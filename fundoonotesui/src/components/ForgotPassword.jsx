@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import Card from '@material-ui/core/Card';
 import '../scss/signin.scss'
 import { TextField } from '@material-ui/core';
@@ -10,21 +10,21 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Email from '@material-ui/icons/Email';
 import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import UserServices from '../services/UserServices';
+const userservice = new UserServices();
 class ForgotPassword extends Component {
     constructor(props) {
         super(props)
         this.state = {
             fields: {},
             errors: {},
-            showPassword: false
+         
         };
-        this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
+       
         this.handleChange = this.handleChange.bind(this);
-        this.handleSignIn = this.handleSignIn.bind(this);
+        this.handleForgotPassword = this.handleForgotPassword.bind(this);
     }
-    handleClickShowPassword = () => {
-        this.setState({ showPassword: !this.state.showPassword });
-    };
+    
     handleChange(event) {
         console.log('in change',event);
         
@@ -34,19 +34,30 @@ class ForgotPassword extends Component {
         this.setState({
             fields
         });
-        console.log(fields);
+        console.log('asd',fields);
         
     }
-    handleSignIn(event) {
+    handleForgotPassword(event) {
         event.preventDefault();
         if (this.validateForm()) {
             let fields = {};
 
             fields["email"] = "";
-            fields["password"] = "";
+            
 
             this.setState({ fields: fields });
-            console.log('submited');
+            console.log('submited',fields);
+            this.setState({[event.target.setOpen]:true})
+            var data =this.state.fields
+            console.log("datasdfdsf",data)
+            userservice.ForgotPassword(data).then((response)=>{
+                console.log("response",response.data.token)
+                 localStorage.setItem("token",response.data.token)
+                 var token = localStorage.getItem("token")
+                 console.log("token after local strg",token);
+                 
+                // this.props.history.push("/resetpassword")
+            })
         }
     }
     validateForm() {
@@ -73,17 +84,7 @@ class ForgotPassword extends Component {
         }
 
 
-        if (!fields["password"]) {
-            formIsValid = false;
-            errors["password"] = "*Please enter your password.";
-        }
-
-        if (typeof fields["password"] !== "undefined") {
-            if (!fields["password"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)) {
-                formIsValid = false;
-                errors["password"] = "*Please enter secure and strong password.";
-            }
-        }
+      
 
         this.setState({
             errors: errors
@@ -116,6 +117,7 @@ class ForgotPassword extends Component {
                             <TextField required id="outlined-basic"
                                 name="email"
                                 label="email"
+                              
                                 onChange={this.handleChange}
                                 variant="outlined"
                                 style={{ width: '80%' }}
@@ -138,7 +140,7 @@ class ForgotPassword extends Component {
                     <div className="textfields">
               
                         <Button variant="contained"
-                            onClick={this.handleSignIn}
+                            onClick={this.handleForgotPassword}
                             style={{ width: '40%', backgroundColor: "dodgerblue", color: "white", marginBottom: '5%' }}>
                            Forgot Password
                     </Button>

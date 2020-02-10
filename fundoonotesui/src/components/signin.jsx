@@ -11,6 +11,8 @@ import Email from '@material-ui/icons/Email';
 import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 //import ReactSnackBar from "react-js-snackbar";
+import UserServices from '../services/UserServices';
+const userservice = new UserServices();
 class SignIn extends Component {
     constructor(props) {
         super(props)
@@ -49,7 +51,13 @@ class SignIn extends Component {
 
             this.setState({ fields: fields });
             console.log('submited');
-        }
+            this.setState({ [event.target.setOpen]: true })
+            var data = this.state.fields
+            console.log("data is", data)
+            userservice.Login(data).then((response) => {
+                console.log("singup data after login ", response);
+                this.props.history.push("/dashboard")
+            })}
     }
     gotoforgotpassword() {
         this.props.history.push('/forgotpassword')

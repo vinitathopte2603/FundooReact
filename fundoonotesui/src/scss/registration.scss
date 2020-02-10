@@ -2,9 +2,10 @@
   
     margin-top: 5%;
     color: firebrick;
+    justify-content: space-evenly;
 }
 .cardregistration{
-    width: 35%;
+    width: 40%;
     height: 100%;
     /* background-color: #bfbfbf; */
     background-color: red;
@@ -12,9 +13,20 @@
     margin-top: 1%;
     margin-left: 30%;
     flex-direction: column;
-    justify-items: center;
+    justify-content:center;
     }
     .errorMsgregistration{
         color: #cc0000;
         margin-bottom: 12px;
       }
+      .nametextfields{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+      }
+      @media only screen and (max-width: 800px) {
+        .nametextfields {
+         display: flex;
+         flex-direction: column;
+        }
+    }

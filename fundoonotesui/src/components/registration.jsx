@@ -13,6 +13,10 @@ import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import UserServices from '../services/UserServices'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 //import ReactSnackBar from "react-js-snackbar";
 
 const userservice = new UserServices();
@@ -20,8 +24,8 @@ class Registration extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            Show:false,
-            Showing:false,
+            Show: false,
+            Showing: false,
             fields: {},
             errors: {},
             showPassword: false
@@ -29,11 +33,11 @@ class Registration extends Component {
         this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleRegistration = this.handleRegistration.bind(this);
-        this.gotosignin=this.gotosignin.bind(this);
+        this.gotosignin = this.gotosignin.bind(this);
     }
     gotosignin() {
         this.props.history.push('/signin')
-      }
+    }
     handleClickShowPassword = () => {
         this.setState({ showPassword: !this.state.showPassword });
     };
@@ -58,28 +62,28 @@ class Registration extends Component {
             fields["Email"] = "";
             fields["Passwrod"] = "";
             fields["Type"] = "";
-           
+
 
             this.setState({ fields: fields });
-            console.log('in register',this.state.fields);
-            
+            console.log('in register', this.state.fields);
+
             console.log('submited');
             this.setState({ [event.target.setOpen]: true })
             var data = this.state.fields
             console.log("data is", data)
             userservice.Register(data).then((response) => {
-                    console.log("singup data after registraion ", response);
-                   // if (this.state.Showing) return;
+                console.log("singup data after registraion ", response);
+                // if (this.state.Showing) return;
 
-                    // this.setState({ Show: true, Showing: true });
-                    // setTimeout(() => {
-                    //     this.setState({ Show: false, Showing: false });
-                    // }, 2000);
+                // this.setState({ Show: true, Showing: true });
+                // setTimeout(() => {
+                //     this.setState({ Show: false, Showing: false });
+                // }, 2000);
 
-                    //this.props.history.push("/signin")
+                this.props.history.push("/signin")
 
-                }
-                )
+            }
+            )
         }
     }
     validateForm() {
@@ -141,17 +145,17 @@ class Registration extends Component {
             }
         }
 
-        if (!fields["type"]) {
-            formIsValid = false;
-            errors["type"] = "*Please enter your user type.";
-        }
-        if (typeof fields["type"] !== "undefined") {
-            var pattern = new RegExp(/^[A-Z][a-zA-Z]*$/)
-            if (!pattern.test(fields["firstName"])) {
-                formIsValid = false;
-                errors["type"] = "*Please enter user type in correct format"
-            }
-        }
+        // if (!fields["type"]) {
+        //     formIsValid = false;
+        //     errors["type"] = "*Please enter your user type.";
+        // }
+        // if (typeof fields["type"] !== "undefined") {
+        //     var pattern = new RegExp(/^[A-Z][a-zA-Z]*$/)
+        //     if (!pattern.test(fields["firstName"])) {
+        //         formIsValid = false;
+        //         errors["type"] = "*Please enter user type in correct format"
+        //     }
+        // }
         this.setState({
             errors: errors
         });
@@ -179,7 +183,8 @@ class Registration extends Component {
                         Create your Fundoo Account
                       </Typography >
                     <form noValidate autoComplete="off">
-                        <div className="textfieldsregistration">
+                        <div className="nametextfields">
+                        <div className="textfieldsregistration" >
                             <TextField required id="outlined-basic"
                                 name="firstName"
                                 label="firstName"
@@ -196,9 +201,10 @@ class Registration extends Component {
                                     }
                                 }
                             />
+                            <div className="errorMsgregistration">{this.state.errors.firstName}</div>
                         </div>
-                        <div className="errorMsgregistration">{this.state.errors.firstName}</div>
-                        <div>
+                        
+                        {/* <div div className="textfieldsregistration"> */}
                             <TextField required id="outlined-basic"
                                 name="lastName"
                                 label="lastName"
@@ -215,8 +221,10 @@ class Registration extends Component {
                                     }
                                 }
                             />
+                            <div className="errorMsg">{this.state.errors.lastName}</div>
                         </div>
-                        <div className="errorMsg">{this.state.errors.lastName}</div>
+                        {/* </div> */}
+                       
                         <div className="textfields">
                             <TextField required id="outlined-basic"
                                 name="email"
@@ -263,7 +271,7 @@ class Registration extends Component {
                         </div>
                         <div className="errorMsg">{this.state.errors.password}</div>
                         <div className="textfields">
-                            <TextField required id="outlined-basic"
+                            {/* <TextField required id="outlined-basic"
                                 name="type"
                                 label="type"
                                 onChange={this.handleChange}
@@ -278,9 +286,27 @@ class Registration extends Component {
                                         ),
                                     }
                                 }
-                            />
+                            /> */}
+
+
+                            <RadioGroup row aria-label="type" name="Type" onChange={this.handleChange}>
+                                <FormControlLabel
+                                    style={{ color: "dodgerblue", marginLeft:'20%' }}
+                                    value="Basic"
+                                    control={<Radio color="dodgerblue" />}
+                                    label="Basic"
+                                    labelPlacement="start"
+                                />
+                        
+                                <FormControlLabel
+                                    style={{ color: "dodgerblue",marginLeft:'20%' }}
+                                    value="Advance"
+                                    control={<Radio color="dodgerblue" />}
+                                    label="Advance"
+                                    labelPlacement="start"
+                                />
+                             </RadioGroup> 
                         </div>
-                        <div className="errorMsg">{this.state.errors.email}</div>
                     </form>
 
                     <div className="textfields">
@@ -291,12 +317,12 @@ class Registration extends Component {
                             style={{ width: '30%', backgroundColor: "dodgerblue", color: "white", marginBottom: '5%' }}>
                             Register
                     </Button>
-                    <Button variant="contained"
+                        {/* <Button variant="contained"
                             onClick={this.gotosignin}
 
                             style={{ width: '30%', backgroundColor: "dodgerblue", color: "white", marginBottom: '5%' }}>
                             Sign In
-                    </Button>
+                    </Button> */}
                         {/* <ReactSnackBar Show={this.state.Show}>
                             User Logged In   Successfully...
                         </ReactSnackBar> */}

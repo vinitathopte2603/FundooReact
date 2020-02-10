@@ -6,6 +6,7 @@ import Registration from './components/registration'
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import ForgotPassword from './components/ForgotPassword'
 import ResetPassword from './components/ResetPassword'
+import DashBoard from './components/DashBoard';
 function App() {
   return (
     <div className="App">
@@ -17,6 +18,7 @@ function App() {
             <Route path="/registration" component={Registration}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
             <Route path="/resetpassword" component={ResetPassword}/>
+            <Route path="/dashboard" component={DashBoard}/>
 
           </Switch>
         </div>
