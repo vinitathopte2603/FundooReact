@@ -20,7 +20,7 @@ class ResetPassword extends Component {
         };
         this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleSignIn = this.handleSignIn.bind(this);
+        this.handleResetPassword = this.handleResetPassword.bind(this);
     }
     handleClickShowPassword = () => {
         this.setState({ showPassword: !this.state.showPassword });
@@ -37,12 +37,12 @@ class ResetPassword extends Component {
         console.log(fields);
         
     }
-    handleSignIn(event) {
+    handleResetPassword(event) {
         event.preventDefault();
         if (this.validateForm()) {
             let fields = {};
 
-            fields["email"] = "";
+            
             fields["password"] = "";
 
             this.setState({ fields: fields });

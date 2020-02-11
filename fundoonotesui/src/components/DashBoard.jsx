@@ -8,57 +8,46 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import '../scss/dashboard.scss'
 
 class DashBoard extends Component {
-
-    render() {
-        return (
-            <div >
-      <AppBar position="static" style={{backgroundColor:'whitesmoke'}}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon style={{color:'black'}}/>
-          </IconButton>
-          <Typography  variant="h6" noWrap style={{color:'black'}}>
-            Keep
-          </Typography>
-          <div className="search">
-            <div className="searchIcon">
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-             style={{backgroundColor:'whitesmoke'},{marginRight:'60%'}}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
-          <div  />
-          <div >
-           
-           
+  constructor(props) {
+    super(props);
+    this.state = {
+      setOpen: false
+    };
+  }
+ 
+  render() {
+    return (
+      <div >
+        <AppBar position="static" style={{ backgroundColor: 'whitesmoke' }}>
+          <Toolbar>
             <IconButton
-              edge="end"
-              aria-label="account of current user"
-            
-              aria-haspopup="true"
-              
+              edge="start"
               color="inherit"
+              aria-label="open drawer"
             >
-              <AccountCircle />
+              <MenuIcon style={{ color: 'black' }} onClick={this.handleClick} />
             </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-     
-      
-    </div>
-        );
-    }
+            <Typography variant="h6" noWrap style={{ color: 'black' }}>
+              Keep
+          </Typography>
+            <div className="search">
+              <div className="searchIcon">
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                style={{ backgroundColor: 'whitesmoke' }, { marginRight: '60%' }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </div>
+            <div />
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }
 }
 export default DashBoard

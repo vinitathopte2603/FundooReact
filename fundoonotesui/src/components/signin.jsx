@@ -10,7 +10,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Email from '@material-ui/icons/Email';
 import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-//import ReactSnackBar from "react-js-snackbar";
+import SnackBar  from "react-js-snackbar";
 import UserServices from '../services/UserServices';
 const userservice = new UserServices();
 class SignIn extends Component {
@@ -19,6 +19,8 @@ class SignIn extends Component {
         this.state = {
             fields: {},
             errors: {},
+            Show: false,
+            Showing: false,
             showPassword: false
         };
         this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
@@ -31,15 +33,15 @@ class SignIn extends Component {
         this.setState({ showPassword: !this.state.showPassword });
     };
     handleChange(event) {
-        console.log('in change',event);
-        
+
+
         let fields = this.state.fields;
         fields[event.target.name] = event.target.value;
         this.setState({
             fields
         });
-        console.log(fields);
-        
+
+
     }
     handleSignIn(event) {
         event.preventDefault();
@@ -56,20 +58,31 @@ class SignIn extends Component {
             console.log("data is", data)
             userservice.Login(data).then((response) => {
                 console.log("singup data after login ", response);
-                this.props.history.push("/dashboard")
-            })}
+                // if (this.state.Showing) return;
+                this.setState({ Show: !this.state.Show, Showing: !this.state.Showing });
+                setTimeout(() => {
+                    this.setState({ Show: false, Showing: false });
+                }, 2000);
+                setTimeout(() => {
+                    this.props.history.push("/dashboard")
+  
+                }, 3000);
+
+                
+            })
+        }
     }
     gotoforgotpassword() {
         this.props.history.push('/forgotpassword')
-      }
-      gotoregister() {
+    }
+    gotoregister() {
         this.props.history.push('/registration')
-      }
+    }
     validateForm() {
 
         let fields = this.state.fields;
         console.log(fields);
-        
+
         let errors = {};
         let formIsValid = true;
 
@@ -80,7 +93,7 @@ class SignIn extends Component {
         }
 
         if (typeof fields["email"] !== "undefined") {
-            
+
             var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
             if (!pattern.test(fields["email"])) {
                 formIsValid = false;
@@ -188,6 +201,9 @@ class SignIn extends Component {
                             Sign in
                     </Button>
 
+                        <SnackBar Show={this.state.Show}>
+                            User Logged In Successfully...
+                        </SnackBar>
                     </div>
                 </Card>
             </div>

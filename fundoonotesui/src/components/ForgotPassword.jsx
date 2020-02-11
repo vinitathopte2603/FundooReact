@@ -11,6 +11,7 @@ import Email from '@material-ui/icons/Email';
 import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import UserServices from '../services/UserServices';
+import ReactSnackBar from '@material-ui/core/Snackbar';
 const userservice = new UserServices();
 class ForgotPassword extends Component {
     constructor(props) {
@@ -18,6 +19,8 @@ class ForgotPassword extends Component {
         this.state = {
             fields: {},
             errors: {},
+            Show: false,
+            Showing: false,
          
         };
        
@@ -55,7 +58,12 @@ class ForgotPassword extends Component {
                  localStorage.setItem("token",response.data.token)
                  var token = localStorage.getItem("token")
                  console.log("token after local strg",token);
-                 
+                 if (this.state.Showing) return;
+
+                 this.setState({ Show: true, Showing: true });
+                 setTimeout(() => {
+                     this.setState({ Show: false, Showing: false });
+                 }, 2000);
                 // this.props.history.push("/resetpassword")
             })
         }
@@ -144,7 +152,9 @@ class ForgotPassword extends Component {
                             style={{ width: '40%', backgroundColor: "dodgerblue", color: "white", marginBottom: '5%' }}>
                            Forgot Password
                     </Button>
-
+                    <ReactSnackBar Show={this.state.Show}>
+                            User Registered Successfully...
+                        </ReactSnackBar> 
                     </div>
                 </Card>
             </div>

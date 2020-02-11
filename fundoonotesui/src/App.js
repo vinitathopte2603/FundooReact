@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 import ForgotPassword from './components/ForgotPassword'
 import ResetPassword from './components/ResetPassword'
 import DashBoard from './components/DashBoard';
+import Demo from './components/Demo'
 function App() {
   return (
     <div className="App">
@@ -19,7 +20,7 @@ function App() {
             <Route path="/forgotpassword" component={ForgotPassword}/>
             <Route path="/resetpassword" component={ResetPassword}/>
             <Route path="/dashboard" component={DashBoard}/>
-
+            <Route path="/demo" component={Demo}/>
           </Switch>
         </div>
       </Router>

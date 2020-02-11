@@ -17,8 +17,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-//import ReactSnackBar from "react-js-snackbar";
-
+import ReactSnackBar from '@material-ui/core/Snackbar';
 const userservice = new UserServices();
 class Registration extends Component {
     constructor(props) {
@@ -73,12 +72,12 @@ class Registration extends Component {
             console.log("data is", data)
             userservice.Register(data).then((response) => {
                 console.log("singup data after registraion ", response);
-                // if (this.state.Showing) return;
+                if (this.state.Showing) return;
 
-                // this.setState({ Show: true, Showing: true });
-                // setTimeout(() => {
-                //     this.setState({ Show: false, Showing: false });
-                // }, 2000);
+                this.setState({ Show: true, Showing: true });
+                setTimeout(() => {
+                    this.setState({ Show: false, Showing: false });
+                }, 2000);
 
                 this.props.history.push("/signin")
 
@@ -204,7 +203,7 @@ class Registration extends Component {
                             <div className="errorMsgregistration">{this.state.errors.firstName}</div>
                         </div>
                         
-                        {/* <div div className="textfieldsregistration"> */}
+                         <div className="textfieldsregistration"> 
                             <TextField required id="outlined-basic"
                                 name="lastName"
                                 label="lastName"
@@ -223,7 +222,7 @@ class Registration extends Component {
                             />
                             <div className="errorMsg">{this.state.errors.lastName}</div>
                         </div>
-                        {/* </div> */}
+                     </div> 
                        
                         <div className="textfields">
                             <TextField required id="outlined-basic"
@@ -323,9 +322,9 @@ class Registration extends Component {
                             style={{ width: '30%', backgroundColor: "dodgerblue", color: "white", marginBottom: '5%' }}>
                             Sign In
                     </Button> */}
-                        {/* <ReactSnackBar Show={this.state.Show}>
-                            User Logged In   Successfully...
-                        </ReactSnackBar> */}
+                        <ReactSnackBar Show={this.state.Show}>
+                            User Registered Successfully...
+                        </ReactSnackBar> 
                     </div>
                 </Card>
             </div>
