@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { render } from '@testing-library/react';
 import Card from '@material-ui/core/Card';
-import '../scss/signin.scss'
+import '../../scss/signin.scss'
 import { TextField } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -11,7 +11,7 @@ import Email from '@material-ui/icons/Email';
 import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import SnackBar  from "react-js-snackbar";
-import UserServices from '../services/UserServices';
+import UserServices from '../../services/UserServices';
 const userservice = new UserServices();
 class SignIn extends Component {
     constructor(props) {
@@ -57,7 +57,8 @@ class SignIn extends Component {
             var data = this.state.fields
             console.log("data is", data)
             userservice.Login(data).then((response) => {
-                console.log("singup data after login ", response);
+                console.log("singup data after login ", response.data.token);
+                 localStorage.setItem("logintoken",response.data.token)
                 // if (this.state.Showing) return;
                 this.setState({ Show: !this.state.Show, Showing: !this.state.Showing });
                 setTimeout(() => {

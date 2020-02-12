@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { render } from '@testing-library/react';
 import Card from '@material-ui/core/Card';
-import '../scss/registration.scss'
-import '../scss/signin.scss'
+import '../../scss/registration.scss'
+import '../../scss/signin.scss'
 import { TextField } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -12,12 +12,12 @@ import Email from '@material-ui/icons/Email';
 import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import UserServices from '../services/UserServices'
+import UserServices from '../../services/UserServices'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import ReactSnackBar from '@material-ui/core/Snackbar';
+import ReactSnackBar from 'react-js-snackbar';
 const userservice = new UserServices();
 class Registration extends Component {
     constructor(props) {
@@ -78,8 +78,12 @@ class Registration extends Component {
                 setTimeout(() => {
                     this.setState({ Show: false, Showing: false });
                 }, 2000);
+                setTimeout(() => {
+                    this.props.history.push("/signin")
+  
+                }, 3000);
 
-                this.props.history.push("/signin")
+               
 
             }
             )

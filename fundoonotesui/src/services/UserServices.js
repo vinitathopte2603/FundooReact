@@ -18,10 +18,13 @@ export default class UserServices{
         var token="";
         return services.POST("http://localhost:53715/api/Accounts/ForgotPassword",data,token)
     }
-    ResetPassword(data){
-        console.log();
-        var token ={ 
-            headers: { 'Content-Type':'application/json', 'Accept':'*', Authorization: 'Bearer '+localStorage.getItem("token") } }
-        return services.POST("http://localhost:53715/api/Accounts/ResetPassword",data,token)
+    ResetPassword(data,token){
+        console.log("in reset services",data,token);
+        // var options ={ 
+        //     }
+            //  console.log("rvcer",options);
+             
+        return services.POST("http://localhost:53715/api/Accounts/ResetPassword",data,{headers: { 'Content-Type':'application/json',
+        Authorization: 'Bearer '+ token}} )
     }
 }

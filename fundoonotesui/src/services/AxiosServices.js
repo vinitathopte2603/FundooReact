@@ -12,8 +12,8 @@ export default class AxiosServices {
     //         'Content-Type': 'application/json' }})
     //   }
     POST(path, data,token) {
-        console.log("hgdg", data,path)
-        return axios.post(path, data,token)
+        console.log("hgdg", data,path,token)
+        return axios.post(path, data,{token})
     }
     deleteUserdata(id) {
         console.log("id in the service", id)

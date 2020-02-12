@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import Card from '@material-ui/core/Card';
-import '../scss/signin.scss'
+import '../../scss/signin.scss'
 import { TextField } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -10,21 +10,24 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Email from '@material-ui/icons/Email';
 import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-class ResetPassword extends Component {
+import UserServices from '../../services/UserServices';
+import ReactSnackBar from 'react-js-snackbar';
+const userservice = new UserServices();
+class ForgotPassword extends Component {
     constructor(props) {
         super(props)
         this.state = {
             fields: {},
             errors: {},
-            showPassword: false
+            Show: false,
+            Showing: false,
+         
         };
-        this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
+       
         this.handleChange = this.handleChange.bind(this);
-        this.handleResetPassword = this.handleResetPassword.bind(this);
+        this.handleForgotPassword = this.handleForgotPassword.bind(this);
     }
-    handleClickShowPassword = () => {
-        this.setState({ showPassword: !this.state.showPassword });
-    };
+    
     handleChange(event) {
         console.log('in change',event);
         
@@ -34,19 +37,35 @@ class ResetPassword extends Component {
         this.setState({
             fields
         });
-        console.log(fields);
+        console.log('asd',fields);
         
     }
-    handleResetPassword(event) {
+    handleForgotPassword(event) {
         event.preventDefault();
         if (this.validateForm()) {
             let fields = {};
 
+            fields["email"] = "";
             
-            fields["password"] = "";
 
             this.setState({ fields: fields });
-            console.log('submited');
+            console.log('submited',fields);
+            this.setState({[event.target.setOpen]:true})
+            var data =this.state.fields
+            console.log("datasdfdsf",data)
+            userservice.ForgotPassword(data).then((response)=>{
+                console.log("response",response.data.token)
+                
+                //  var token = localStorage.getItem("token")
+                //  console.log("token after local strg",token);
+                 if (this.state.Showing) return;
+
+                 this.setState({ Show: true, Showing: true });
+                 setTimeout(() => {
+                     this.setState({ Show: false, Showing: false });
+                 }, 2000);
+                //  this.props.history.push("/resetpassword")
+            })
         }
     }
     validateForm() {
@@ -57,17 +76,23 @@ class ResetPassword extends Component {
         let errors = {};
         let formIsValid = true;
 
-        if (!fields["password"]) {
+
+        if (!fields["email"]) {
             formIsValid = false;
-            errors["password"] = "*Please enter your password.";
+            errors["email"] = "*Please enter your email-ID.";
         }
 
-        if (typeof fields["password"] !== "undefined") {
-            if (!fields["password"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)) {
+        if (typeof fields["email"] !== "undefined") {
+            
+            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+            if (!pattern.test(fields["email"])) {
                 formIsValid = false;
-                errors["password"] = "*Please enter secure and strong password.";
+                errors["email"] = "*Please enter valid email-ID.";
             }
         }
+
+
+      
 
         this.setState({
             errors: errors
@@ -96,47 +121,41 @@ class ResetPassword extends Component {
                         Use your Fundoo Account
                       </Typography >
                     <form noValidate autoComplete="off">
-                    
-                        <div className="textfields ">
-                            <TextField
-                                required
-                                id="outlined-basic"
-                                name="password"
-                                label="password"
+                        <div className="textfields">
+                            <TextField required id="outlined-basic"
+                                name="email"
+                                label="email"                              
                                 onChange={this.handleChange}
-                                type={this.state.showPassword ? 'text' : 'password'}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={this.handleClickShowPassword}
-                                                edge="end"
-                                            >
-                                                {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
                                 variant="outlined"
                                 style={{ width: '80%' }}
+                                InputProps={
+                                    {
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <Email />
+                                            </InputAdornment>
+                                        ),
+                                    }
+                                }
                             />
                         </div>
-                        <div className="errorMsg">{this.state.errors.password}</div>
+                        <div className="errorMsg">{this.state.errors.email}</div>
                     </form>
 
                     <div className="textfields">
-                    
+              
                         <Button variant="contained"
-                            onClick={this.handleSignIn}
+                            onClick={this.handleForgotPassword}
                             style={{ width: '40%', backgroundColor: "dodgerblue", color: "white", marginBottom: '5%' }}>
-                           Reset password
+                           Forgot Password
                     </Button>
-
+                    <ReactSnackBar Show={this.state.Show}>
+                            mail sent to your registered email
+                        </ReactSnackBar> 
                     </div>
                 </Card>
             </div>
         )
     }
 }
-export default ResetPassword
+export default ForgotPassword

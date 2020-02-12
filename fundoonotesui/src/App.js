@@ -1,11 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.scss';
-import Signin from './components/signin'
-import Registration from './components/registration'
+import Signin from './components/Accounts/signin'
+import Registration from './components/Accounts/registration'
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-import ForgotPassword from './components/ForgotPassword'
-import ResetPassword from './components/ResetPassword'
+import ForgotPassword from './components/Accounts/ForgotPassword'
+import ResetPassword from './components/Accounts/ResetPassword'
 import DashBoard from './components/DashBoard';
 import Demo from './components/Demo'
 function App() {
@@ -18,7 +18,7 @@ function App() {
              <Route path="/signin" component={Signin} />
             <Route path="/registration" component={Registration}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
-            <Route path="/resetpassword" component={ResetPassword}/>
+            <Route path="/resetpassword/:token" component={ResetPassword}/>
             <Route path="/dashboard" component={DashBoard}/>
             <Route path="/demo" component={Demo}/>
           </Switch>
