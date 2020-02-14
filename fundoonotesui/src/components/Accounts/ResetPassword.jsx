@@ -42,6 +42,10 @@ class ResetPassword extends Component {
         console.log(fields);
         
     }
+    // componentDidMount(){
+    //     var token1 = this.props.match.params.token
+    //     localStorage.setItem("logintoken",token1)
+    // }
     handleResetPassword(event) {
         event.preventDefault();
         if (this.validateForm()) {
@@ -55,12 +59,11 @@ class ResetPassword extends Component {
             this.setState({[event.target.setOpen]:true})
             var data = this.state.fields
         
+            // var resettoken=localStorage.getItem("logintoken")
             var token1 = this.props.match.params.token
-            console.log("token 1", token1);
-            
             userservice.ResetPassword(data,token1).then((response)=>{
                 console.log("response",response);
-                
+                this.props.history.push('/')
                 this.setState({ Show: !this.state.Show, Showing: !this.state.Showing });
                 setTimeout(() => {
                     this.setState({ Show: false, Showing: false });

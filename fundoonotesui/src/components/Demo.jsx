@@ -10,7 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import '../scss/dashboard.scss'
 
-class DashBoard extends Component {
+class Demo extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -50,4 +50,4 @@ class DashBoard extends Component {
     );
   }
 }
-export default DashBoard
+export default Demo

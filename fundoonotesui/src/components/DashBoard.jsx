@@ -17,16 +17,30 @@ import SearchIcon from '@material-ui/icons/Search';
 import Avatar from '@material-ui/core/Avatar';
 import '../scss/dashboard.scss'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-class Demo extends Component {
-  constructor(props){
+import avatarimage from '../images/download1.jpg'
+import keepimage from '../images/keep_48dp.png'
+import RefreshIcon from '@material-ui/icons/Refresh';
+import AppsIcon from '@material-ui/icons/Apps';
+import AllNotes from './AllNotes'
+import { Button } from '@material-ui/core';
+import {Redirect} from 'react-router-dom'
+class DashBoard extends Component {
+  constructor(props) {
     super(props);
-    this.state={
-      open : false,
-      setOpen : false
+    const token = localStorage.getItem("logintoken")
+    let loggedIn=true
+    if(token == null){
+      loggedIn=false
+    }
+    this.state = {
+      open: false,
+      setOpen: false,
+      openUpdate:false,
+      loggedIn
     };
   }
-  toggle=()=>{
-    this.setState({open:!this.state.open})
+  toggle = () => {
+    this.setState({ open: !this.state.open })
     // this.setState({open:true})
   }
 
@@ -35,79 +49,107 @@ class Demo extends Component {
       open: false,
     });
   };
-render(){
-  const { open } = this.state;
-  return (
-    <div >
-      <div>
-       <Drawer open={this.state.open}>
-       <ClickAwayListener onClickAway={this.handleClickAway}>
-      <IconButton onClick={this.toggle} >
-      {open ? (
-              <MenuIcon /> 
-            ) : null}
-        
-      </IconButton>
-      </ClickAwayListener>
-    <Divider />
-    <List>
-      {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-        <ListItem button key={text}>
-          <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-          <ListItemText primary={text} />
-        </ListItem>
-      ))}
-    </List>
-    <Divider />
-    <List>
-      {['All mail', 'Trash', 'Spam'].map((text, index) => (
-        <ListItem button key={text}>
-          <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-          <ListItemText primary={text} />
-        </ListItem>
-      ))}
-    </List>
-  </Drawer>
-  </div>
-  <div>
-      <AppBar
-        position="fixed"
-        style={{backgroundColor:'whitesmoke'}}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={this.toggle}
-            edge="start"
+  forRefresh(){
   
+     window.location.reload(false);
+  }
+  logout=()=>{
+    localStorage.clear()
+    this.props.history.push('/signin')
+  }
+  render() {
+    if(this.state.loggedIn===false){
+      return <Redirect to="/"/>
+    }
+    const { open } = this.state;
+    return (
+      <div >
+        <div>
+          <Drawer open={this.state.open}>
+            <ClickAwayListener onClickAway={this.handleClickAway}>
+              <IconButton onClick={this.toggle} >
+                {open ? (
+                  <MenuIcon />
+                ) : null}
+
+              </IconButton>
+            </ClickAwayListener>
+            <Divider />
+            <List>
+              {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                <ListItem button key={text}>
+                  <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItem>
+              ))}
+            </List>
+            <Divider />
+            <List>
+              {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                <ListItem button key={text}>
+                  <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItem>
+              ))}
+            </List>
+          </Drawer>
+        </div>
+        <div>
+          <AppBar
+            position="fixed"
+            style={{ backgroundColor: 'whitesmoke' }}
           >
-            <MenuIcon style={{color:'black'}}/>
-          </IconButton>
-          <Typography variant="h6" noWrap style={{color:'black'}}>
-           Keep
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={this.toggle}
+                edge="start"
+
+              >
+                <MenuIcon style={{ color: 'black' }} />
+              </IconButton>
+              <div>
+                <img src={keepimage}/>
+              </div>
+              <Typography variant="h6" noWrap style={{ color: 'black' }}>
+               Fundoo keep
           </Typography>
-          <div className="search">
-            <div className="searchIcon">
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-             style={{backgroundColor:'whitesmoke'}, {marginRight:'60%'}}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
-          <div>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" style={{marginLeft:'50%'}} />
-          </div>
-          <div/>
-        </Toolbar>
-      </AppBar>
-     </div>
-      <div style={{marginTop:'8%'}}>welcome to dashboard</div>
-    </div>
-  );
+              <div className="search">
+                <div className="searchIcon">
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  style={{ marginRight: '60%'}}
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </div>
+              <div className="iconsdiv" style={{marginLeft:'25%'}}>
+              <div className="refreshicon">
+                <IconButton onClick={this.forRefresh}>
+                <RefreshIcon />
+                </IconButton>
+              </div>
+              <div>
+                <IconButton>
+                <AppsIcon style={{color:"dimgray"}}></AppsIcon>
+                </IconButton>
+              </div>
+              <div className="avatar">
+                <Avatar alt="Remy Sharp" src={avatarimage} style={{marginLeft:'30%'}}/>
+              </div>
+              </div>
+              <div />
+            </Toolbar>
+          </AppBar>
+        </div>
+        <div style={{ marginTop: '8%' }}>welcome to dashboard</div>
+        <AllNotes refresh={this.forRefresh}></AllNotes>
+        <Button onClick={this.logout}>Logout</Button>
+      </div>
+    );
+  }
+
 }
- 
-}
-export default Demo
+export default DashBoard

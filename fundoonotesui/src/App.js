@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.scss';
 import Signin from './components/Accounts/signin'
 import Registration from './components/Accounts/registration'
@@ -15,7 +14,7 @@ function App() {
         <div>
           <Switch>
            <Route path="/" exact component={Signin}/>
-             <Route path="/signin" component={Signin} />
+            <Route path="/signin" component={Signin} />
             <Route path="/registration" component={Registration}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
             <Route path="/resetpassword/:token" component={ResetPassword}/>

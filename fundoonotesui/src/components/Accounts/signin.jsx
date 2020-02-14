@@ -10,18 +10,25 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Email from '@material-ui/icons/Email';
 import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import SnackBar  from "react-js-snackbar";
+import SnackBar from "react-js-snackbar";
 import UserServices from '../../services/UserServices';
+
 const userservice = new UserServices();
 class SignIn extends Component {
     constructor(props) {
         super(props)
+        const token = localStorage.getItem("logintoken")
+        let loggedIn=true
+        if(token == null){
+          loggedIn=false
+        }
         this.state = {
             fields: {},
             errors: {},
             Show: false,
             Showing: false,
-            showPassword: false
+            showPassword: false,
+            loggedIn
         };
         this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -58,18 +65,19 @@ class SignIn extends Component {
             console.log("data is", data)
             userservice.Login(data).then((response) => {
                 console.log("singup data after login ", response.data.token);
-                 localStorage.setItem("logintoken",response.data.token)
+                localStorage.setItem("logintoken", response.data.token)
                 // if (this.state.Showing) return;
+                this.setState({ loggedIn:true })
                 this.setState({ Show: !this.state.Show, Showing: !this.state.Showing });
                 setTimeout(() => {
                     this.setState({ Show: false, Showing: false });
                 }, 2000);
-                setTimeout(() => {
-                    this.props.history.push("/dashboard")
-  
-                }, 3000);
+                // setTimeout(() => {
+                //     this.props.history.push("/dashboard")
 
-                
+                // }, 3000);
+
+
             })
         }
     }
@@ -122,7 +130,13 @@ class SignIn extends Component {
 
     }
     render() {
+if(this.state.loggedIn){
+     setTimeout(() => {
+                    this.props.history.push("/dashboard")
 
+                }, 3000);
+    // return<Redirect to="/dashboard"/>
+}
         return (
             <div>
                 <Card className="card">
