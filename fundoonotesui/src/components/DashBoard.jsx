@@ -24,6 +24,12 @@ import AppsIcon from '@material-ui/icons/Apps';
 import AllNotes from './AllNotes'
 import { Button } from '@material-ui/core';
 import {Redirect} from 'react-router-dom'
+import CreateNote from './CreateNote'
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
+import NotificationsNoneSharpIcon from '@material-ui/icons/NotificationsNoneSharp';
+import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
+import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 class DashBoard extends Component {
   constructor(props) {
     super(props);
@@ -57,13 +63,14 @@ class DashBoard extends Component {
     localStorage.clear()
     this.props.history.push('/signin')
   }
+ 
   render() {
     if(this.state.loggedIn===false){
       return <Redirect to="/"/>
     }
     const { open } = this.state;
     return (
-      <div >
+      <div>
         <div>
           <Drawer open={this.state.open}>
             <ClickAwayListener onClickAway={this.handleClickAway}>
@@ -76,23 +83,36 @@ class DashBoard extends Component {
             </ClickAwayListener>
             <Divider />
             <List>
-              {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                <ListItem button key={text}>
-                  <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                  <ListItemText primary={text} />
+                  <ListItem button key="Notes">
+                  <ListItemIcon> <EmojiObjectsOutlinedIcon /></ListItemIcon>
+                  <ListItemText primary="Notes" />
                 </ListItem>
-              ))}
+                <ListItem button key="Reminder">
+                  <ListItemIcon> <NotificationsNoneSharpIcon /></ListItemIcon>
+                  <ListItemText primary="Reminder" />
+                </ListItem>
             </List>
             <Divider />
             <List>
-              {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                <ListItem button key={text}>
-                  <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                  <ListItemText primary={text} />
+                  <ListItem button key="Edit labels">
+                  <ListItemIcon> <EditOutlinedIcon /></ListItemIcon>
+                  <ListItemText primary="Edit labels" />
                 </ListItem>
-              ))}
             </List>
+            <Divider />
+            <List>
+                  <ListItem button key="Archive">
+                  <ListItemIcon> <ArchiveOutlinedIcon /></ListItemIcon>
+                  <ListItemText primary="Archive" />
+                </ListItem>
+                <ListItem button key="Trash">
+                  <ListItemIcon> <DeleteOutlineOutlinedIcon /></ListItemIcon>
+                  <ListItemText primary="Trash" />
+                </ListItem>
+            </List>
+            <Button onClick={this.logout}>Logout</Button>
           </Drawer>
+          
         </div>
         <div>
           <AppBar
@@ -113,7 +133,7 @@ class DashBoard extends Component {
                 <img src={keepimage}/>
               </div>
               <Typography variant="h6" noWrap style={{ color: 'black' }}>
-               Fundoo keep
+                Keep
           </Typography>
               <div className="search">
                 <div className="searchIcon">
@@ -144,9 +164,6 @@ class DashBoard extends Component {
             </Toolbar>
           </AppBar>
         </div>
-        <div style={{ marginTop: '8%' }}>welcome to dashboard</div>
-        <AllNotes refresh={this.forRefresh}></AllNotes>
-        <Button onClick={this.logout}>Logout</Button>
       </div>
     );
   }

@@ -12,8 +12,17 @@ import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import SnackBar from "react-js-snackbar";
 import UserServices from '../../services/UserServices';
-
+import { withStyles } from '@material-ui/core/styles';
+import LinearProgress from '@material-ui/core/LinearProgress';
 const userservice = new UserServices();
+const ColorLinearProgress = withStyles({
+    colorPrimary: {
+      backgroundColor: 'aliceblue',
+    },
+    barColorPrimary: {
+      backgroundColor: 'dodgerblue',
+    },
+  })(LinearProgress);
 class SignIn extends Component {
     constructor(props) {
         super(props)
@@ -28,6 +37,7 @@ class SignIn extends Component {
             Show: false,
             Showing: false,
             showPassword: false,
+            linearProgress:false,
             loggedIn
         };
         this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
@@ -60,6 +70,7 @@ class SignIn extends Component {
 
             this.setState({ fields: fields });
             console.log('submited');
+            this.setState({linearProgress:true})
             this.setState({ [event.target.setOpen]: true })
             var data = this.state.fields
             console.log("data is", data)
@@ -132,15 +143,17 @@ class SignIn extends Component {
     render() {
 if(this.state.loggedIn){
      setTimeout(() => {
-                    this.props.history.push("/dashboard")
+                    this.props.history.push("/dashboard/notes")
 
                 }, 3000);
     // return<Redirect to="/dashboard"/>
 }
         return (
             <div>
+                
                 <Card className="card">
-
+                    {this.state.linearProgress?<ColorLinearProgress/>:null}
+                
                     <div style={{ fontSize: "1.6rem", padding: "1%", fontWeight: "bolder", fontFamily: "sarif", marginTop: "3%" }}>
                         <span style={{ color: "#3369E8" }}>F</span>
                         <span style={{ color: "#D50F25" }}>u</span>

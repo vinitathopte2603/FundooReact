@@ -5,12 +5,6 @@ export default class AxiosServices {
     GET(path, data, token) {
         return axios.get(path, data, token);
     }
-    //   POST(data) {
-    //     console.log("hgdg", data)
-    //     return axios.post(`http://localhost:60404/api/Employee/postEmployee`, data, {
-    //       headers: {
-    //         'Content-Type': 'application/json' }})
-    //   }
     POST(path, data,token) {
         console.log("hgdg", data)
         console.log("token",token)

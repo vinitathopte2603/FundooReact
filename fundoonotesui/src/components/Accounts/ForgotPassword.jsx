@@ -12,7 +12,17 @@ import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import UserServices from '../../services/UserServices';
 import ReactSnackBar from 'react-js-snackbar';
+import { withStyles } from '@material-ui/core/styles';
+import LinearProgress from '@material-ui/core/LinearProgress';
 const userservice = new UserServices();
+const ColorLinearProgress = withStyles({
+    colorPrimary: {
+      backgroundColor: 'aliceblue',
+    },
+    barColorPrimary: {
+      backgroundColor: 'dodgerblue',
+    },
+  })(LinearProgress);
 class ForgotPassword extends Component {
     constructor(props) {
         super(props)
@@ -21,6 +31,7 @@ class ForgotPassword extends Component {
             errors: {},
             Show: false,
             Showing: false,
+            linearProgress:false,
          
         };
        
@@ -50,6 +61,7 @@ class ForgotPassword extends Component {
 
             this.setState({ fields: fields });
             console.log('submited',fields);
+            this.setState({linearProgress:true})
             this.setState({[event.target.setOpen]:true})
             var data =this.state.fields
             console.log("datasdfdsf",data)
@@ -105,7 +117,7 @@ class ForgotPassword extends Component {
         return (
             <div>
                 <Card className="card">
-
+                {this.state.linearProgress?<ColorLinearProgress/>:null}
                     <div style={{ fontSize: "1.6rem", padding: "1%", fontWeight: "bolder", fontFamily: "sarif", marginTop: "3%" }}>
                         <span style={{ color: "#3369E8" }}>F</span>
                         <span style={{ color: "#D50F25" }}>u</span>

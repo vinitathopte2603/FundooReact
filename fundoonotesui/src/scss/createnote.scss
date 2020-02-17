@@ -1,0 +1,21 @@
+.inputbasediv{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.note{
+    width: 50%;
+    margin-left: 25%;
+
+}
+.inputbase{
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-family: Arial ;
+}
+.noteiconsdiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

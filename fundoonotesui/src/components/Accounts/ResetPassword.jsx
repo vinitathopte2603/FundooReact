@@ -63,10 +63,13 @@ class ResetPassword extends Component {
             var token1 = this.props.match.params.token
             userservice.ResetPassword(data,token1).then((response)=>{
                 console.log("response",response);
-                this.props.history.push('/')
+                
                 this.setState({ Show: !this.state.Show, Showing: !this.state.Showing });
                 setTimeout(() => {
                     this.setState({ Show: false, Showing: false });
+                }, 2000);
+                setTimeout(() => {
+                    this.props.history.push('/')
                 }, 2000);
             }
             )

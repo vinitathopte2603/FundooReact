@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
-import Child from './Child'
-class AllNotes extends Component{
+import CreateNote from './CreateNote'
+import DisplayNotes from './DisplayNotes'
+import Card from '@material-ui/core/Card';
+import InputBase from '@material-ui/core/InputBase';
+class AllNotes extends Component {
+  
     constructor(props){
         super(props);
         this.state ={
-            number : 1234,
-            name:'vini'
+           getAllNote:[]
         }
     }
-    render()
-    {
-        return(
+    GetAllNotes=()=>{
+
+    }
+    render() {
+      
+        return (
             <div>
-             <h1>all notes are here</h1>
-            <Child number={this.state.number} name={this.state.name} />
+                <h1>all notes are here</h1>
+                <CreateNote />
+                <div style={{marginTop:'3%'}}>
+                <DisplayNotes  />
+                </div>
             </div>
         )
     }
