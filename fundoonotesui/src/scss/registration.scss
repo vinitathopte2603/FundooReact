@@ -22,7 +22,7 @@
       .nametextfields{
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content:center;
       }
       @media only screen and (max-width: 800px) {
         .nametextfields {

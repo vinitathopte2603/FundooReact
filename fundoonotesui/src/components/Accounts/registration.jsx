@@ -20,15 +20,16 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import ReactSnackBar from 'react-js-snackbar';
 import { withStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
+
 const userservice = new UserServices();
 const ColorLinearProgress = withStyles({
     colorPrimary: {
-      backgroundColor: 'aliceblue',
+        backgroundColor: 'aliceblue',
     },
     barColorPrimary: {
-      backgroundColor: 'dodgerblue',
+        backgroundColor: 'dodgerblue',
     },
-  })(LinearProgress);
+})(LinearProgress);
 class Registration extends Component {
     constructor(props) {
         super(props)
@@ -38,7 +39,7 @@ class Registration extends Component {
             fields: {},
             errors: {},
             showPassword: false,
-            linearProgress:false,
+            linearProgress: false,
         };
         this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -78,7 +79,7 @@ class Registration extends Component {
             console.log('in register', this.state.fields);
 
             console.log('submited');
-            this.setState({linearProgress:true})
+            this.setState({ linearProgress: true })
             this.setState({ [event.target.setOpen]: true })
             var data = this.state.fields
             console.log("data is", data)
@@ -92,10 +93,10 @@ class Registration extends Component {
                 }, 2000);
                 setTimeout(() => {
                     this.props.history.push("/signin")
-  
+
                 }, 3000);
 
-               
+
 
             }
             )
@@ -160,17 +161,7 @@ class Registration extends Component {
             }
         }
 
-        // if (!fields["type"]) {
-        //     formIsValid = false;
-        //     errors["type"] = "*Please enter your user type.";
-        // }
-        // if (typeof fields["type"] !== "undefined") {
-        //     var pattern = new RegExp(/^[A-Z][a-zA-Z]*$/)
-        //     if (!pattern.test(fields["firstName"])) {
-        //         formIsValid = false;
-        //         errors["type"] = "*Please enter user type in correct format"
-        //     }
-        // }
+
         this.setState({
             errors: errors
         });
@@ -182,7 +173,7 @@ class Registration extends Component {
         return (
             <div>
                 <Card className="cardregistration">
-                {this.state.linearProgress?<ColorLinearProgress/>:null}
+                    {this.state.linearProgress ? <ColorLinearProgress /> : null}
                     <div style={{ fontSize: "1.6rem", padding: "1%", fontWeight: "bolder", fontFamily: "sarif", marginTop: "3%" }}>
                         <span style={{ color: "#3369E8" }}>F</span>
                         <span style={{ color: "#D50F25" }}>u</span>
@@ -199,47 +190,47 @@ class Registration extends Component {
                       </Typography >
                     <form noValidate autoComplete="off">
                         <div className="nametextfields">
-                        <div className="textfieldsregistration" >
-                            <TextField required id="outlined-basic"
-                                name="firstName"
-                                label="firstName"
-                                onChange={this.handleChange}
-                                variant="outlined"
-                                style={{ width: '80%' }}
-                                InputProps={
-                                    {
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <AccountCircle />
-                                            </InputAdornment>
-                                        ),
+                            <div className="textfieldsregistration" >
+                                <TextField required id="outlined-basic"
+                                    name="firstName"
+                                    label="firstName"
+                                    onChange={this.handleChange}
+                                    variant="outlined"
+                                    style={{ width: '80%' }}
+                                    InputProps={
+                                        {
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <AccountCircle />
+                                                </InputAdornment>
+                                            ),
+                                        }
                                     }
-                                }
-                            />
-                            <div className="errorMsgregistration">{this.state.errors.firstName}</div>
-                        </div>
-                        
-                         <div className="textfieldsregistration"> 
-                            <TextField required id="outlined-basic"
-                                name="lastName"
-                                label="lastName"
-                                onChange={this.handleChange}
-                                variant="outlined"
-                                style={{ width: '80%' }}
-                                InputProps={
-                                    {
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <AccountCircle />
-                                            </InputAdornment>
-                                        ),
+                                />
+                                <div className="errorMsgregistration">{this.state.errors.firstName}</div>
+                            </div>
+
+                            <div className="textfieldsregistration">
+                                <TextField required id="outlined-basic"
+                                    name="lastName"
+                                    label="lastName"
+                                    onChange={this.handleChange}
+                                    variant="outlined"
+                                    style={{ width: '80%' }}
+                                    InputProps={
+                                        {
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <AccountCircle />
+                                                </InputAdornment>
+                                            ),
+                                        }
                                     }
-                                }
-                            />
-                            <div className="errorMsg">{this.state.errors.lastName}</div>
+                                />
+                                <div className="errorMsg">{this.state.errors.lastName}</div>
+                            </div>
                         </div>
-                     </div> 
-                       
+
                         <div className="textfields">
                             <TextField required id="outlined-basic"
                                 name="email"
@@ -286,41 +277,23 @@ class Registration extends Component {
                         </div>
                         <div className="errorMsg">{this.state.errors.password}</div>
                         <div className="textfields">
-                            {/* <TextField required id="outlined-basic"
-                                name="type"
-                                label="type"
-                                onChange={this.handleChange}
-                                variant="outlined"
-                                style={{ width: '80%' }}
-                                InputProps={
-                                    {
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <AccountCircle />
-                                            </InputAdornment>
-                                        ),
-                                    }
-                                }
-                            /> */}
-
-
                             <RadioGroup row aria-label="type" name="Type" onChange={this.handleChange}>
                                 <FormControlLabel
-                                    style={{ color: "dodgerblue", marginLeft:'20%' }}
+                                    style={{ color: "dodgerblue", marginLeft: '20%' }}
                                     value="Basic"
                                     control={<Radio color="dodgerblue" />}
                                     label="Basic"
                                     labelPlacement="start"
                                 />
-                        
+
                                 <FormControlLabel
-                                    style={{ color: "dodgerblue",marginLeft:'20%' }}
+                                    style={{ color: "dodgerblue", marginLeft: '20%' }}
                                     value="Advance"
                                     control={<Radio color="dodgerblue" />}
                                     label="Advance"
                                     labelPlacement="start"
                                 />
-                             </RadioGroup> 
+                            </RadioGroup>
                         </div>
                     </form>
 
@@ -340,7 +313,7 @@ class Registration extends Component {
                     </Button> */}
                         <ReactSnackBar Show={this.state.Show}>
                             User Registered Successfully...
-                        </ReactSnackBar> 
+                        </ReactSnackBar>
                     </div>
                 </Card>
             </div>

@@ -7,7 +7,6 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Email from '@material-ui/icons/Email';
 import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import UserServices from '../../services/UserServices';
@@ -42,10 +41,7 @@ class ResetPassword extends Component {
         console.log(fields);
         
     }
-    // componentDidMount(){
-    //     var token1 = this.props.match.params.token
-    //     localStorage.setItem("logintoken",token1)
-    // }
+
     handleResetPassword(event) {
         event.preventDefault();
         if (this.validateForm()) {

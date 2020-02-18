@@ -2,8 +2,10 @@ import axios from 'axios'
 
 export default class AxiosServices {
 
-    GET(path, data, token) {
-        return axios.get(path, data, token);
+    GET(path, token) {
+        console.log("gedhdthdgbt",token);
+        
+        return axios.get(path, token);
     }
     POST(path, data,token) {
         console.log("hgdg", data)

@@ -1,5 +1,6 @@
 import AxiosServices from './AxiosServices'
 const userAccountBaseURL="http://localhost:53715/api/Accounts/";
+const notesBaseURL="http://localhost:53715/api/Notes";
 let services = new AxiosServices()
 
 export default class UserServices{
@@ -23,8 +24,12 @@ export default class UserServices{
         return services.POST(`${userAccountBaseURL}/ResetPassword`,data,{headers: { 'Content-Type':'application/json','Accept':'*',
         Authorization: 'Bearer '+ token}} )
     }
-    GetAllNotes(){
-        return services.GET
+    GetAllNotes(token){
+        var data ="";
+        console.log("token in services",token);
+        
+        return services.GET(notesBaseURL,{headers: { 'Content-Type':'application/json','Accept':'*',
+        Authorization: 'Bearer '+ token}})
     }
 }
 

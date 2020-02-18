@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { render } from '@testing-library/react';
 import Card from '@material-ui/core/Card';
 import '../../scss/signin.scss'
-import { TextField } from '@material-ui/core';
+import  TextField  from '@material-ui/core/TextField';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,9 +12,23 @@ import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import SnackBar from "react-js-snackbar";
 import UserServices from '../../services/UserServices';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, ThemeProvider,createMuiTheme,} from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { blue } from '@material-ui/core/colors';
+
 const userservice = new UserServices();
+const theme = createMuiTheme({
+    overrides:{
+    palette: {
+      primary: blue,
+    },
+    MuiOutlinedInput:{root:{Mui:{focused:{MuiOutlinedInput:{notchedOutline:{
+    
+        borderColor:"red"
+    }}}
+}}}}
+
+  });
 const ColorLinearProgress = withStyles({
     colorPrimary: {
       backgroundColor: 'aliceblue',
@@ -77,18 +91,12 @@ class SignIn extends Component {
             userservice.Login(data).then((response) => {
                 console.log("singup data after login ", response.data.token);
                 localStorage.setItem("logintoken", response.data.token)
-                // if (this.state.Showing) return;
                 this.setState({ loggedIn:true })
                 this.setState({ Show: !this.state.Show, Showing: !this.state.Showing });
                 setTimeout(() => {
                     this.setState({ Show: false, Showing: false });
                 }, 2000);
-                // setTimeout(() => {
-                //     this.props.history.push("/dashboard")
-
-                // }, 3000);
-
-
+             
             })
         }
     }
@@ -146,7 +154,6 @@ if(this.state.loggedIn){
                     this.props.history.push("/dashboard/notes")
 
                 }, 3000);
-    // return<Redirect to="/dashboard"/>
 }
         return (
             <div>
@@ -169,8 +176,10 @@ if(this.state.loggedIn){
                         Use your Fundoo Account
                       </Typography >
                     <form noValidate autoComplete="off">
+                   
                         <div className="textfields">
-                            <TextField required id="outlined-basic"
+                        <ThemeProvider theme={theme}>
+                            <TextField required id="mui-theme-provider-outlined-input"
                                 name="email"
                                 label="email"
                                 onChange={this.handleChange}
@@ -186,7 +195,9 @@ if(this.state.loggedIn){
                                     }
                                 }
                             />
+                            </ThemeProvider>
                         </div>
+                        
                         <div className="errorMsg">{this.state.errors.email}</div>
                         <div className="textfields ">
                             <TextField
