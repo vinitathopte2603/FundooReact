@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { render } from '@testing-library/react';
 import Card from '@material-ui/core/Card';
 import '../../scss/signin.scss'
 import { TextField } from '@material-ui/core';

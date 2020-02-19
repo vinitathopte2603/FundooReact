@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { render } from '@testing-library/react';
 import Card from '@material-ui/core/Card';
 import '../../scss/registration.scss'
 import '../../scss/signin.scss'
@@ -14,7 +13,6 @@ import Button from '@material-ui/core/Button';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import UserServices from '../../services/UserServices'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import ReactSnackBar from 'react-js-snackbar';
@@ -116,7 +114,7 @@ class Registration extends Component {
             errors["firstName"] = "*Please enter your first name.";
         }
         if (typeof fields["firstName"] !== "undefined") {
-            var pattern = new RegExp(/^[A-Z][a-zA-Z]*$/)
+            let pattern = new RegExp(/^[A-Z][a-zA-Z]*$/)
             if (!pattern.test(fields["firstName"])) {
                 formIsValid = false;
                 errors["firstName"] = "*Please enter first name in correct format"
@@ -128,7 +126,7 @@ class Registration extends Component {
             errors["lastName"] = "*Please enter your last name.";
         }
         if (typeof fields["lastName"] !== "undefined") {
-            var pattern = new RegExp(/^[A-Z][a-zA-Z]*$/)
+            let pattern = new RegExp(/^[A-Z][a-zA-Z]*$/)
             if (!pattern.test(fields["lastName"])) {
                 formIsValid = false;
                 errors["lastName"] = "*Please enter last name in correct format"
@@ -141,7 +139,7 @@ class Registration extends Component {
 
         if (typeof fields["email"] !== "undefined") {
 
-            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+            let pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
             if (!pattern.test(fields["email"])) {
                 formIsValid = false;
                 errors["email"] = "*Please enter valid email-ID.";

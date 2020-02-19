@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import CreateNote from './CreateNote'
-import InputBase from '@material-ui/core/InputBase';
 import Card from '@material-ui/core/Card';
 import Icons from './Icons'
 import '../../src/scss/createnote.scss'
+import '../scss/displaynotes.scss'
 class DisplayNotes extends Component{
  constructor(props){
      super(props);
@@ -19,7 +18,9 @@ class DisplayNotes extends Component{
         
         const notes = this.props.AllNotes.map((element,index)=>{
             return(
-                <Card key={index}>
+                <div style={{marginBottom:'20px',width:'250px'}} >
+                    <div >
+                <Card key={index} variant="outlined">
                 <div className="inputbasediv">
                     <div className="inputbase">
                        {element.title}
@@ -34,11 +35,13 @@ class DisplayNotes extends Component{
                        <Icons/>
                     </div>
             </Card>
+            </div>
+            </div>
             )
 
         })
         return(
-            <div className="note">
+            <div className="notesdisplay">
         {notes}
             </div>
         )

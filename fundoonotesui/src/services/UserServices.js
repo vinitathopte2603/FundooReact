@@ -24,11 +24,30 @@ export default class UserServices{
         return services.POST(`${userAccountBaseURL}/ResetPassword`,data,{headers: { 'Content-Type':'application/json','Accept':'*',
         Authorization: 'Bearer '+ token}} )
     }
-    GetAllNotes(token){
-        var data ="";
-        console.log("token in services",token);
-        
+    GetAllNotes(){
+        var token = localStorage.getItem("logintoken")
         return services.GET(notesBaseURL,{headers: { 'Content-Type':'application/json','Accept':'*',
+        Authorization: 'Bearer '+ token}})
+    }
+    GetAllArchive(){
+        console.log("in archive");
+        
+        var token = localStorage.getItem("logintoken")
+        return services.GET(`${notesBaseURL}/AllArchive`,{headers: { 'Content-Type':'application/json','Accept':'*',
+        Authorization: 'Bearer '+ token}})
+    }
+    GetAllTrash(){
+        console.log("in trash");
+        
+        var token = localStorage.getItem("logintoken")
+        return services.GET(`${notesBaseURL}/AllTrash`,{headers: { 'Content-Type':'application/json','Accept':'*',
+        Authorization: 'Bearer '+ token}})
+    }
+    GetAllReminder(){
+        console.log("in reminder");
+        
+        var token = localStorage.getItem("logintoken")
+        return services.GET(`${notesBaseURL}/reminder`,{headers: { 'Content-Type':'application/json','Accept':'*',
         Authorization: 'Bearer '+ token}})
     }
 }

@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-import { render, fireEvent } from '@testing-library/react';
 import Card from '@material-ui/core/Card';
 import '../../scss/signin.scss'
 import { TextField } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Email from '@material-ui/icons/Email';
 import { Typography } from '@material-ui/core';

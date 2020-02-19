@@ -1,0 +1,17 @@
+.display{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 73px;
+    justify-content: space-evenly;
+    margin-right: 73px;
+}
+.notesdisplay{
+    width: 74%;
+    margin-left: 13%;
+    display: flex;
+    flex-flow: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+}

@@ -10,8 +10,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import Avatar from '@material-ui/core/Avatar';
@@ -21,10 +19,9 @@ import avatarimage from '../images/download1.jpg'
 import keepimage from '../images/keep_48dp.png'
 import RefreshIcon from '@material-ui/icons/Refresh';
 import AppsIcon from '@material-ui/icons/Apps';
-import AllNotes from './AllNotes'
 import { Button } from '@material-ui/core';
+import ClearIcon from '@material-ui/icons/Clear';
 import {Redirect} from 'react-router-dom'
-import CreateNote from './CreateNote'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
 import NotificationsNoneSharpIcon from '@material-ui/icons/NotificationsNoneSharp';
@@ -63,7 +60,18 @@ class DashBoard extends Component {
     localStorage.clear()
     this.props.history.push('/signin')
   }
- 
+ showArchive=()=>{
+   this.props.history.push('/dashboard/archive')
+ }
+ showAllNotes=()=>{
+   this.props.history.push('/dashboard/notes')
+ }
+ showTrash=()=>{
+  this.props.history.push('/dashboard/trash')
+ }
+ showReminder=()=>{
+   this.props.history.push('/dashboard/reminders')
+ }
   render() {
     if(this.state.loggedIn===false){
       return <Redirect to="/"/>
@@ -83,11 +91,11 @@ class DashBoard extends Component {
             </ClickAwayListener>
             <Divider />
             <List>
-                  <ListItem button key="Notes">
+                  <ListItem button key="Notes" onClick={this.showAllNotes}>
                   <ListItemIcon> <EmojiObjectsOutlinedIcon /></ListItemIcon>
                   <ListItemText primary="Notes" />
                 </ListItem>
-                <ListItem button key="Reminder">
+                <ListItem button key="Reminder" onClick={this.showReminder}>
                   <ListItemIcon> <NotificationsNoneSharpIcon /></ListItemIcon>
                   <ListItemText primary="Reminder" />
                 </ListItem>
@@ -101,11 +109,11 @@ class DashBoard extends Component {
             </List>
             <Divider />
             <List>
-                  <ListItem button key="Archive">
+                  <ListItem button key="Archive" onClick={this.showArchive}>
                   <ListItemIcon> <ArchiveOutlinedIcon /></ListItemIcon>
                   <ListItemText primary="Archive" />
                 </ListItem>
-                <ListItem button key="Trash">
+                <ListItem button key="Trash" onClick={this.showTrash}>
                   <ListItemIcon> <DeleteOutlineOutlinedIcon /></ListItemIcon>
                   <ListItemText primary="Trash" />
                 </ListItem>
@@ -141,9 +149,12 @@ class DashBoard extends Component {
                 </div>
                 <InputBase
                   placeholder="Search…"
-                  style={{ marginRight: '60%'}}
+                  style={{ width:'500px',marginTop:'2%'}}
                   inputProps={{ 'aria-label': 'search' }}
                 />
+                <IconButton>
+                <ClearIcon />
+                </IconButton>
               </div>
               <div className="iconsdiv" style={{marginLeft:'25%'}}>
               <div className="refreshicon">

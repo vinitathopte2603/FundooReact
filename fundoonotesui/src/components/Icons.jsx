@@ -6,11 +6,12 @@ import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from '@material-ui/core/IconButton';
+import '../scss/createnote.scss'
 
 class Icons extends Component{
     render(){
         return(
-            <div>
+            <div className="noteiconsdiv">
 <IconButton >
 <AddAlertOutlinedIcon style={{ fontSize: '17' }} />
 </IconButton>

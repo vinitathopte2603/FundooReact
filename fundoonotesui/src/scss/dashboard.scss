@@ -10,7 +10,7 @@ width: 45%;
 }
   
   .searchIcon {
-   margin-top: 1%;
+   margin-top: 3%;
    margin-left: 3%;
    margin-right: 4%;
   }
@@ -29,4 +29,9 @@ width: 45%;
 .drawer{
   width: 23%;
 }
-  
+  .button:hover{
+    background-color: #feefc3;
+    border-bottom-right-radius: 38px;
+    border-bottom-right-radius: 38px;
+    width: 100%;
+  }

@@ -4,8 +4,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import '../scss/dashboard.scss'
@@ -39,7 +37,7 @@ class Demo extends Component {
               </div>
               <InputBase
                 placeholder="Search…"
-                style={{ backgroundColor: 'whitesmoke' } ,{ marginRight: '60%' }}
+                style={{ backgroundColor: 'whitesmoke'  , marginRight: '60%' }}
                 inputProps={{ 'aria-label': 'search' }}
               />
             </div>
