@@ -9,47 +9,39 @@ class AllNotes extends Component {
         super(props);
         this.state = {
             allNote: [],
-            firstNote: false
+            reverseArray: []
+
         }
     }
     componentDidMount = () => {
         this.GetAllNote()
     }
     GetAllNote = () => {
-    
-        
-
         notesServices.GetAllNotes().then(response => {
             // console.log("data",response.data.data);
+            this.reverseArray = response.data.data.filter(note => note.isTrash === false && note.isArchive === false)
+            this.reverseArray.reverse()
             if (response.data.data != null) {
-                this.setState({ allNote: response.data.data })
+                this.setState({ allNote: this.reverseArray })
             }
-            else {
-                this.setState({ firstNote: !this.state.firstNote })
-            }
-
         })
     }
+    // parentCallback=()=>{
+    //     console.log("he ala ikade");
+        
+    //     this.GetAllNote()
+    // }
     render() {
 
         return (
             <div>
                 <h1>all notes are here</h1>
-                {this.state.firstNote ?
-                    <div>
-                        <CreateNote />
-                    </div> :
-                    <div>
-                        
-                        <CreateNote />
-                    
-                        <div style={{ marginTop: '20px' }}>
-                
-                            <DisplayNotes AllNotes={this.state.allNote} />
-                            </div>
-            
+                <div>
+                    <CreateNote/>
+                    <div style={{ marginTop: '20px' }}>
+                        <DisplayNotes AllNotes={this.state.allNote} />
                     </div>
-                }
+                </div>
             </div>
         )
     }

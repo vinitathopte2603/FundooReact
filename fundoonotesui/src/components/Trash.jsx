@@ -6,13 +6,16 @@ class Trash extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            allTrash: []
+            allTrash: [],
+            reverseArray:[]
         }
     }
 
     GetAllTrashed = () => {
         notesServices.GetAllTrash().then(response => {
             console.log("data", response.data);
+            this.reverseArray=response.data.data
+            this.allTrash=this.reverseArray.reverse()
             if (response.data.data != null) {
                 this.setState({ allTrash: response.data.data })
             }

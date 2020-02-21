@@ -3,23 +3,23 @@ import axios from 'axios'
 export default class AxiosServices {
 
     GET(path, token) {
-        console.log("gedhdthdgbt",token);
-        
+        console.log("gedhdthdgbt", token);
+
         return axios.get(path, token);
     }
-    POST(path, data,token) {
+    POST(path, data, token) {
         console.log("hgdg", data)
-        console.log("token",token)
-        
-        return axios.post(path, data,token)
+        console.log("token", token)
+
+        return axios.post(path, data, token)
     }
-    deleteUserdata(id) {
-        console.log("id in the service", id)
-        return axios.delete("http://localhost:60404/api/Employee/deleteEmployee/" + id)
+    PUT(path, data, token) {
+        console.log("id in the service", path, data)
+        return axios.put(path, data, token)
     }
-    updateUserData(data) {
-        console.log("jygvyh", data)
-        return axios.put("http://localhost:60404/api/Employee", data,
-            { headers: { 'Content-Type': 'application/json' } })
+    DELETE(path, token) {
+        console.log("HASGFHASVVSD", path);
+
+        return axios.delete(path, token)
     }
 }

@@ -15,24 +15,22 @@ class DisplayNotes extends Component{
     render()
     {
         console.log('==>',this.props.AllNotes);
-        
         const notes = this.props.AllNotes.map((element,index)=>{
             return(
-                <div style={{marginBottom:'20px',width:'250px'}} >
+                <div style={{marginBottom:'20px',width:'250px',marginRight: '25px'}} key={index}>
                     <div >
-                <Card key={index} variant="outlined">
+                <Card  variant="outlined">
                 <div className="inputbasediv">
                     <div className="inputbase">
                        {element.title}
                     </div>
-                
                      <div className="inputbase">
                        {element.description}
                     </div> 
                 </div>
               
                 <div className="noteiconsdiv">
-                       <Icons/>
+                       <Icons note={element}/>
                     </div>
             </Card>
             </div>

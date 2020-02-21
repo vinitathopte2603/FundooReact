@@ -27,6 +27,8 @@ import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
 import NotificationsNoneSharpIcon from '@material-ui/icons/NotificationsNoneSharp';
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+
+
 class DashBoard extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +56,7 @@ class DashBoard extends Component {
   };
   forRefresh(){
   
-     window.location.reload(false);
+    //  window.location.reload(false);
   }
   logout=()=>{
     localStorage.clear()
@@ -91,14 +93,22 @@ class DashBoard extends Component {
             </ClickAwayListener>
             <Divider />
             <List>
+              <div className="button">
+              
                   <ListItem button key="Notes" onClick={this.showAllNotes}>
                   <ListItemIcon> <EmojiObjectsOutlinedIcon /></ListItemIcon>
                   <ListItemText primary="Notes" />
                 </ListItem>
+                
+                </div>
+                <div className="button">
+                  
                 <ListItem button key="Reminder" onClick={this.showReminder}>
                   <ListItemIcon> <NotificationsNoneSharpIcon /></ListItemIcon>
                   <ListItemText primary="Reminder" />
                 </ListItem>
+         
+                </div>
             </List>
             <Divider />
             <List>
@@ -109,14 +119,18 @@ class DashBoard extends Component {
             </List>
             <Divider />
             <List>
+              <div className="button">
                   <ListItem button key="Archive" onClick={this.showArchive}>
                   <ListItemIcon> <ArchiveOutlinedIcon /></ListItemIcon>
                   <ListItemText primary="Archive" />
                 </ListItem>
+                </div>
+                <div className="button">
                 <ListItem button key="Trash" onClick={this.showTrash}>
                   <ListItemIcon> <DeleteOutlineOutlinedIcon /></ListItemIcon>
                   <ListItemText primary="Trash" />
                 </ListItem>
+                </div>
             </List>
             <Button onClick={this.logout}>Logout</Button>
           </Drawer>

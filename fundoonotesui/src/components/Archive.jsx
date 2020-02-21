@@ -6,13 +6,16 @@ class Archive extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            allArchive: []
+            allArchive: [],
+            reverseArray:[]
         }
     }
 
     GetAllArchives = () => {
         notesServices.GetAllArchive().then(response => {
             console.log("data", response.data);
+            this.reverseArray=response.data.data;
+            this.allArchive=this.reverseArray.reverse()
             if (response.data.data != null) {
                 this.setState({ allArchive: response.data.data })
             }
