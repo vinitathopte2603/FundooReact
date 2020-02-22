@@ -24,7 +24,7 @@ class Icons extends Component {
     super(props);
     this.state = {
       open: false,
-      value: true
+      value: false
     }
   }
 
@@ -41,12 +41,13 @@ class Icons extends Component {
   };
   TrashNote = () => {
     console.log("note", this.props.note.id)
-    var data = { value: this.state.value }
+    var data = { value: !this.state.value }
     notesServices.MoveToTrash(this.props.note.id, data).then(response => {
       console.log("response from back end", response);
 
     })
   }
+
   ArchiveNote = () => {
     console.log("note", this.props.note.id)
     var data = { value: this.state.value }
@@ -55,6 +56,7 @@ class Icons extends Component {
 
     })
   }
+
   Restore = () => {
 
     console.log("note", this.props.note.id)
@@ -65,25 +67,26 @@ class Icons extends Component {
 
     })
   }
-  DeleteForever=()=>{
-    notesServices.DeleteNote(this.props.note.id).then(response=>{
-      console.log("note deleted",response);
-      
+  DeleteForever = () => {
+    notesServices.DeleteNote(this.props.note.id).then(response => {
+      console.log("note deleted", response);
+
     })
   }
+
   render() {
     const { open } = this.state;
 
     return (
       <div>
-         {/* {this.props.note.isTrash ? <div className="noteiconsdiv">
+        {/* {this.props.note.isTrash ? <div className="noteiconsdiv">
           <IconButton onClick={this.DeleteForever}>
             <DeleteForeverIcon style={{ fontSize: '17' }} />
           </IconButton>
           <IconButton onClick={this.Restore}>
             <RestoreFromTrashIcon style={{ fontSize: '17' }} />
           </IconButton>
-        </div> :  */}
+        </div> : */}
           <div className="noteiconsdiv">
             <IconButton >
               <AddAlertOutlinedIcon style={{ fontSize: '17' }} />

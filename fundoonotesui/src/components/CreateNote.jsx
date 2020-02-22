@@ -15,7 +15,10 @@ class CreateNote extends Component {
             takeNote: false,
             title: '',
             description: '',
-            
+            labels: [],
+            collaborations: [],
+
+
         }
     }
     onTakeNote = () => {
@@ -28,19 +31,27 @@ class CreateNote extends Component {
         this.setState({ takeNote: !this.state.takeNote })
         var data = {
             Title: this.state.title,
-            Description: this.state.description
+            Description: this.state.description,
+            labels: this.state.labels,
+            Collaborators: this.state.collaborations
         }
-        console.log("state changed",data);
-        
+        console.log("state changed", data);
+
         notesServices.CreateNote(data).then(response => {
             console.log("note created", response.data);
+            this.setState({
+                title: '',
+                description: '',
+                labels: [],
+                collaborations: []
 
-            // this.props.parentCallback();
-            // console.log("minya sir", this.props.parentCallback);
-            
+            })
+            this.props.parentCallback();
+            console.log("parent call back", this.props.parentCallback);
+
         })
     }
-  
+
     render() {
         return (
             <div className="note">
@@ -55,6 +66,7 @@ class CreateNote extends Component {
                                 name="title"
                                 value={this.state.title}
                                 onChange={this.OnChange}
+                                 style={{ width: '360%' }}
                             />
                         </div>
                         {this.state.takeNote ?
@@ -67,6 +79,7 @@ class CreateNote extends Component {
                                     name="description"
                                     value={this.state.description}
                                     onChange={this.OnChange}
+                                    style={{ width: '360%' }}
                                 />
                             </div> : null}
                     </div>
@@ -80,7 +93,7 @@ class CreateNote extends Component {
                             </div>
                         </div> : null}
                 </Card>
-        
+
             </div>
         );
     }

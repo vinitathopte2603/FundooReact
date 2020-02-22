@@ -7,29 +7,30 @@ class Trash extends Component {
         super(props);
         this.state = {
             allTrash: [],
-            reverseArray:[]
+            reverseArray: []
         }
     }
 
     GetAllTrashed = () => {
         notesServices.GetAllTrash().then(response => {
             console.log("data", response.data);
-            this.reverseArray=response.data.data
-            this.allTrash=this.reverseArray.reverse()
+            this.reverseArray = response.data.data
+            this.allTrash = this.reverseArray.reverse()
             if (response.data.data != null) {
                 this.setState({ allTrash: response.data.data })
             }
         })
     }
-    componentDidMount=()=>{
+    componentDidMount = () => {
         this.GetAllTrashed()
     }
     render() {
- return(
-     <div style={{marginTop:'80px'}}>
-          <DisplayNotes AllNotes={this.state.allTrash} /> 
-     </div>
- )
+        return (
+            <div style={{ marginTop: '80px' }}>
+                <DisplayNotes AllNotes={this.state.allTrash} />
+
+            </div>
+        )
     }
 }
 export default Trash

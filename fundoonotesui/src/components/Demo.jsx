@@ -15,7 +15,7 @@ class Demo extends Component {
       setOpen: false
     };
   }
- 
+
   render() {
     return (
       <div >
@@ -37,7 +37,7 @@ class Demo extends Component {
               </div>
               <InputBase
                 placeholder="Search…"
-                style={{ backgroundColor: 'whitesmoke'  , marginRight: '60%' }}
+                style={{ backgroundColor: 'whitesmoke', marginRight: '60%' }}
                 inputProps={{ 'aria-label': 'search' }}
               />
             </div>

@@ -26,23 +26,25 @@ class AllNotes extends Component {
             }
         })
     }
-    // parentCallback=()=>{
-    //     console.log("he ala ikade");
-        
-    //     this.GetAllNote()
-    // }
+    parentCallback = () => {
+        console.log("in all notes");
+
+        this.GetAllNote()
+    }
     render() {
 
         return (
-            <div>
-                <h1>all notes are here</h1>
+          
+             
                 <div>
-                    <CreateNote/>
+                    <div style={{marginTop:'95px'}}>
+                    <CreateNote parentCallback={this.parentCallback} />
+                    </div>
                     <div style={{ marginTop: '20px' }}>
                         <DisplayNotes AllNotes={this.state.allNote} />
                     </div>
                 </div>
-            </div>
+         
         )
     }
 }

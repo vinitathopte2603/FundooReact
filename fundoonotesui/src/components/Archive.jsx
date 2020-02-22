@@ -7,29 +7,29 @@ class Archive extends Component {
         super(props);
         this.state = {
             allArchive: [],
-            reverseArray:[]
+            reverseArray: []
         }
     }
 
     GetAllArchives = () => {
         notesServices.GetAllArchive().then(response => {
             console.log("data", response.data);
-            this.reverseArray=response.data.data;
-            this.allArchive=this.reverseArray.reverse()
+            this.reverseArray = response.data.data;
+            this.allArchive = this.reverseArray.reverse()
             if (response.data.data != null) {
                 this.setState({ allArchive: response.data.data })
             }
         })
     }
-    componentDidMount=()=>{
+    componentDidMount = () => {
         this.GetAllArchives()
     }
     render() {
- return(
-     <div style={{marginTop:'80px'}}>
-          <DisplayNotes AllNotes={this.state.allArchive} /> 
-     </div>
- )
+        return (
+            <div style={{ marginTop: '80px' }}>
+                <DisplayNotes AllNotes={this.state.allArchive} />
+            </div>
+        )
     }
 }
 export default Archive

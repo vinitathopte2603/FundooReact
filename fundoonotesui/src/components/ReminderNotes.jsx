@@ -35,10 +35,10 @@ class ReminderNotes extends Component {
                         <CreateNote />
                     </div> :
                     <div>
-                    <CreateNote />
-                    <div style={{ marginTop: '20px' }}>
-                        <DisplayNotes AllNotes={this.state.allReminder} />
-                    </div>
+                        <CreateNote />
+                        <div style={{ marginTop: '20px' }}>
+                            <DisplayNotes AllNotes={this.state.allReminder} />
+                        </div>
                     </div>
                 }
             </div>
