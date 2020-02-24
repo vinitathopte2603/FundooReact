@@ -154,7 +154,7 @@ class SignIn extends Component {
         return (
             <div>
 
-                <Card className="card">
+                <Card className="card" variant="outlined">
                     {this.state.linearProgress ? <ColorLinearProgress /> : null}
 
                     <div style={{ fontSize: "1.6rem", padding: "1%", fontWeight: "bolder", fontFamily: "sarif", marginTop: "3%" }}>

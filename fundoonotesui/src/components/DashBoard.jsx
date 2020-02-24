@@ -14,6 +14,7 @@ import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import Avatar from '@material-ui/core/Avatar';
 import '../scss/dashboard.scss'
+import '../scss/label.scss'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import avatarimage from '../images/download1.jpg'
 import keepimage from '../images/keep_48dp.png'
@@ -29,6 +30,7 @@ import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import ViewAgendaOutlinedIcon from '@material-ui/icons/ViewAgendaOutlined';
 import BorderAllIcon from '@material-ui/icons/BorderAll';
+import AllLabel from '../components/Labels/AllLabel'
 class DashBoard extends Component {
   constructor(props) {
     super(props);
@@ -113,6 +115,8 @@ class DashBoard extends Component {
             </List>
             <Divider />
             <List>
+            <div className="labeltag">LABELS</div>
+            <AllLabel></AllLabel>
               <ListItem button key="Edit labels">
                 <ListItemIcon> <EditOutlinedIcon /></ListItemIcon>
                 <ListItemText primary="Edit labels" />

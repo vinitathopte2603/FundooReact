@@ -1,0 +1,18 @@
+.labeltag{
+    color: #5f6368;
+    cursor: default;
+    letter-spacing: .07272727em;
+    font-family: Roboto,Arial,sans-serif;
+    font-size: .6875rem;
+    font-weight: 500;
+    line-height: 1rem;
+    text-transform: uppercase;
+    padding: 15px 24px 10px;
+}
+
+.label:hover{
+    background-color: #feefc3;
+    border-top-right-radius: 38px;
+    border-bottom-right-radius: 38px;
+    width: 100%;
+  }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DisplayNotes from './DisplayNotes';
-import UserServices from '../services/UserServices';
-const notesServices = new UserServices()
+import NoteServices from '../services/NoteServices';
+const notesServices = new NoteServices()
 class Trash extends Component {
     constructor(props) {
         super(props);

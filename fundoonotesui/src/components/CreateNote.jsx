@@ -4,9 +4,9 @@ import Card from '@material-ui/core/Card';
 import { Button } from '@material-ui/core';
 import Icons from './Icons'
 import '../../src/scss/createnote.scss'
-import UserServices from '../services/UserServices';
+import NoteServices from '../services/NoteServices';
 
-const notesServices = new UserServices()
+const notesServices = new NoteServices()
 class CreateNote extends Component {
 
     constructor(props) {
@@ -66,7 +66,7 @@ class CreateNote extends Component {
                                 name="title"
                                 value={this.state.title}
                                 onChange={this.OnChange}
-                                 style={{ width: '360%' }}
+                                 style={{ width: '600px' }}
                             />
                         </div>
                         {this.state.takeNote ?
@@ -79,7 +79,7 @@ class CreateNote extends Component {
                                     name="description"
                                     value={this.state.description}
                                     onChange={this.OnChange}
-                                    style={{ width: '360%' }}
+                                    style={{ width: '600px' }}
                                 />
                             </div> : null}
                     </div>

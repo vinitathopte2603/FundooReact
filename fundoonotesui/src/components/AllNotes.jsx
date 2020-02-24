@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import CreateNote from './CreateNote'
 import DisplayNotes from './DisplayNotes'
-import UserServices from '../services/UserServices';
-const notesServices = new UserServices()
+import NoteServices from '../services/NoteServices';
+const notesServices = new NoteServices()
 class AllNotes extends Component {
 
     constructor(props) {

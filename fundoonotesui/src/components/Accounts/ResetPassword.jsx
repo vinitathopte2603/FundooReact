@@ -101,7 +101,7 @@ class ResetPassword extends Component {
 
         return (
             <div>
-                <Card className="card">
+                <Card className="card" variant="outlined">
 
                     <div style={{ fontSize: "1.6rem", padding: "1%", fontWeight: "bolder", fontFamily: "sarif", marginTop: "3%" }}>
                         <span style={{ color: "#3369E8" }}>F</span>

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import DisplayNotes from './DisplayNotes';
-import UserServices from '../services/UserServices';
+import NoteServices from '../services/NoteServices';
 import CreateNote from './CreateNote'
-const notesServices = new UserServices()
+const notesServices = new NoteServices()
 class ReminderNotes extends Component {
     constructor(props) {
         super(props);

@@ -170,7 +170,7 @@ class Registration extends Component {
 
         return (
             <div>
-                <Card className="cardregistration">
+                <Card className="cardregistration" variant="outlined">
                     {this.state.linearProgress ? <ColorLinearProgress /> : null}
                     <div style={{ fontSize: "1.6rem", padding: "1%", fontWeight: "bolder", fontFamily: "sarif", marginTop: "3%" }}>
                         <span style={{ color: "#3369E8" }}>F</span>

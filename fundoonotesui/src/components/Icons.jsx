@@ -15,8 +15,8 @@ import '../scss/createnote.scss'
 import { Card } from '@material-ui/core';
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import UserServices from '../services/UserServices';
-const notesServices = new UserServices()
+import NoteServices from '../services/NoteServices';
+const notesServices = new NoteServices()
 
 
 class Icons extends Component {
@@ -127,7 +127,7 @@ class Icons extends Component {
                 </Grow>
               )}
             </Popper>
-          </div>}
+          </div>
       </div>
     )
   }

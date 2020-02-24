@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import InputBase from '@material-ui/core/InputBase';
-import Card from '@material-ui/core/Card';
-import { Button, Dialog, DialogContent } from '@material-ui/core';
+import { Button, Dialog, DialogContent, DialogActions } from '@material-ui/core';
 import '../../src/scss/createnote.scss'
 import '../scss/displaynotes.scss'
 import Icons from './Icons'
-
+import NoteServices from '../services/NoteServices';
+const notesServices = new NoteServices()
 class UpdateNote extends Component {
     constructor(props) {
         super(props);
@@ -14,60 +14,89 @@ class UpdateNote extends Component {
             description: '',
             labels: [],
             collaborations: [],
-            open: false
+            closeDialog: false,
+            openDialog: true
         }
     }
+    HandleClose = () => {
+        this.setState(prevState => ({
+            closeDialog: !prevState.closeDialog,
+            openDialog: !prevState.openDialog
+        }))
 
+    }
+    Update = () => {
+        var data = {
+            Title: this.state.title,
+            Description: this.state.description,
+            labels: this.state.labels,
+            Collaborators: this.state.collaborations
+        }
+        notesServices.UpdateNote(this.props.object.noteId, data).then(response => {
+            console.log("note update", response);
+
+        })
+        this.HandleClose()
+    }
+    componentDidMount() {
+        this.setState({
+            title: this.props.object.title,
+            description: this.props.object.description
+        })
+    }
+    OnChange = (e) => {
+        console.log("setstate", e.value);
+
+        this.setState({ [e.target.name]: e.target.value });
+
+    }
 
     render() {
-        console.log("kajsbcdvkjasbxc",this.props.object.change);
-        
+        console.log(this.props.object)
         return (
 
             <div>
-                <Dialog  open={this.props.object.change}>
+                <Dialog open={this.state.openDialog}/*{this.props.object.change}*/ onClose={this.HandleClose}>
                     <DialogContent>
-                        <div className="note">
-                            <Card>
-                                <div className="inputbasediv">
-                                    <div className="inputbase">
-                                        <InputBase
-                                            placeholder="Title"
-                                            multiline
-                                            inputProps={{ 'aria-label': 'naked' }}
-                                            // onClick={this.onTakeNote}
-                                            name="title"
-                                             value={this.props.object.title}
-                                            // onChange={this.OnChange}
-                                            style={{ width: '360%' }}
-                                        />
-                                    </div>
 
-                                    <div className="inputbase">
 
-                                        <InputBase
-                                            placeholder="Take a note"
-                                            multiline
-                                            inputProps={{ 'aria-label': 'naked' }}
-                                            name="description"
-                                             value={this.props.object.description}
-                                            // onChange={this.OnChange}
-                                            style={{ width: '360%' }}
-                                        />
-                                    </div>
-                                </div>
 
-                                <div className="noteiconsdiv">
-                                    <div>
-                                        <Icons />
-                                    </div>
-                                    <div>
-                                        <Button style={{ marginRight: '9px', color: "dimgray" }} onClick={this.Update}>Close</Button>
-                                    </div>
-                                </div>
-                            </Card>
+                        <div  >
+                            <InputBase
+                                placeholder="Title"
+                                multiline
+                                inputProps={{ 'aria-label': 'naked' }}
+                                name="title"
+                                value={this.state.title}
+                                onChange={this.OnChange}
+
+                            />
                         </div>
+
+                        <div >
+
+                            <InputBase
+                                placeholder="Take a note"
+                                multiline
+                                inputProps={{ 'aria-label': 'naked' }}
+                                name="description"
+                                value={this.state.description}
+                                onChange={this.OnChange}
+                            />
+                        </div>
+
                     </DialogContent>
+                    <DialogActions>
+                        <div className="noteiconsdiv">
+                            <div>
+                                <Icons note={this.props.object} />
+                            </div>
+                            <div>
+                                <Button style={{ marginRight: '9px', color: "dimgray" }} onClick={this.Update}>Close</Button>
+                            </div>
+                        </div>
+                    </DialogActions>
+
                 </Dialog>
             </div>
         )

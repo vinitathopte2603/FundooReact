@@ -10,37 +10,40 @@ class DisplayNotes extends Component {
         this.state = {
             title: '',
             description: '',
-            // editNote: false,
-            change:false,
-            data:[]
+            labels:[],
+            noteId:'',
+            change: false
         }
         //  this.HandleEditNote = this.HandleEditNote.bind(this)
     }
-    HandleEditNote=()=>{
-        this.setState(prevState=>({
-            change:!prevState.change,
-            
+    HandleEditNote = (element) => {
+        this.setState(prevState => ({
+            change: !prevState.change,
+            noteId:element.id,
+            title: element.title,
+            description: element.description
         }))
-        
-      
-        console.log("alsk",this.state.change);
-        
-        // console.log("user data",this.state.data);
-        
+
+
+        console.log("alsk", this.state);
+
     }
+   
     render() {
         console.log('==>', this.props.AllNotes);
         const notes = this.props.AllNotes.map((element, index) => {
             return (
                 <div style={{ marginBottom: '20px', width: '250px', marginRight: '25px' }} key={index} >
-                    <div className="displaycard">
-                        <Card variant="outlined" onClick={()=>this.HandleEditNote()}>
-                            <div className="inputbasediv" >
-                                <div className="inputbase"  >
-                                    {element.title}
-                                </div>
-                                <div className="inputbase" >
-                                    {element.description}
+                    <div /*className="displaycard"*/>
+                        <Card variant="outlined" >
+                            <div onClick={() => this.HandleEditNote(element)}>
+                                <div className="inputbasediv" >
+                                    <div className="inputbase"  >
+                                        {element.title}
+                                    </div>
+                                    <div className="inputbase">
+                                        {element.description}
+                                    </div>
                                 </div>
                             </div>
                             <div className="noteiconsdiv">
@@ -54,10 +57,12 @@ class DisplayNotes extends Component {
         })
         return (
             <div>
-                 <div className="notesdisplay">
-                        {notes}
-                    </div>
-                {this.state.change ? <UpdateNote object={this.state}></UpdateNote> :null}
+                <div className="notesdisplay">
+                    {notes}
+                </div>
+                <div>
+                    {this.state.change ? <UpdateNote object={this.state} parentCallback={this.parentCallback}></UpdateNote> : null}
+                </div>
             </div>
         )
     }
