@@ -5,6 +5,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import LabelServices from '../../services/LabelServices';
 import '../../scss/label.scss'
+import NotesByLabelId from '../NotesByLabelId';
 const labelsServices = new LabelServices()
 class AllLabel extends Component {
     constructor(props) {
@@ -24,15 +25,23 @@ class AllLabel extends Component {
             }
         })
     }
+    ShowNotes = () => {
+        // this.props.history.push('/dashboard/labels')
+    }
     render() {
 
         const labels = this.state.allLabels.map((item, index) => {
             return (
-                <div className="label">
-                    <ListItem button key="Labels" >
-                        <ListItemIcon> <LabelOutlinedIcon /></ListItemIcon>
-                        <ListItemText primary={item.label} />
-                    </ListItem>
+                <div key={index}>
+                    <div className="label">
+                        <ListItem button key="Labels" onClick={this.ShowNotes}>
+                            <ListItemIcon> <LabelOutlinedIcon /></ListItemIcon>
+                            <ListItemText primary={item.label} />
+                        </ListItem>
+                    </div>
+
+                    {/* <NotesByLabelId note={item}></NotesByLabelId> */}
+
                 </div>
             )
         })

@@ -10,8 +10,8 @@ class DisplayNotes extends Component {
         this.state = {
             title: '',
             description: '',
-            labels:[],
-            noteId:'',
+            labels: [],
+            noteId: '',
             change: false
         }
         //  this.HandleEditNote = this.HandleEditNote.bind(this)
@@ -19,7 +19,7 @@ class DisplayNotes extends Component {
     HandleEditNote = (element) => {
         this.setState(prevState => ({
             change: !prevState.change,
-            noteId:element.id,
+            noteId: element.id,
             title: element.title,
             description: element.description
         }))
@@ -28,7 +28,10 @@ class DisplayNotes extends Component {
         console.log("alsk", this.state);
 
     }
-   
+CallBack=()=>{
+    this.props.parentToAllNoteCallback();
+    console.log("parent call back", this.props.parentToAllNoteCallback);
+}
     render() {
         console.log('==>', this.props.AllNotes);
         const notes = this.props.AllNotes.map((element, index) => {
@@ -47,7 +50,7 @@ class DisplayNotes extends Component {
                                 </div>
                             </div>
                             <div className="noteiconsdiv">
-                                <Icons note={element} />
+                                <Icons parentCallback={this.CallBack} note={element} />
                             </div>
                         </Card>
                     </div>
@@ -61,7 +64,7 @@ class DisplayNotes extends Component {
                     {notes}
                 </div>
                 <div>
-                    {this.state.change ? <UpdateNote object={this.state} parentCallback={this.parentCallback}></UpdateNote> : null}
+                    {this.state.change ? <UpdateNote object={this.state} parentCallback={this.CallBack}></UpdateNote> : null}
                 </div>
             </div>
         )

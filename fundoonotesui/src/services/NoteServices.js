@@ -96,4 +96,13 @@ export default class NoteServices{
             }
         })  
     }
+    GetAllLabelledNotes(id){
+        var token = localStorage.getItem("logintoken")
+        return services.GET(`${notesBaseURL}/`+id+`/notebylabelid`, {
+            headers: {
+                'Content-Type': 'application/json', 'Accept': '*',
+                Authorization: 'Bearer ' + token
+            }
+        })
+    }
 }

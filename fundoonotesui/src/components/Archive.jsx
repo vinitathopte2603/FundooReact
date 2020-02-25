@@ -19,15 +19,21 @@ class Archive extends Component {
             if (response.data.data != null) {
                 this.setState({ allArchive: response.data.data })
             }
+          
         })
     }
     componentDidMount = () => {
         this.GetAllArchives()
     }
+    parentCallback = () => {
+        console.log("in all archived notes");
+
+        this.GetAllArchives()
+    }
     render() {
         return (
             <div style={{ marginTop: '80px' }}>
-                <DisplayNotes AllNotes={this.state.allArchive} />
+                <DisplayNotes parentToAllNoteCallback={this.parentCallback} AllNotes={this.state.allArchive} />
             </div>
         )
     }

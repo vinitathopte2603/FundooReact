@@ -34,6 +34,8 @@ class UpdateNote extends Component {
         }
         notesServices.UpdateNote(this.props.object.noteId, data).then(response => {
             console.log("note update", response);
+            this.props.parentCallback();
+            console.log("parent call back", this.props.parentCallback);
 
         })
         this.HandleClose()

@@ -43,7 +43,7 @@ class DashBoard extends Component {
       open: false,
       setOpen: false,
       openUpdate: false,
-      listView:false,
+      listView: false,
       loggedIn
     };
   }
@@ -74,8 +74,8 @@ class DashBoard extends Component {
   showReminder = () => {
     this.props.history.push('/dashboard/reminders')
   }
-  HandleListView=()=>{
-    this.setState({listView:!this.state.listView})
+  HandleListView = () => {
+    this.setState({ listView: !this.state.listView })
   }
   render() {
     if (this.state.loggedIn === false) {
@@ -115,8 +115,8 @@ class DashBoard extends Component {
             </List>
             <Divider />
             <List>
-            <div className="labeltag">LABELS</div>
-            <AllLabel></AllLabel>
+              <div className="labeltag">LABELS</div>
+              <AllLabel></AllLabel>
               <ListItem button key="Edit labels">
                 <ListItemIcon> <EditOutlinedIcon /></ListItemIcon>
                 <ListItemText primary="Edit labels" />
@@ -182,12 +182,12 @@ class DashBoard extends Component {
                   </IconButton>
                 </div>
                 <div>
-                <IconButton onClick={this.HandleListView}>
-                  {this.state.listView?
-                <BorderAllIcon></BorderAllIcon>:
-                <ViewAgendaOutlinedIcon></ViewAgendaOutlinedIcon>
-                  }
-                </IconButton>
+                  <IconButton onClick={this.HandleListView}>
+                    {this.state.listView ?
+                      <BorderAllIcon></BorderAllIcon> :
+                      <ViewAgendaOutlinedIcon></ViewAgendaOutlinedIcon>
+                    }
+                  </IconButton>
                 </div>
                 <div>
                   <IconButton>

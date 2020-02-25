@@ -3,28 +3,26 @@ import DisplayNotes from './DisplayNotes';
 import NoteServices from '../services/NoteServices';
 import CreateNote from './CreateNote'
 const notesServices = new NoteServices()
-class ReminderNotes extends Component {
+class NotesByLabelId extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            allReminder: [],
+            allLabelledNotes: [],
           
         }
     }
 
-    GetAllRemindered = () => {
-        notesServices.GetAllReminder().then(response => {
+    GetAllLabelled = () => {
+        notesServices.GetAllLabelledNotes().then(response => {
             console.log("data", response.data);
             if (response.data.data != null) {
-                this.setState({ allReminder: response.data.data })
+                this.setState({ allLabelledNotes: response.data.data })
             }
-            else {
-                this.setState({ createNoteReminder: !this.state.createNoteReminder })
-            }
+           
         })
     }
     componentDidMount = () => {
-        this.GetAllRemindered()
+        this.GetAllLabelled()
     }
     render() {
         return (
@@ -35,7 +33,7 @@ class ReminderNotes extends Component {
                     <div>
                         <CreateNote />
                         <div style={{ marginTop: '20px' }}>
-                            <DisplayNotes AllNotes={this.state.allReminder} />
+                            <DisplayNotes AllNotes={this.state.allLabelledNotes} />
                         </div>
                     </div>
                 
@@ -43,4 +41,4 @@ class ReminderNotes extends Component {
         )
     }
 }
-export default ReminderNotes
+export default NotesByLabelId

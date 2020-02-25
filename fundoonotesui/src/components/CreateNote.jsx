@@ -17,7 +17,9 @@ class CreateNote extends Component {
             description: '',
             labels: [],
             collaborations: [],
-
+            note:{
+                isTrash:false
+            } 
 
         }
     }
@@ -66,7 +68,7 @@ class CreateNote extends Component {
                                 name="title"
                                 value={this.state.title}
                                 onChange={this.OnChange}
-                                 style={{ width: '600px' }}
+                                style={{ width: '600px' }}
                             />
                         </div>
                         {this.state.takeNote ?
@@ -83,10 +85,11 @@ class CreateNote extends Component {
                                 />
                             </div> : null}
                     </div>
+                    
                     {this.state.takeNote ?
                         <div className="noteiconsdiv">
                             <div>
-                                <Icons />
+                                <Icons note={this.state.note} />
                             </div>
                             <div>
                                 <Button style={{ marginRight: '9px', color: "dimgray" }} onClick={this.Create}>Close</Button>

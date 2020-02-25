@@ -6,11 +6,11 @@ import { BrowserRouter as Router, Route} from 'react-router-dom';
 import ForgotPassword from './components/Accounts/ForgotPassword'
 import ResetPassword from './components/Accounts/ResetPassword'
 import DashBoard from './components/DashBoard';
-import Demo from './components/Demo'
 import AllNotes from './components/AllNotes';
 import Archive from './components/Archive';
 import Trash from './components/Trash';
 import ReminderNotes from './components/ReminderNotes';
+import NotesByLabelId from './components/NotesByLabelId';
 function App() {
   return (
     <div className="App">
@@ -26,8 +26,9 @@ function App() {
             <Route path="/dashboard/notes" component={AllNotes}/>
             <Route path="/dashboard/archive"component={Archive} />
             <Route path="/dashboard/trash" component={Trash} />
+            <Route path="/dashboard/labels" component={NotesByLabelId}/>
             <Route path="/dashboard/reminders" component={ReminderNotes}/>
-            <Route path="/demo" component={Demo}/>
+            {/* <Route path="/demo" component={Demo}/> */}
           
         </div>
       </Router>

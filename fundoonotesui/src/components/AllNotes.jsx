@@ -41,7 +41,7 @@ class AllNotes extends Component {
                     <CreateNote parentCallback={this.parentCallback} />
                     </div>
                     <div style={{ marginTop: '20px' }}>
-                        <DisplayNotes AllNotes={this.state.allNote} />
+                        <DisplayNotes parentToAllNoteCallback={this.parentCallback} AllNotes={this.state.allNote} />
                     </div>
                 </div>
          

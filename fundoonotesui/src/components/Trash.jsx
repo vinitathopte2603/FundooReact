@@ -24,10 +24,15 @@ class Trash extends Component {
     componentDidMount = () => {
         this.GetAllTrashed()
     }
+    parentCallback = () => {
+        console.log("in all archived notes");
+
+        this.GetAllTrashed()
+    }
     render() {
         return (
             <div style={{ marginTop: '80px' }}>
-                <DisplayNotes AllNotes={this.state.allTrash} />
+                <DisplayNotes parentToAllNoteCallback={this.parentCallback} AllNotes={this.state.allTrash} />
 
             </div>
         )
