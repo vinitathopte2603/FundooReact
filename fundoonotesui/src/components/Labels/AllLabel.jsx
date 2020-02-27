@@ -5,13 +5,16 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import LabelServices from '../../services/LabelServices';
 import '../../scss/label.scss'
-import NotesByLabelId from '../NotesByLabelId';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import UpdateLabel from './UpdateLabel';
+
 const labelsServices = new LabelServices()
 class AllLabel extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            allLabels: []
+            allLabels: [],
+            editLabel: false,
         }
     }
     componentDidMount = () => {
@@ -25,29 +28,39 @@ class AllLabel extends Component {
             }
         })
     }
-    ShowNotes = () => {
-        // this.props.history.push('/dashboard/labels')
+    EditLabel = () => {
+        this.setState({ editLabel: true })
+        console.log("edit label ", !this.state.editLabel);
     }
     render() {
-
+       
         const labels = this.state.allLabels.map((item, index) => {
             return (
                 <div key={index}>
                     <div className="label">
-                        <ListItem button key="Labels" onClick={this.ShowNotes}>
-                            <ListItemIcon> <LabelOutlinedIcon /></ListItemIcon>
+                        <ListItem button key="Labels" >
+                            <ListItemIcon><LabelOutlinedIcon /></ListItemIcon>
                             <ListItemText primary={item.label} />
                         </ListItem>
                     </div>
-
-                    {/* <NotesByLabelId note={item}></NotesByLabelId> */}
-
                 </div>
             )
         })
         return (
             <div>
-                {labels}
+                <div>
+                    {labels}
+                </div>
+                <div className="label">
+                    <ListItem button key="Edit labels" onClick={this.EditLabel}>
+                        <ListItemIcon><EditOutlinedIcon /></ListItemIcon>
+                        <ListItemText primary="Edit labels" />
+                    </ListItem>
+                </div>
+                <div>
+                    {this.state.editLabel ?
+                        <UpdateLabel></UpdateLabel> : null}
+                </div>
             </div>
         )
     }

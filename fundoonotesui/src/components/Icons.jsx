@@ -16,9 +16,7 @@ import { Card } from '@material-ui/core';
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import NoteServices from '../services/NoteServices';
-import CloseIcon from '@material-ui/icons/Close';
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
+import Tooltip from '@material-ui/core/Tooltip';
 const notesServices = new NoteServices()
 
 
@@ -111,57 +109,52 @@ class Icons extends Component {
 
   render() {
     const { open } = this.state;
-    const { changeColor } = this.state;
     return (
       <div>
         {this.props.note.isTrash ? <div className="noteiconsdiv">
+        <Tooltip title="Delete">
           <IconButton onClick={this.DeleteForever}>
             <DeleteForeverIcon style={{ fontSize: '17' }} />
           </IconButton>
+          </Tooltip>
+          <Tooltip title="Restore">
           <IconButton onClick={this.Restore}>
             <RestoreFromTrashIcon style={{ fontSize: '17' }} />
           </IconButton>
+          </Tooltip>
         </div> :
           <div className="noteiconsdiv">
+            <Tooltip title="Remind me">
             <IconButton >
               <AddAlertOutlinedIcon style={{ fontSize: '17' }} />
             </IconButton>
+            </Tooltip>
+            <Tooltip title="Collaborator">
             <IconButton>
               <PersonAddOutlinedIcon style={{ fontSize: '17' }} />
             </IconButton>
-
-            <IconButton buttonRef={node => { this.anchorEl = node; }} onClick={this.handleToggleChangeColor}>
+            </Tooltip>
+            <Tooltip title="Change color">
+            <IconButton onClick={this.handleToggleChangeColor}>
               <PaletteOutlinedIcon style={{ fontSize: '17' }} />
             </IconButton>
-            <Popper changeColor={changeColor} anchorEl={this.anchorEl} transition disablePortal style={{ zIndex: 1 }}>
-              {({ TransitionProps }) => (
-                <Grow style={{ zIndex: 1 }}
-                  {...TransitionProps}
-                >
-
-                  <Card>
-                    <ClickAwayListener onClickAway={this.handleClosePalette}>
-                      <MenuList>
-                        <MenuItem >jukgbhjbj</MenuItem>
-                        <MenuItem >Add label</MenuItem>
-                        <MenuItem >Logout</MenuItem>
-                      </MenuList>
-                    </ClickAwayListener>
-                  </Card>
-
-                </Grow>
-              )}
-            </Popper>
+            </Tooltip>
+            <Tooltip title="Add image">
             <IconButton>
               <ImageOutlinedIcon style={{ fontSize: '17' }} />
             </IconButton>
+            </Tooltip>
+            <Tooltip title="Archive">
             <IconButton onClick={this.ArchiveNote}>
               <ArchiveOutlinedIcon style={{ fontSize: '17' }} />
             </IconButton>
+            </Tooltip> 
+            <Tooltip title="More">
             <IconButton buttonRef={node => { this.anchorEl = node; }} onClick={this.handleToggle}>
               <MoreVertIcon style={{ fontSize: '17' }} >
               </MoreVertIcon>
             </IconButton>
+            </Tooltip>
             <Popper open={open} anchorEl={this.anchorEl} transition disablePortal style={{ zIndex: 1 }}>
               {({ TransitionProps }) => (
                 <Grow style={{ zIndex: 1 }}

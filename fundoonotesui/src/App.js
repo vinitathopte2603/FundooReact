@@ -22,13 +22,13 @@ function App() {
             <Route path="/registration" component={Registration}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
             <Route path="/resetpassword/:token" component={ResetPassword}/>
-            <Route path="/dashboard" component={DashBoard}/>
-            <Route path="/dashboard/notes" component={AllNotes}/>
-            <Route path="/dashboard/archive"component={Archive} />
-            <Route path="/dashboard/trash" component={Trash} />
+            <Route path="/notes" component={DashBoard}/>
+            <Route path="/notes" component={AllNotes}/>
+            <Route path="/archive"component={Archive} />
+            <Route path="/trash" component={Trash} />
             <Route path="/dashboard/labels" component={NotesByLabelId}/>
-            <Route path="/dashboard/reminders" component={ReminderNotes}/>
-            {/* <Route path="/demo" component={Demo}/> */}
+            <Route path="/reminders" component={ReminderNotes}/>
+            
           
         </div>
       </Router>

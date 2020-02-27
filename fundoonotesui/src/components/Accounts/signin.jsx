@@ -146,7 +146,7 @@ class SignIn extends Component {
     render() {
         if (this.state.loggedIn) {
             setTimeout(() => {
-                this.props.history.push("/dashboard/notes")
+                this.props.history.push("/notes")
 
             }, 3000);
         }

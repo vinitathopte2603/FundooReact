@@ -23,7 +23,6 @@ class UpdateNote extends Component {
             closeDialog: !prevState.closeDialog,
             openDialog: !prevState.openDialog
         }))
-
     }
     Update = () => {
         var data = {
@@ -48,21 +47,14 @@ class UpdateNote extends Component {
     }
     OnChange = (e) => {
         console.log("setstate", e.value);
-
         this.setState({ [e.target.name]: e.target.value });
-
     }
-
     render() {
         console.log(this.props.object)
         return (
-
             <div>
-                <Dialog open={this.state.openDialog}/*{this.props.object.change}*/ onClose={this.HandleClose}>
+                <Dialog open={this.state.openDialog} onClose={this.HandleClose}>
                     <DialogContent>
-
-
-
                         <div  >
                             <InputBase
                                 placeholder="Title"
@@ -71,12 +63,9 @@ class UpdateNote extends Component {
                                 name="title"
                                 value={this.state.title}
                                 onChange={this.OnChange}
-
                             />
                         </div>
-
                         <div >
-
                             <InputBase
                                 placeholder="Take a note"
                                 multiline
@@ -86,7 +75,6 @@ class UpdateNote extends Component {
                                 onChange={this.OnChange}
                             />
                         </div>
-
                     </DialogContent>
                     <DialogActions>
                         <div className="noteiconsdiv">
@@ -98,12 +86,9 @@ class UpdateNote extends Component {
                             </div>
                         </div>
                     </DialogActions>
-
                 </Dialog>
             </div>
         )
-
     }
-
 }
 export default UpdateNote

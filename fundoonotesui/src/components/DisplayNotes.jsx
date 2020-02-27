@@ -10,7 +10,6 @@ class DisplayNotes extends Component {
         this.state = {
             title: '',
             description: '',
-            labels: [],
             noteId: '',
             change: false
         }
@@ -28,10 +27,10 @@ class DisplayNotes extends Component {
         console.log("alsk", this.state);
 
     }
-CallBack=()=>{
-    this.props.parentToAllNoteCallback();
-    console.log("parent call back", this.props.parentToAllNoteCallback);
-}
+    CallBack = () => {
+        this.props.parentToAllNoteCallback();
+        console.log("parent call back", this.props.parentToAllNoteCallback);
+    }
     render() {
         console.log('==>', this.props.AllNotes);
         const notes = this.props.AllNotes.map((element, index) => {
@@ -47,6 +46,36 @@ CallBack=()=>{
                                     <div className="inputbase">
                                         {element.description}
                                     </div>
+                                    <div>
+                                {element.labels!=null? <div className="inputbase">
+                                        {element.labels.map((item,labelindex)=>{
+                                            return(
+                                                <div key={labelindex}>
+                                                    {item.label}
+                                                </div>
+                                                
+                                            )
+                                        })}
+                                    </div>:null}
+                                </div>
+                                <div>
+                                {element.collaborations!=null? <div className="inputbase">
+                                        {element.collaborations.map((data,collabindex)=>{
+                                            return(
+                                                <div key={collabindex}>
+                                                    <div>
+                                                    {data.email}
+                                                    </div>
+                                                    <div>
+                                                    {data.firstname}
+                                                    {data.lastName}
+                                                    </div>
+                                                </div>
+                                                
+                                            )
+                                        })}
+                                    </div>:null}
+                                </div>
                                 </div>
                             </div>
                             <div className="noteiconsdiv">
@@ -56,7 +85,6 @@ CallBack=()=>{
                     </div>
                 </div>
             )
-
         })
         return (
             <div>
