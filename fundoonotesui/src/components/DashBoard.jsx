@@ -20,7 +20,7 @@ import avatarimage from '../images/download1.jpg'
 import keepimage from '../images/keep_48dp.png'
 import RefreshIcon from '@material-ui/icons/Refresh';
 import AppsIcon from '@material-ui/icons/Apps';
-import { Button } from '@material-ui/core';
+import { Button, Paper } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Redirect } from 'react-router-dom'
 import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
@@ -37,13 +37,8 @@ const drawertheme = createMuiTheme({
       paperAnchorLeft: {
         top: 65
       }
-
-
     }
   }
-
-
-
 });
 class DashBoard extends Component {
   constructor(props) {
@@ -58,12 +53,18 @@ class DashBoard extends Component {
       setOpen: false,
       openUpdate: false,
       listView: false,
-      loggedIn
+      loggedIn,
+      isNotes: true,
+      isReminder: false,
+      isArchive: false,
+      isTrash: false,
+      profile: false
+
     };
   }
   toggle = () => {
     this.setState({ open: !this.state.open })
-    // this.setState({open:true})
+
   }
 
   handleClickAway = () => {
@@ -77,92 +78,113 @@ class DashBoard extends Component {
     this.props.history.push('/signin')
   }
   showArchive = () => {
-    this.props.history.push('/archive')
+    this.setState({ isArchive: true, isNotes: false, isReminder: false, isTrash: false })
+    this.props.history.push('/u/0/archive')
   }
   showAllNotes = () => {
-    this.props.history.push('/notes')
+    this.setState({ isNotes: true, isReminder: false, isTrash: false, isArchive: false })
+    this.props.history.push('/u/0/notes')
   }
   showTrash = () => {
-    this.props.history.push('/trash')
+    this.setState({ isTrash: true, isNotes: false, isReminder: false, isArchive: false })
+    this.props.history.push('/u/0/trash')
   }
   showReminder = () => {
-    this.props.history.push('/reminders')
+    this.setState({ isReminder: true, isNotes: false, isArchive: false, isTrash: false })
+    this.props.history.push('/u/0/reminders')
   }
   HandleListView = () => {
     this.setState({ listView: !this.state.listView })
   }
-
+  profileupload = () => {
+    this.setState({ profile: !this.state.profile })
+  }
   render() {
     if (this.state.loggedIn === false) {
       return <Redirect to="/" />
     }
-    // const { open } = this.state;
+
     return (
       <div>
-        
-          <div className="appbar">
-          
-            <AppBar
-              position="fixed"
-              style={{ backgroundColor: 'whitesmoke', zIndex: 1 }}
-            >
-              <Toolbar>
-                <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={this.toggle}
-                  edge="start"
 
-                >
-                  <MenuIcon style={{ color: 'black' }} />
-                </IconButton>
-                <div>
+        <div className="appbar">
+
+          <AppBar
+            position="fixed"
+            style={{ backgroundColor: 'whitesmoke', zIndex: 1 }}
+          >
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={this.toggle}
+                edge="start"
+
+              >
+                <MenuIcon style={{ color: 'black' }} />
+              </IconButton>
+              {this.state.isNotes ?
+
+                <div style={{ display: 'flex' }}>
                   <img src={keepimage} />
-                </div>
+
+                  <Typography variant="h6" noWrap style={{ color: 'black', marginTop: '7px' }}>
+                    Keep
+          </Typography></div> : null}||{this.state.isReminder ? <div>
                 <Typography variant="h6" noWrap style={{ color: 'black' }}>
-                  Keep
-          </Typography>
-                <div className="search">
-                  <div className="searchIcon">
-                    <SearchIcon />
-                  </div>
-                  <InputBase
-                    placeholder="Search…"
-                    style={{ width: '500px', marginTop: '2%' }}
-                    inputProps={{ 'aria-label': 'search' }}
-                  />
+                  Remainder
+          </Typography></div> : null}||{
+                this.state.isArchive ? <div>
+                  <Typography variant="h6" noWrap style={{ color: 'black' }}>
+                    Archive
+      </Typography></div> : null
+              }||{this.state.isTrash ? <div>
+                <Typography variant="h6" noWrap style={{ color: 'black' }}>
+                  Trash
+    </Typography></div> : null}
+              <div className="search">
+                <div className="searchIcon">
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  style={{ width: '500px', marginTop: '2%' }}
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+                <IconButton>
+                  <ClearIcon />
+                </IconButton>
+              </div>
+              <div className="iconsdiv" style={{ marginLeft: '25%' }}>
+                <div className="refreshicon">
                   <IconButton>
-                    <ClearIcon />
+                    <RefreshIcon />
                   </IconButton>
                 </div>
-                <div className="iconsdiv" style={{ marginLeft: '25%' }}>
-                  <div className="refreshicon">
-                    <IconButton>
-                      <RefreshIcon />
-                    </IconButton>
-                  </div>
-                  <div>
-                    <IconButton onClick={this.HandleListView}>
-                      {this.state.listView ?
-                        <BorderAllIcon></BorderAllIcon> :
-                        <ViewAgendaOutlinedIcon></ViewAgendaOutlinedIcon>
-                      }
-                    </IconButton>
-                  </div>
-                  <div>
-                    <IconButton>
-                      <AppsIcon style={{ color: "dimgray" }}></AppsIcon>
-                    </IconButton>
-                  </div>
-                  <div className="avatar">
-                    <Avatar alt="Dash" src={avatarimage} style={{ marginLeft: '30%' }} />
-                  </div>
+                <div>
+                  <IconButton onClick={this.HandleListView}>
+                    {this.state.listView ?
+                      <BorderAllIcon></BorderAllIcon> :
+                      <ViewAgendaOutlinedIcon></ViewAgendaOutlinedIcon>
+                    }
+                  </IconButton>
                 </div>
-                <div />
-              </Toolbar>
-            </AppBar>
-          </div>
-          <div>
+                <div>
+                  <IconButton>
+                    <AppsIcon style={{ color: "dimgray" }}></AppsIcon>
+                  </IconButton>
+                </div>
+                <div className="avatar">
+                  <IconButton onClick={this.profileupload}>
+                    <Avatar alt="Dash" src={avatarimage} style={{ marginLeft: '30%' }} />
+                  </IconButton>
+                </div>
+              </div>
+              <div />
+            </Toolbar>
+          </AppBar>
+        </div>
+        <div>
           <ThemeProvider theme={drawertheme}>
             <Drawer open={this.state.open}
               variant="persistent" >
@@ -193,7 +215,7 @@ class DashBoard extends Component {
 
                 <div className="labeltag">LABELS</div>
                 {/* <ClickAwayListener onClickAway={this.handleClickAway}> */}
-                <AllLabel></AllLabel>
+                <AllLabel props={this.props}></AllLabel>
                 {/* </ClickAwayListener> */}
 
               </List>
@@ -222,9 +244,9 @@ class DashBoard extends Component {
                 </div>
               </div>
             </Drawer>
-            </ThemeProvider>
-          </div>
-        
+          </ThemeProvider>
+        </div>
+
       </div>
     );
   }

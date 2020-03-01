@@ -21,3 +21,16 @@
     transition: box-shadow 0.5s ease-in-out;
     transition: transform 0.5s ease-in-out;
   }
+
+  .chips{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .iconvisi{
+      visibility: hidden;
+      opacity: 0;
+  }
+  .displaycard:hover .iconvisi{
+      visibility: visible;
+      opacity: 1;
+  }

@@ -18,7 +18,7 @@ class AllNotes extends Component {
     }
     GetAllNote = () => {
         notesServices.GetAllNotes().then(response => {
-            // console.log("data",response.data.data);
+        
             this.reverseArray = response.data.data.filter(note => note.isTrash === false && note.isArchive === false)
             this.reverseArray.reverse()
             if (response.data.data != null) {
@@ -27,7 +27,7 @@ class AllNotes extends Component {
         })
     }
     parentCallback = () => {
-        console.log("in all notes");
+        
 
         this.GetAllNote()
     }

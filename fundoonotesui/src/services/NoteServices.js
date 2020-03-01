@@ -98,11 +98,22 @@ export default class NoteServices{
     }
     GetAllLabelledNotes(id){
         var token = localStorage.getItem("logintoken")
-        return services.GET(`${notesBaseURL}/`+id+`/notebylabelid`, {
+        return services.GET(`${notesBaseURL}/`+id+`/notebylabel`, {
             headers: {
                 'Content-Type': 'application/json', 'Accept': '*',
                 Authorization: 'Bearer ' + token
             }
         })
+    }
+    ChangeColour(data,id){
+        console.log("sdhcvgdgcv",data,id);
+        
+        var token = localStorage.getItem("logintoken")
+        return services.PUT(`${notesBaseURL}/` + id+`/color`,data, {
+            headers: {
+                'Content-Type': 'application/json', 'Accept': '*',
+                Authorization: 'Bearer ' + token
+            }
+        })  
     }
 }

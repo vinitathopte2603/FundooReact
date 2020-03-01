@@ -1,0 +1,17 @@
+.editicons{
+display: flex;
+}
+
+.Hide{
+display: block;
+}
+.Show{
+    display: none;
+}
+.editicons:hover .Hide{
+    display: none;
+}
+
+.editicons:hover .Show{
+    display: block;
+}

@@ -29,15 +29,15 @@ class ResetPassword extends Component {
         this.setState({ showPassword: !this.state.showPassword });
     };
     handleChange(event) {
-        // console.log('in change',event);
+        
         
         let fields = this.state.fields;
-        // console.log('==>',event.target.value,event.target.name,fields);
+        
         fields[event.target.name] = event.target.value;
         this.setState({
             fields
         });
-        console.log(fields);
+        
         
     }
 
@@ -50,14 +50,14 @@ class ResetPassword extends Component {
             fields["password"] = "";
 
             this.setState({ fields: fields });
-            console.log('submited',fields.password);
+            
             this.setState({[event.target.setOpen]:true})
             var data = this.state.fields
         
-            // var resettoken=localStorage.getItem("logintoken")
+        
             var token1 = this.props.match.params.token
             userservice.ResetPassword(data,token1).then((response)=>{
-                console.log("response",response);
+                
                 
                 this.setState({ Show: !this.state.Show, Showing: !this.state.Showing });
                 setTimeout(() => {
@@ -74,7 +74,7 @@ class ResetPassword extends Component {
     validateForm() {
 
         let fields = this.state.fields;
-        console.log(fields);
+        
         
         let errors = {};
         let formIsValid = true;

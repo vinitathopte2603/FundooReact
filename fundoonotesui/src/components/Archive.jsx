@@ -13,7 +13,7 @@ class Archive extends Component {
 
     GetAllArchives = () => {
         notesServices.GetAllArchive().then(response => {
-            console.log("data", response.data);
+        
             this.reverseArray = response.data.data;
             this.allArchive = this.reverseArray.reverse()
             if (response.data.data != null) {
@@ -26,7 +26,7 @@ class Archive extends Component {
         this.GetAllArchives()
     }
     parentCallback = () => {
-        console.log("in all archived notes");
+        
 
         this.GetAllArchives()
     }

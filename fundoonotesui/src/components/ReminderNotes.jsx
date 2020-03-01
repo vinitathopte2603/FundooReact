@@ -14,13 +14,11 @@ class ReminderNotes extends Component {
 
     GetAllRemindered = () => {
         notesServices.GetAllReminder().then(response => {
-            console.log("data", response.data);
+            
             if (response.data.data != null) {
                 this.setState({ allReminder: response.data.data })
             }
-            else {
-                this.setState({ createNoteReminder: !this.state.createNoteReminder })
-            }
+          
         })
     }
     componentDidMount = () => {

@@ -12,11 +12,12 @@ import MenuList from '@material-ui/core/MenuList';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import '../scss/createnote.scss'
-import { Card } from '@material-ui/core';
+import { Card, Paper } from '@material-ui/core';
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import NoteServices from '../services/NoteServices';
 import Tooltip from '@material-ui/core/Tooltip';
+import '../scss/changebackgroundcolor.scss'
 const notesServices = new NoteServices()
 
 
@@ -26,18 +27,23 @@ class Icons extends Component {
     this.state = {
       open: false,
       value: true,
-      changeColor: false
+      changeColor: false,
+      colors: [{ color: "#d7aefb" }, { color: "#fdcfe8" }, { color: "#e6c9a8" }, { color: "#e8eaed" },
+      { color: "#ccff90" }, { color: "#a7ffeb" }, { color: "#cbf0f8" }, { color: "#aecbfa" },
+      { color: "#f28b82" }, { color: "#fbbc04" }, { color: "#fff475" }, { color: "#fff" }],
+      clr:''
 
     }
+
   }
 
-  handleClosePalette = event => {
+  handleClosecolor = event => {
     if (this.anchorEl.contains(event.target)) {
       return;
     }
 
     this.setState({ changeColor: false });
-  };
+  }
 
   handleClose = event => {
     if (this.anchorEl.contains(event.target)) {
@@ -51,37 +57,37 @@ class Icons extends Component {
     this.setState(state => ({ open: !state.open }));
   };
   handleToggleChangeColor = () => {
-    this.setState(state => ({ changeColor: !state.changeColor }));
-    console.log("change color",this.state.changeColor)
+    this.setState({ changeColor: !this.state.changeColor });
+    
   };
   TrashNote = () => {
-    console.log("note", this.props.note.id)
+    
     let data = { value: true }
-    console.log("trash the note", data);
+    
 
     notesServices.MoveToTrash(this.props.note.id, data).then(response => {
-      console.log("response from back end", response);
+    
       this.props.parentCallback();
     })
   }
 
   ArchiveNote = () => {
-    console.log("note", this.props.note.id)
+    
     if (this.props.note.isArchive) {
       let data = { value: false }
       notesServices.MoveToArchive(this.props.note.id, data).then(response => {
-        console.log("response from back end", response);
+        
         this.props.parentCallback();
-        console.log("parent call back", this.props.parentCallback);
+        
 
       })
     }
     else {
       let data = { value: true }
       notesServices.MoveToArchive(this.props.note.id, data).then(response => {
-        console.log("response from back end", response);
+        
         this.props.parentCallback();
-        console.log("parent call back", this.props.parentCallback);
+        
 
       })
     }
@@ -90,71 +96,112 @@ class Icons extends Component {
 
   Restore = () => {
 
-    console.log("note", this.props.note.id)
+    
     var data = { value: false }
-    console.log("restore", data);
+    
 
     //restore from trash
     notesServices.MoveToTrash(this.props.note.id, data).then(response => {
-      console.log("response from back end", response);
+    
       this.props.parentCallback();
     })
   }
   DeleteForever = () => {
     notesServices.DeleteNote(this.props.note.id).then(response => {
-      console.log("note deleted", response);
+      
       this.props.parentCallback();
     })
   }
-
+  changeBackgroundcolor=(data)=>{
+  var clrdata={
+    color:data
+  }
+    
+    notesServices.ChangeColour(clrdata,this.props.note.id).then(response=>{
+      
+      this.props.parentCallback();
+    })
+  }
   render() {
+    const colour = this.state.colors.map((item, index) => {
+      return (
+        <div key={index}>
+
+          <div className="colorStyle">
+            <IconButton style={{ backgroundColor: item.color }}
+            onClick={() => this.changeBackgroundcolor(item.color)}
+             />
+          </div>
+
+        </div>
+      )
+    })
     const { open } = this.state;
+
+
     return (
       <div>
         {this.props.note.isTrash ? <div className="noteiconsdiv">
-        <Tooltip title="Delete">
-          <IconButton onClick={this.DeleteForever}>
-            <DeleteForeverIcon style={{ fontSize: '17' }} />
-          </IconButton>
+          <Tooltip title="Delete">
+            <IconButton onClick={this.DeleteForever}>
+              <DeleteForeverIcon style={{ fontSize: '17' }} />
+            </IconButton>
           </Tooltip>
           <Tooltip title="Restore">
-          <IconButton onClick={this.Restore}>
-            <RestoreFromTrashIcon style={{ fontSize: '17' }} />
-          </IconButton>
+            <IconButton onClick={this.Restore}>
+              <RestoreFromTrashIcon style={{ fontSize: '17' }} />
+            </IconButton>
           </Tooltip>
         </div> :
           <div className="noteiconsdiv">
             <Tooltip title="Remind me">
-            <IconButton >
-              <AddAlertOutlinedIcon style={{ fontSize: '17' }} />
-            </IconButton>
+              <IconButton >
+                <AddAlertOutlinedIcon style={{ fontSize: '17' }} />
+              </IconButton>
             </Tooltip>
             <Tooltip title="Collaborator">
-            <IconButton>
-              <PersonAddOutlinedIcon style={{ fontSize: '17' }} />
-            </IconButton>
+              <IconButton>
+                <PersonAddOutlinedIcon style={{ fontSize: '17' }} />
+              </IconButton>
             </Tooltip>
+
             <Tooltip title="Change color">
-            <IconButton onClick={this.handleToggleChangeColor}>
-              <PaletteOutlinedIcon style={{ fontSize: '17' }} />
-            </IconButton>
+              <IconButton onClick={this.handleToggleChangeColor}>
+                <PaletteOutlinedIcon style={{ fontSize: '17' }} />
+              </IconButton>
             </Tooltip>
+
+            <Paper>
+              {this.state.changeColor ?
+                <ClickAwayListener onClickAway={this.handleClosecolor}>
+                  <Card className="colorpalettecard">
+                    {colour}
+                  </Card>
+                </ClickAwayListener>
+                : null}
+            </Paper>
+
+
+
+
             <Tooltip title="Add image">
-            <IconButton>
-              <ImageOutlinedIcon style={{ fontSize: '17' }} />
-            </IconButton>
+              <IconButton>
+                <ImageOutlinedIcon style={{ fontSize: '17' }} />
+              </IconButton>
             </Tooltip>
             <Tooltip title="Archive">
-            <IconButton onClick={this.ArchiveNote}>
-              <ArchiveOutlinedIcon style={{ fontSize: '17' }} />
-            </IconButton>
-            </Tooltip> 
-            <Tooltip title="More">
-            <IconButton buttonRef={node => { this.anchorEl = node; }} onClick={this.handleToggle}>
-              <MoreVertIcon style={{ fontSize: '17' }} >
-              </MoreVertIcon>
-            </IconButton>
+              <IconButton onClick={this.ArchiveNote}>
+                <ArchiveOutlinedIcon style={{ fontSize: '17' }} />
+              </IconButton>
             </Tooltip>
+
+            <Tooltip title="More">
+              <IconButton buttonRef={node => { this.anchorEl = node; }} onClick={this.handleToggle}>
+                <MoreVertIcon style={{ fontSize: '17' }} >
+                </MoreVertIcon>
+              </IconButton>
+            </Tooltip>
+
             <Popper open={open} anchorEl={this.anchorEl} transition disablePortal style={{ zIndex: 1 }}>
               {({ TransitionProps }) => (
                 <Grow style={{ zIndex: 1 }}
@@ -165,7 +212,7 @@ class Icons extends Component {
                       <MenuList>
                         <MenuItem onClick={this.TrashNote}>Delete note</MenuItem>
                         <MenuItem onClick={this.handleClose}>Add label</MenuItem>
-              
+
                       </MenuList>
                     </ClickAwayListener>
                   </Card>

@@ -1,18 +1,29 @@
 import React, { Component } from 'react';
-import {Dialog, DialogContent, InputBase } from '@material-ui/core';
+import { Dialog, DialogContent, InputBase, DialogActions, IconButton, TextField } from '@material-ui/core';
 import LabelServices from '../../services/LabelServices';
+import Button from '@material-ui/core/Button';
+import LabelRoundedIcon from '@material-ui/icons/LabelRounded';
+import EditRoundedIcon from '@material-ui/icons/EditRounded';
+import AddIcon from '@material-ui/icons/Add';
+import ClearIcon from '@material-ui/icons/Clear';
+import DeleteIcon from '@material-ui/icons/Delete';
+import '../../scss/editlabel.scss'
 const labelsServices = new LabelServices()
-class UpdateLabel extends Component{
-    constructor(props){
+class UpdateLabel extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            openEdit:true,
-            closeEdit:false,
-            labels:[],
-            Label:''
+        this.state = {
+            openEdit: true,
+            closeEdit: false,
+            labels: [],
+            Label: '',
+            edit: false,
+            cancel: false,
+            newlabel: '',
+            delete:false
         }
     }
-    HandleCloseDialog=()=>{
+    HandleCloseDialog = () => {
         this.setState(prevState => ({
             closeEdit: !prevState.closeEdit,
             openEdit: !prevState.openEdit
@@ -28,46 +39,121 @@ class UpdateLabel extends Component{
             }
         })
     }
-    OnChange = (e) => {
-        console.log("setstate", e.value);
+
+    HandleEdit = () => {
+
+        var data = {
+            Label: this.state.label
+        }
+        labelsServices.EditLabel(data)
+    }
+    Handlecreate = () => {
+        var data = {
+            Label: this.state.newlabel
+        }
+        labelsServices.CreateLabel(data).then(response => {
+            console.log("label created", response.data);
+
+        })
+    }
+    newlabelonchange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
-    render(){
+    OnChange = (e, key, item) => {
+        console.log("setstate", e.currentTarget.value, item.value);
+        // this.setState({ [e.target.name]: e.target.value });
+        item.label = e.currentTarget.value;
+        var stateCopy = Object.assign({}, this.state);
+        stateCopy.labels[key].label = e.currentTarget.value;
+        this.setState(stateCopy);
+    }
+    handleCancel = () => {
+        this.setState({ cancel: !this.state.cancel })
+    }
+    HandleDeleteLabel=(Id)=>{
+        this.setState({ delete:true})
+    
+        
+        if(this.state.delete===true)
+        {
+            this.DeleteLabel(Id)
+        }
+    }
+    DeleteLabel = (id) => {
+        labelsServices.Deletelabel(id).then(response => {
+            console.log("note deleted",response);
+        })
+    }
+    render() {
         const alllabels = this.state.labels.map((item, index) => {
             return (
                 <div key={index}>
                     <div >
-                    <InputBase
+                        <div className="editicons">
+                            <div className="Hide">
+                                <IconButton>
+                                    <LabelRoundedIcon />
+                                </IconButton>
+                            </div>
+                            <div className="Show" >
+                                <IconButton onClick={()=>this.HandleDeleteLabel(item.id)}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </div>
+                            <InputBase
                                 placeholder="Title"
                                 multiline
                                 inputProps={{ 'aria-label': 'naked' }}
                                 name="label"
                                 value={item.label}
-                                onChange={this.OnChange}
+                                onChange={(e) => this.OnChange(e, index, item)}
                             />
+                            <IconButton>
+                                <EditRoundedIcon />
+                            </IconButton>
+                        </div>
+
                     </div>
                 </div>
             )
         })
-       return(
-           <div>
-           <Dialog open={this.state.openEdit} onClose={this.HandleCloseDialog}>
-               <DialogContent>
-                   <InputBase
-                    placeholder="Title"
-                    multiline
-                    inputProps={{ 'aria-label': 'naked' }}
-                    name="title"
-                   />                   
-               </DialogContent>
-               <DialogContent>
-               <div>
-              {alllabels}
-                   </div>
-               </DialogContent>
-           </Dialog> 
-           </div>
-       )
+        return (
+            <div >
+                <Dialog open={this.state.openEdit} onClose={this.HandleCloseDialog}>
+                    <div>Edit labels</div>
+                    <div >
+                        <IconButton onClick={this.handleCancel}>
+                            {this.state.cancel ? <AddIcon /> : <ClearIcon></ClearIcon>}
+                        </IconButton>
+
+                        <TextField
+                            placeholder="Create new label"
+                            multiline
+                            inputProps={{ 'aria-label': 'naked' }}
+                            name="newlabel"
+                            value={this.state.newlabel}
+                            onChange={this.newlabelonchange}
+                            onClick={this.icons}
+                        />
+                    </div>
+                    <DialogContent>
+                        <div style={{ maxHeight: '392px' }}>
+                            {alllabels}
+                        </div>
+                    </DialogContent>
+                    <DialogActions>
+                        {this.state.edit ?
+                            <Button onClick={this.HandleEdit}>
+                                Done
+                            </Button> :
+                            <Button onClick={this.Handlecreate}>
+                                Done
+                            </Button>
+                        }
+                    </DialogActions>
+                </Dialog>
+            </div>
+        )
     }
 }
 export default UpdateLabel

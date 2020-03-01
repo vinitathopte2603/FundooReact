@@ -78,13 +78,13 @@ class SignIn extends Component {
             fields["password"] = "";
 
             this.setState({ fields: fields });
-            console.log('submited');
+            
             this.setState({ linearProgress: true })
             this.setState({ [event.target.setOpen]: true })
             var data = this.state.fields
-            console.log("data is", data)
+        
             userservice.Login(data).then((response) => {
-                console.log("singup data after login ", response.data.token);
+                
                 localStorage.setItem("logintoken", response.data.token)
                 this.setState({ loggedIn: true })
                 this.setState({ Show: !this.state.Show, Showing: !this.state.Showing });
@@ -104,7 +104,7 @@ class SignIn extends Component {
     validateForm() {
 
         let fields = this.state.fields;
-        console.log(fields);
+        
 
         let errors = {};
         let formIsValid = true;
@@ -146,7 +146,7 @@ class SignIn extends Component {
     render() {
         if (this.state.loggedIn) {
             setTimeout(() => {
-                this.props.history.push("/notes")
+                this.props.history.push("/u/0/notes")
 
             }, 3000);
         }

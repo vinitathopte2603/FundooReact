@@ -13,7 +13,7 @@ class Trash extends Component {
 
     GetAllTrashed = () => {
         notesServices.GetAllTrash().then(response => {
-            console.log("data", response.data);
+           
             this.reverseArray = response.data.data
             this.allTrash = this.reverseArray.reverse()
             if (response.data.data != null) {
@@ -25,7 +25,7 @@ class Trash extends Component {
         this.GetAllTrashed()
     }
     parentCallback = () => {
-        console.log("in all archived notes");
+      
 
         this.GetAllTrashed()
     }

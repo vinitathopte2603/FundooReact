@@ -7,6 +7,7 @@ import LabelServices from '../../services/LabelServices';
 import '../../scss/label.scss'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import UpdateLabel from './UpdateLabel';
+import NotesByLabelId from '../NotesByLabelId';
 
 const labelsServices = new LabelServices()
 class AllLabel extends Component {
@@ -15,6 +16,8 @@ class AllLabel extends Component {
         this.state = {
             allLabels: [],
             editLabel: false,
+            labelId: '',
+            showNotesOnLabels: false
         }
     }
     componentDidMount = () => {
@@ -29,16 +32,22 @@ class AllLabel extends Component {
         })
     }
     EditLabel = () => {
-        this.setState({ editLabel: true })
-        console.log("edit label ", !this.state.editLabel);
+        this.setState(prevState => ({
+            editLabel: !prevState.editLabel,
+
+        }))
     }
+    ShowNotes = (data) => {
+        this.props.props.history.push(`/u/0/label/${data.label}`)
+    }
+
     render() {
-       
+
         const labels = this.state.allLabels.map((item, index) => {
             return (
                 <div key={index}>
                     <div className="label">
-                        <ListItem button key="Labels" >
+                        <ListItem button key="Labels" onClick={() => this.ShowNotes(item)}>
                             <ListItemIcon><LabelOutlinedIcon /></ListItemIcon>
                             <ListItemText primary={item.label} />
                         </ListItem>
@@ -59,7 +68,7 @@ class AllLabel extends Component {
                 </div>
                 <div>
                     {this.state.editLabel ?
-                        <UpdateLabel></UpdateLabel> : null}
+                        <UpdateLabel editstate={this.state.editLabel}></UpdateLabel> : null}
                 </div>
             </div>
         )

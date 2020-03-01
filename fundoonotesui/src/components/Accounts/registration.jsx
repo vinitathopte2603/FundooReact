@@ -53,12 +53,12 @@ class Registration extends Component {
     handleChange(event) {
 
         let fields = this.state.fields;
-        // console.log('==>',event.target.value,event.target.name,fields);
+       
         fields[event.target.name] = event.target.value;
         this.setState({
             fields
         });
-        console.log(fields);
+        
 
     }
     handleRegistration(event) {
@@ -74,15 +74,13 @@ class Registration extends Component {
 
 
             this.setState({ fields: fields });
-            console.log('in register', this.state.fields);
-
-            console.log('submited');
+           
             this.setState({ linearProgress: true })
             this.setState({ [event.target.setOpen]: true })
             var data = this.state.fields
-            console.log("data is", data)
+        
             userservice.Register(data).then((response) => {
-                console.log("singup data after registraion ", response);
+               
                 if (this.state.Showing) return;
 
                 this.setState({ Show: true, Showing: true });
@@ -103,7 +101,7 @@ class Registration extends Component {
     validateForm() {
 
         let fields = this.state.fields;
-        console.log(fields);
+    
 
         let errors = {};
         let formIsValid = true;
@@ -303,12 +301,12 @@ class Registration extends Component {
                             style={{ width: '30%', backgroundColor: "dodgerblue", color: "white", marginBottom: '5%' }}>
                             Register
                     </Button>
-                        {/* <Button variant="contained"
+                         <Button variant="contained"
                             onClick={this.gotosignin}
 
                             style={{ width: '30%', backgroundColor: "dodgerblue", color: "white", marginBottom: '5%' }}>
-                            Sign In
-                    </Button> */}
+                            Sign In instead
+                    </Button> 
                         <ReactSnackBar Show={this.state.Show}>
                             User Registered Successfully...
                         </ReactSnackBar>

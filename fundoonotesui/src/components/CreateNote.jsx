@@ -37,10 +37,10 @@ class CreateNote extends Component {
             labels: this.state.labels,
             Collaborators: this.state.collaborations
         }
-        console.log("state changed", data);
+    
 
         notesServices.CreateNote(data).then(response => {
-            console.log("note created", response.data);
+            
             this.setState({
                 title: '',
                 description: '',
@@ -49,7 +49,7 @@ class CreateNote extends Component {
 
             })
             this.props.parentCallback();
-            console.log("parent call back", this.props.parentCallback);
+            
 
         })
     }

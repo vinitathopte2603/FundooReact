@@ -28,7 +28,6 @@ class ForgotPassword extends Component {
             Show: false,
             Showing: false,
             linearProgress:false,
-         
         };
        
         this.handleChange = this.handleChange.bind(this);
@@ -36,50 +35,38 @@ class ForgotPassword extends Component {
     }
     
     handleChange(event) {
-        console.log('in change',event);
-        
         let fields = this.state.fields;
-        // console.log('==>',event.target.value,event.target.name,fields);
         fields[event.target.name] = event.target.value;
         this.setState({
             fields
         });
-        console.log('asd',fields);
-        
     }
     handleForgotPassword(event) {
         event.preventDefault();
         if (this.validateForm()) {
             let fields = {};
-
             fields["email"] = "";
-            
-
             this.setState({ fields: fields });
-            console.log('submited',fields);
+            
             this.setState({linearProgress:true})
             this.setState({[event.target.setOpen]:true})
             var data =this.state.fields
-            console.log("datasdfdsf",data)
+            
             userservice.ForgotPassword(data).then((response)=>{
-                console.log("response",response.data.token)
-                
-                //  var token = localStorage.getItem("token")
-                //  console.log("token after local strg",token);
+            
                  if (this.state.Showing) return;
 
                  this.setState({ Show: true, Showing: true });
                  setTimeout(() => {
                      this.setState({ Show: false, Showing: false });
                  }, 2000);
-                //  this.props.history.push("/resetpassword")
+                
             })
         }
     }
     validateForm() {
 
         let fields = this.state.fields;
-        console.log(fields);
         
         let errors = {};
         let formIsValid = true;

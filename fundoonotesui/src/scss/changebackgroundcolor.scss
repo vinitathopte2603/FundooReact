@@ -1,0 +1,20 @@
+
+
+.colorStyle {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+.colorpalettecard{
+    position: absolute;
+    max-width: 116px;
+    padding: 3px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    z-index: 1;
+    transition: 5s;
+}
+.colorpalettecard div IconButton{
+    margin: 5px;
+}

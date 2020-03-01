@@ -32,9 +32,9 @@ class UpdateNote extends Component {
             Collaborators: this.state.collaborations
         }
         notesServices.UpdateNote(this.props.object.noteId, data).then(response => {
-            console.log("note update", response);
+           
             this.props.parentCallback();
-            console.log("parent call back", this.props.parentCallback);
+            
 
         })
         this.HandleClose()
@@ -46,11 +46,11 @@ class UpdateNote extends Component {
         })
     }
     OnChange = (e) => {
-        console.log("setstate", e.value);
+      
         this.setState({ [e.target.name]: e.target.value });
     }
     render() {
-        console.log(this.props.object)
+    
         return (
             <div>
                 <Dialog open={this.state.openDialog} onClose={this.HandleClose}>
