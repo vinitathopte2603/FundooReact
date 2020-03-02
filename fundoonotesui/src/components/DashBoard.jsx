@@ -6,6 +6,7 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -16,11 +17,10 @@ import Avatar from '@material-ui/core/Avatar';
 import '../scss/dashboard.scss'
 import '../scss/label.scss'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import avatarimage from '../images/download1.jpg'
 import keepimage from '../images/keep_48dp.png'
 import RefreshIcon from '@material-ui/icons/Refresh';
 import AppsIcon from '@material-ui/icons/Apps';
-import { Button, Paper } from '@material-ui/core';
+import { Button, Paper, Popover } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Redirect } from 'react-router-dom'
 import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
@@ -30,7 +30,10 @@ import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined'
 import ViewAgendaOutlinedIcon from '@material-ui/icons/ViewAgendaOutlined';
 import BorderAllIcon from '@material-ui/icons/BorderAll';
 import AllLabel from '../components/Labels/AllLabel'
+import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import UserServices from '../services/UserServices'
+const userService = new UserServices()
 const drawertheme = createMuiTheme({
   overrides: {
     MuiDrawer: {
@@ -40,6 +43,7 @@ const drawertheme = createMuiTheme({
     }
   }
 });
+
 class DashBoard extends Component {
   constructor(props) {
     super(props);
@@ -58,7 +62,10 @@ class DashBoard extends Component {
       isReminder: false,
       isArchive: false,
       isTrash: false,
-      profile: false
+      profile: false,
+      anchorEl: null,
+      imageFile: '',
+
 
     };
   }
@@ -74,7 +81,7 @@ class DashBoard extends Component {
   };
 
   logout = () => {
-    localStorage.clear()
+    localStorage.removeItem("logintoken")
     this.props.history.push('/signin')
   }
   showArchive = () => {
@@ -96,14 +103,46 @@ class DashBoard extends Component {
   HandleListView = () => {
     this.setState({ listView: !this.state.listView })
   }
-  profileupload = () => {
-    this.setState({ profile: !this.state.profile })
+
+  profileupload = event => {
+    this.setState({
+      anchorEl: event.currentTarget,
+    });
+  };
+  handleClose = () => {
+    this.setState({
+      anchorEl: null,
+    });
+  };
+  handleImageChange = async (e) => {
+    await this.setState({
+      imageFile: e.target.files[0]
+    })
+    console.log("here", this.state.imageFile);
+    const formdata = new FormData();
+    formdata.append('ImageUrl', this.state.imageFile)
+    userService.profilePicture(formdata).then(response => {
+      console.log("profile uploaded successfully", response.data.imageUrl);
+      localStorage.setItem("imageurl", response.data.imageUrl)
+    })
+
   }
+  // profilepicture = () => {
+  //   const formdata = new FormData();
+  //   formdata.append('ImageUrl', this.state.imageFile)
+  //   userService.profilePicture(formdata).then(response => {
+  //     console.log("profile uploaded successfully", response.data.imageUrl);
+  //     localStorage.setItem("imageurl", response.data.imageUrl)
+  //   })
+
+  // }
   render() {
+
     if (this.state.loggedIn === false) {
       return <Redirect to="/" />
     }
-
+    const { anchorEl } = this.state;
+    const openpopover = Boolean(anchorEl);
     return (
       <div>
 
@@ -174,10 +213,64 @@ class DashBoard extends Component {
                     <AppsIcon style={{ color: "dimgray" }}></AppsIcon>
                   </IconButton>
                 </div>
-                <div className="avatar">
+                <div>
                   <IconButton onClick={this.profileupload}>
-                    <Avatar alt="Dash" src={avatarimage} style={{ marginLeft: '30%' }} />
+                    <Avatar alt="Dash" src={localStorage.getItem("imageurl")} style={{ marginLeft: '30%' }} />
                   </IconButton>
+                  <div>
+                    <Popover open={openpopover}
+                      anchorEl={anchorEl} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                      }} onClose={this.handleClose}>
+                      <div>
+                        <Paper style={{ height: '350px', width: '350px' }}>
+                          <div>
+                            <Badge
+                              overlap="circle"
+                              anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                              }}
+                              badgeContent={
+                                <div>
+                                  <input accept="image/*" style={{ display: 'none' }} id="icon-button-file" type="file"
+                                    onChange={this.handleImageChange} />
+                                  <label htmlFor="icon-button-file">
+                                    <IconButton component="span">
+
+                                      <PhotoCameraOutlinedIcon>
+
+                                      </PhotoCameraOutlinedIcon>
+
+                                    </IconButton>
+                                  </label>
+                                </div>}
+                            >
+                              <Avatar src={localStorage.getItem("imageurl")} style={{ height: '180px', width: '180px', marginLeft: '50%', marginTop: '10%' }}></Avatar>
+                            </Badge>
+                          </div>
+                          <div style={{ marginLeft: '33%', fontSize: '23px' }}>
+                            {localStorage.getItem("first")}
+                          </div>
+                          <div style={{
+                            marginTop: '7px',
+                            marginLeft: '26%'
+                          }}>
+                            {localStorage.getItem("email")}
+                          </div>
+
+                          <div className="logoutbutton">
+                            <div className="imageuploadbutton">
+                              <Button variant="outlined" onClick={this.logout}>Logout</Button>
+                            </div>
+                          </div>
+
+                        </Paper>
+                      </div>
+                    </Popover>
+                  </div>
                 </div>
               </div>
               <div />
@@ -235,7 +328,7 @@ class DashBoard extends Component {
                   </ListItem>
                 </div>
               </List>
-              <Button onClick={this.logout}>Logout</Button>
+
               <Divider />
               <div style={{ marginBottom: '90px' }}>
                 Privacy · Terms

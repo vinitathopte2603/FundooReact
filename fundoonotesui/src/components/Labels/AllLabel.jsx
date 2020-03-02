@@ -7,7 +7,7 @@ import LabelServices from '../../services/LabelServices';
 import '../../scss/label.scss'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import UpdateLabel from './UpdateLabel';
-import NotesByLabelId from '../NotesByLabelId';
+
 
 const labelsServices = new LabelServices()
 class AllLabel extends Component {

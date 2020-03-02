@@ -16,11 +16,12 @@ class UpdateLabel extends Component {
             openEdit: true,
             closeEdit: false,
             labels: [],
-            Label: '',
             edit: false,
             cancel: false,
             newlabel: '',
-            delete:false
+            editlabel:'',
+            delete:false,
+            
         }
     }
     HandleCloseDialog = () => {
@@ -40,19 +41,13 @@ class UpdateLabel extends Component {
         })
     }
 
-    HandleEdit = () => {
-
-        var data = {
-            Label: this.state.label
-        }
-        labelsServices.EditLabel(data)
-    }
+  
     Handlecreate = () => {
         var data = {
             Label: this.state.newlabel
         }
         labelsServices.CreateLabel(data).then(response => {
-            console.log("label created", response.data);
+           
 
         })
     }
@@ -60,12 +55,30 @@ class UpdateLabel extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
     OnChange = (e, key, item) => {
-        console.log("setstate", e.currentTarget.value, item.value);
+        console.log("setstate", e.currentTarget.value, item.label);
         // this.setState({ [e.target.name]: e.target.value });
-        item.label = e.currentTarget.value;
+        this.setState({
+            editlabel : e.currentTarget.value
+        }) 
+      var  edi= e.currentTarget.value
+      console.log("current value in ",this.state.editlabel);
+      
         var stateCopy = Object.assign({}, this.state);
         stateCopy.labels[key].label = e.currentTarget.value;
         this.setState(stateCopy);
+    }
+    HandleEdit = (id) => {
+console.log("submit edit ",this.state.editlabel);
+
+        var data = {
+            Label: this.state.editlabel
+        }
+        console.log("new label",data.Label);
+        
+        labelsServices.EditLabel(data,id).then(response=>{
+            console.log("new ",response.data);
+            
+        })
     }
     handleCancel = () => {
         this.setState({ cancel: !this.state.cancel })
@@ -104,11 +117,11 @@ class UpdateLabel extends Component {
                                 placeholder="Title"
                                 multiline
                                 inputProps={{ 'aria-label': 'naked' }}
-                                name="label"
+                                name="editlabel"
                                 value={item.label}
                                 onChange={(e) => this.OnChange(e, index, item)}
                             />
-                            <IconButton>
+                            <IconButton onClick={()=>this.HandleEdit(item.id)}>
                                 <EditRoundedIcon />
                             </IconButton>
                         </div>
@@ -131,7 +144,7 @@ class UpdateLabel extends Component {
                             multiline
                             inputProps={{ 'aria-label': 'naked' }}
                             name="newlabel"
-                            value={this.state.newlabel}
+                            value={this.state.label}
                             onChange={this.newlabelonchange}
                             onClick={this.icons}
                         />

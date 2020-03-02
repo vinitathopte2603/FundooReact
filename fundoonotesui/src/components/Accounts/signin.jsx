@@ -84,7 +84,9 @@ class SignIn extends Component {
             var data = this.state.fields
         
             userservice.Login(data).then((response) => {
-                
+                console.log("data",response.data);
+                localStorage.setItem("first",response.data.data.firstName +" "+ response.data.data.lastName)
+                localStorage.setItem("email",response.data.data.email)
                 localStorage.setItem("logintoken", response.data.token)
                 this.setState({ loggedIn: true })
                 this.setState({ Show: !this.state.Show, Showing: !this.state.Showing });

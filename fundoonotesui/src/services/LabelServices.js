@@ -24,10 +24,18 @@ export default class LabelServices {
         })
     }
     Deletelabel(id){
-        console.log("in label services",id);
-        
         var token = localStorage.getItem("logintoken")
         return services.DELETE(`${labelsBaseURL}/`+ id, {
+            headers: {
+                'Content-Type': 'application/json', 'Accept': '*',
+                Authorization: 'Bearer ' + token
+            }
+        })
+    }
+    EditLabel(data,id){
+        console.log("id in edit label",id);
+        var token = localStorage.getItem("logintoken")
+        return services.PUT(`${labelsBaseURL}/`+ id, data,{
             headers: {
                 'Content-Type': 'application/json', 'Accept': '*',
                 Authorization: 'Bearer ' + token

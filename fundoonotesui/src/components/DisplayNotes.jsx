@@ -54,12 +54,14 @@ class DisplayNotes extends Component {
                         <Card variant="outlined" style={{ backgroundColor: element.color }}>
                             <div onClick={() => this.HandleEditNote(element)}>
                                 <div className="inputbasediv" >
+                                <div className="inputbase"  >
+                                       <img src={element.image}></img> 
+                                    </div>
                                     <div className="inputbase"  >
                                         {element.title}
                                     </div>
                                     <div className="inputbase">
                                         {element.description}
-                                        
                                     </div>
                                     <ThemeProvider theme={collabtheme}>
                                     <div className="chips">
