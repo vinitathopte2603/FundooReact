@@ -19,9 +19,9 @@ class UpdateLabel extends Component {
             edit: false,
             cancel: false,
             newlabel: '',
-            editlabel:'',
-            delete:false,
-            
+            editlabel: '',
+            delete: false,
+
         }
     }
     HandleCloseDialog = () => {
@@ -41,13 +41,13 @@ class UpdateLabel extends Component {
         })
     }
 
-  
+
     Handlecreate = () => {
         var data = {
             Label: this.state.newlabel
         }
         labelsServices.CreateLabel(data).then(response => {
-           
+
 
         })
     }
@@ -58,43 +58,42 @@ class UpdateLabel extends Component {
         console.log("setstate", e.currentTarget.value, item.label);
         // this.setState({ [e.target.name]: e.target.value });
         this.setState({
-            editlabel : e.currentTarget.value
-        }) 
-      var  edi= e.currentTarget.value
-      console.log("current value in ",this.state.editlabel);
-      
+            editlabel: e.currentTarget.value
+        })
+        //   var  edi= e.currentTarget.value
+        console.log("current value in ", this.state.editlabel);
+
         var stateCopy = Object.assign({}, this.state);
         stateCopy.labels[key].label = e.currentTarget.value;
         this.setState(stateCopy);
     }
     HandleEdit = (id) => {
-console.log("submit edit ",this.state.editlabel);
+        console.log("submit edit ", this.state.editlabel);
 
         var data = {
             Label: this.state.editlabel
         }
-        console.log("new label",data.Label);
-        
-        labelsServices.EditLabel(data,id).then(response=>{
-            console.log("new ",response.data);
-            
+        console.log("new label", data.Label);
+
+        labelsServices.EditLabel(data, id).then(response => {
+            console.log("new ", response.data);
+
         })
     }
     handleCancel = () => {
         this.setState({ cancel: !this.state.cancel })
     }
-    HandleDeleteLabel=(Id)=>{
-        this.setState({ delete:true})
-    
-        
-        if(this.state.delete===true)
-        {
+    HandleDeleteLabel = (Id) => {
+        this.setState({ delete: true })
+
+
+        if (this.state.delete === true) {
             this.DeleteLabel(Id)
         }
     }
     DeleteLabel = (id) => {
         labelsServices.Deletelabel(id).then(response => {
-            console.log("note deleted",response);
+            console.log("note deleted", response);
         })
     }
     render() {
@@ -109,7 +108,7 @@ console.log("submit edit ",this.state.editlabel);
                                 </IconButton>
                             </div>
                             <div className="Show" >
-                                <IconButton onClick={()=>this.HandleDeleteLabel(item.id)}>
+                                <IconButton onClick={() => this.HandleDeleteLabel(item.id)}>
                                     <DeleteIcon />
                                 </IconButton>
                             </div>
@@ -121,7 +120,7 @@ console.log("submit edit ",this.state.editlabel);
                                 value={item.label}
                                 onChange={(e) => this.OnChange(e, index, item)}
                             />
-                            <IconButton onClick={()=>this.HandleEdit(item.id)}>
+                            <IconButton onClick={() => this.HandleEdit(item.id)}>
                                 <EditRoundedIcon />
                             </IconButton>
                         </div>
