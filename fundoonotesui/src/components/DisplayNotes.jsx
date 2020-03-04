@@ -10,7 +10,14 @@ import { Avatar, IconButton } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import pin from '../images/pin.png';
 import unpin from '../images/unpin.png';
-
+import NoteServices from '../services/NoteServices';
+import Masonry from 'react-masonry-css'
+const notesServices = new NoteServices()
+const breakpointColumnsObj = {
+    default: 3,
+    700: 2,
+    500: 1
+  };
 const collabtheme = createMuiTheme({
     overrides: {
         MuiAvatar: {
@@ -37,6 +44,8 @@ class DisplayNotes extends Component {
 
     }
     HandleEditNote = (element) => {
+
+
         this.setState(prevState => ({
             change: !prevState.change,
             noteId: element.id,
@@ -48,9 +57,29 @@ class DisplayNotes extends Component {
     CallBack = () => {
         this.props.parentToAllNoteCallback();
     }
-    pinNote = () => {
-    console.log("hereeeee");
-    
+    pinNote = (element) => {
+        console.log("noteid", element.id);
+
+        if (element.isPin === true) {
+            let data = { value: false }
+            notesServices.PinNote(element.id, data).then(response => {
+
+                this.props.parentToAllNoteCallback();
+                console.log("note unpinned", response.data);
+
+
+            })
+        }
+        else {
+            let data = { value: true }
+            notesServices.PinNote(element.id, data).then(response => {
+
+                this.props.parentToAllNoteCallback();
+                console.log("note pinned", response.data);
+
+            })
+        }
+
     }
     render() {
         console.log('==>', this.props.AllNotes);
@@ -61,13 +90,13 @@ class DisplayNotes extends Component {
                         <Card variant="outlined" style={{ backgroundColor: element.color }}>
                             <div className="iconvisi" style={{ float: 'right', marginRight: '48px' }}>
                                 <div style={{ position: 'absolute', margintop: '5px' }}>
-                                <IconButton onClick={this.pinNote} style={{height:'50px',width:'50px'}}>
-                                    {element.IsPin ?
-                                    
-                                        <img src={pin} /> 
-                                       :
-                                        <img src={unpin} />}
-                                         </IconButton>
+                                    <IconButton onClick={() => this.pinNote(element)} style={{ height: '50px', width: '50px' }}>
+                                        {element.isPin ?
+
+                                            <img src={pin} />
+                                            :
+                                            <img src={unpin} />}
+                                    </IconButton>
                                 </div>
                             </div>
                             <div>
@@ -138,7 +167,14 @@ class DisplayNotes extends Component {
         return (
             <div>
                 <div className="notesdisplay">
-                    {notes}
+                    <Masonry
+                        breakpointCols={breakpointColumnsObj}
+                        className="my-masonry-grid"
+                        columnClassName="my-masonry-grid_column">
+                        
+
+                        {notes}
+                    </Masonry>
                 </div>
                 <div>
                     {this.state.change ? <UpdateNote object={this.state} parentCallback={this.CallBack}></UpdateNote> : null}

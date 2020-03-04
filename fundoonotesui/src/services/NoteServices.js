@@ -125,4 +125,26 @@ export default class NoteServices {
             }
         })
     }
+    PinNote(id,data){
+        console.log("data in services",data);
+        
+        var token = localStorage.getItem("logintoken")
+        return services.PUT(`${notesBaseURL}/` + id + `/Pinned`, data, {
+            headers: {
+                'Content-Type': 'application/json', 'Accept': '*',
+                Authorization: 'Bearer ' + token
+            }
+        })
+    }
+    GetPinned(){
+        console.log("pinned in service");
+        
+        var token = localStorage.getItem("logintoken")
+        return services.GET(`${notesBaseURL}/AllPin`, {
+            headers: {
+                'Content-Type': 'application/json', 'Accept': '*',
+                Authorization: 'Bearer ' + token
+            }
+        })
+    }
 }

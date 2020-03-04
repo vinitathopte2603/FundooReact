@@ -54,18 +54,21 @@ class UpdateLabel extends Component {
     newlabelonchange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
-    OnChange = (e, key, item) => {
-        console.log("setstate", e.currentTarget.value, item.label);
+    OnChange = async(e, key, item) => {
+        
+        console.log("setstate==>", e.currentTarget.value, item.label);
         // this.setState({ [e.target.name]: e.target.value });
-        this.setState({
+        await this.setState({
             editlabel: e.currentTarget.value
         })
+        e.persist();
         //   var  edi= e.currentTarget.value
         console.log("current value in ", this.state.editlabel);
 
         var stateCopy = Object.assign({}, this.state);
-        stateCopy.labels[key].label = e.currentTarget.value;
+        stateCopy.labels[key].label = this.state.editlabel;
         this.setState(stateCopy);
+        
     }
     HandleEdit = (id) => {
         console.log("submit edit ", this.state.editlabel);

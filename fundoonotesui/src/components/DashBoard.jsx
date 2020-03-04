@@ -35,13 +35,14 @@ import AllLabel from '../components/Labels/AllLabel'
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import UserServices from '../services/UserServices'
+import SearchNote from './SearchNote';
 
 const userService = new UserServices()
 const drawertheme = createMuiTheme({
   overrides: {
     MuiDrawer: {
       paperAnchorLeft: {
-        top: 65
+        top: 70
       }
     }
   }
@@ -74,7 +75,7 @@ class DashBoard extends Component {
         width: 30,
         aspect: 1 / 1,
       },
-
+    keyword:''
 
     };
   }
@@ -165,16 +166,16 @@ class DashBoard extends Component {
     console.log("imager cropped");
 
   }
-   async MakeClientCrop(crop) {
+  async MakeClientCrop(crop) {
     if (this.imageRef && crop.width && crop.height) {
-      const croppedImageUrl =  await this.getCroppedImg(
+      const croppedImageUrl = await this.getCroppedImg(
         this.imageRef,
         crop,
         'newFile.jpeg'
       );
-      console.log("image",croppedImageUrl);
-      
-       this.setState({ imageFile1:croppedImageUrl });
+      console.log("image", croppedImageUrl);
+
+      this.setState({ imageFile1: croppedImageUrl });
     }
   }
   getCroppedImg(image, crop, fileName) {
@@ -200,7 +201,7 @@ class DashBoard extends Component {
     return new Promise((resolve) => {
       canvas.toBlob(blob => {
         if (!blob) {
-          
+
           console.error('Canvas is empty');
           return;
         }
@@ -211,8 +212,13 @@ class DashBoard extends Component {
       }, 'image/jpeg');
     });
   }
+  OnChange=(e)=>{
+    this.setState({ [e.target.name]: e.target.value });
+    console.log(this.state.keyword);
+    
+  }
   render() {
-  
+
 
     if (this.state.loggedIn === false) {
       return <Redirect to="/" />
@@ -242,11 +248,11 @@ class DashBoard extends Component {
 
                 <div style={{ display: 'flex' }}>
                   <div >
-                  <Avatar variant="square" src={keepimage} style={{height:'51px',width:'51px'}} />
+                    <Avatar variant="square" src={keepimage} style={{ height: '51px', width: '51px' }} />
                   </div>
                   <div>
-                  <Typography variant="h6" noWrap style={{ color: 'black', marginTop: '7px' }}>
-                    Keep
+                    <Typography variant="h6" noWrap style={{ color: 'black', marginTop: '7px' }}>
+                      Keep
           </Typography></div></div> : null}||{this.state.isReminder ? <div>
                 <Typography variant="h6" noWrap style={{ color: 'black' }}>
                   Remainder
@@ -267,10 +273,14 @@ class DashBoard extends Component {
                   placeholder="Search…"
                   style={{ width: '500px', marginTop: '2%' }}
                   inputProps={{ 'aria-label': 'search' }}
+                  name="keyword"
+                  value={this.state.keyword}
+                  onChange={this.OnChange}
                 />
                 <IconButton>
                   <ClearIcon />
                 </IconButton>
+                
               </div>
               <div className="iconsdiv" style={{ marginLeft: '25%' }}>
                 <div className="refreshicon">
@@ -293,7 +303,7 @@ class DashBoard extends Component {
                 </div>
                 <div>
                   <IconButton onClick={this.profileupload}>
-                    <Avatar alt={localStorage.getItem("first")} src={localStorage.getItem("imageurl")} style={{ marginLeft: '30%',height:'45px',width:'45px' }} />
+                    <Avatar alt={localStorage.getItem("first")} src={localStorage.getItem("imageurl")} style={{ marginLeft: '30%', height: '45px', width: '45px' }} />
                   </IconButton>
                   <div>
                     <Popover open={openpopover}

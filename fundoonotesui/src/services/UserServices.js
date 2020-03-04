@@ -1,5 +1,5 @@
 import AxiosServices from './AxiosServices'
-const userAccountBaseURL = "http://localhost:53715/api/Accounts/";
+const userAccountBaseURL = "http://localhost:53715/api/Accounts";
 let services = new AxiosServices()
 
 export default class UserServices {

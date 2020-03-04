@@ -28,6 +28,7 @@ class CreateNote extends Component {
     }
     OnChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
+        
     }
     Create = () => {
         this.setState({ takeNote: !this.state.takeNote })
