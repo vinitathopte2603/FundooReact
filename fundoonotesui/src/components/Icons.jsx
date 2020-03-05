@@ -12,13 +12,14 @@ import MenuList from '@material-ui/core/MenuList';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import '../scss/createnote.scss'
-import { Card, Paper, Dialog, InputBase, Avatar } from '@material-ui/core';
+import { Card, Paper, Dialog, InputBase, Avatar, Button } from '@material-ui/core';
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import NoteServices from '../services/NoteServices';
 import Tooltip from '@material-ui/core/Tooltip';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import '../scss/changebackgroundcolor.scss'
+import '../scss/collaborate.scss'
 
 const notesServices = new NoteServices()
 
@@ -190,24 +191,39 @@ class Icons extends Component {
             </Tooltip>
             {this.state.collab ?
               <Dialog open={this.state.collab} onClose={this.handlecollabclose}>
-                <Card style={{height:'200px',width:'588px'}}>
-                  <div>
+                <Card style={{height:'100%',width:'588px'}}>
+                  <div className="cardpadding">
                     <div className="collabtitle">
                       Collaborators
                     </div>
-                    
+                    <div className="collabmaindiv">
+                    <div className="ownerdiv">
                     <div>
-                      <Avatar src={localStorage.getItem("imageurl")}/>
-                      {localStorage.getItem("first")}
+                      <Avatar src={localStorage.getItem("imageurl")} style={{height:'40px',width:'40px'}} />
                     </div>
-                  <div>
+                  <div style={{marginTop:'5px', marginLeft:'10px'}}>
+                    <div className="collabowner">
+                  {localStorage.getItem("first")} (owner)
+                  </div>
+                  <div style={{color: '#5f6368',fontSize:'13px'}}>
                   {localStorage.getItem("email")}
                   </div>
+                  </div>
+                  </div>
+                  <div className="ownerdiv">
                    <PersonAddIcon/>
-
                    <InputBase
                    placeholder="Person or email to share with"
+                   style={{width:'253px',marginLeft:'21px'}}
                    />
+                   </div>
+                  </div>
+                  </div>
+                  <div className="collabbutton">
+                    <div className="collabcancel">
+                  <Button>Cancel</Button>
+                  </div>
+                  <Button>Save</Button>
                   </div>
                 </Card>
 

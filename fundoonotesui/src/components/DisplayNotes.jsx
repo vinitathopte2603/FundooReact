@@ -58,14 +58,14 @@ class DisplayNotes extends Component {
         this.props.parentToAllNoteCallback();
     }
     pinNote = (element) => {
-        console.log("noteid", element.id);
+       
 
         if (element.isPin === true) {
             let data = { value: false }
             notesServices.PinNote(element.id, data).then(response => {
 
                 this.props.parentToAllNoteCallback();
-                console.log("note unpinned", response.data);
+               
 
 
             })
@@ -73,16 +73,13 @@ class DisplayNotes extends Component {
         else {
             let data = { value: true }
             notesServices.PinNote(element.id, data).then(response => {
-
                 this.props.parentToAllNoteCallback();
-                console.log("note pinned", response.data);
-
             })
         }
-
     }
     render() {
-        console.log('==>', this.props.AllNotes);
+        const list= this.props.listview?'listview':'notesdisplay'
+        // console.log('==>', this.props.AllNotes);
         const notes = this.props.AllNotes.map((element, index) => {
             return (
                 <div style={{ marginBottom: '20px', width: '250px', marginRight: '25px' }} key={index} >
@@ -93,16 +90,16 @@ class DisplayNotes extends Component {
                                     <IconButton onClick={() => this.pinNote(element)} style={{ height: '50px', width: '50px' }}>
                                         {element.isPin ?
 
-                                            <img src={pin} />
+                                            <img src={pin} alt="Pin"/>
                                             :
-                                            <img src={unpin} />}
+                                            <img src={unpin} alt="Unpin"/>}
                                     </IconButton>
                                 </div>
                             </div>
                             <div>
                                 {element.image === null ? null :
                                     <div className="box">
-                                        <img src={element.image}></img>
+                                        <img src={element.image} alt=""></img>
                                     </div>}
                             </div>
 
@@ -171,8 +168,6 @@ class DisplayNotes extends Component {
                         breakpointCols={breakpointColumnsObj}
                         className="my-masonry-grid"
                         columnClassName="my-masonry-grid_column">
-                        
-
                         {notes}
                     </Masonry>
                 </div>

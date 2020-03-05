@@ -11,12 +11,12 @@ import Archive from './components/Archive';
 import Trash from './components/Trash';
 import ReminderNotes from './components/ReminderNotes';
 import NotesByLabelId from './components/NotesByLabelId';
+import SearchNote from './components/SearchNote';
 function App() {
   return (
     <div className="App">
       <Router>
         <div>
-        
            <Route path="/" exact component={Signin}/>
             <Route path="/signin" component={Signin} />
             <Route path="/registration" component={Registration}/>
@@ -28,9 +28,7 @@ function App() {
             <Route path="/u/0/trash" component={Trash} />
             <Route path="/u/0/label/:label" component={NotesByLabelId}/>
             <Route path="/u/0/reminders" component={ReminderNotes}/>
-          
-            
-          
+            <Route path="/u/0/search/:search" component={SearchNote}/>
         </div>
       </Router>
     </div>

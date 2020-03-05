@@ -16,10 +16,11 @@ class CreateNote extends Component {
             title: '',
             description: '',
             labels: [],
+            color:'#ffffff',
             collaborations: [],
-            note:{
-                isTrash:false
-            } 
+            note: {
+                isTrash: false
+            }
 
         }
     }
@@ -28,7 +29,7 @@ class CreateNote extends Component {
     }
     OnChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
-        
+
     }
     Create = () => {
         this.setState({ takeNote: !this.state.takeNote })
@@ -36,12 +37,13 @@ class CreateNote extends Component {
             Title: this.state.title,
             Description: this.state.description,
             labels: this.state.labels,
-            Collaborators: this.state.collaborations
+            Collaborators: this.state.collaborations,
+            Color:this.state.color
         }
-    
+
 
         notesServices.CreateNote(data).then(response => {
-            
+
             this.setState({
                 title: '',
                 description: '',
@@ -50,7 +52,7 @@ class CreateNote extends Component {
 
             })
             this.props.parentCallback();
-            
+
 
         })
     }
@@ -60,33 +62,34 @@ class CreateNote extends Component {
             <div className="note">
                 <Card>
                     <div className="inputbasediv">
-                        <div className="inputbase">
-                            <InputBase
-                                placeholder="Title"
-                                multiline
-                                inputProps={{ 'aria-label': 'naked' }}
-                                onClick={this.onTakeNote}
-                                name="title"
-                                value={this.state.title}
-                                onChange={this.OnChange}
-                                style={{ width: '600px' }}
-                            />
-                        </div>
                         {this.state.takeNote ?
                             <div className="inputbase">
-
                                 <InputBase
-                                    placeholder="Take a note"
+                                    placeholder="Title"
                                     multiline
                                     inputProps={{ 'aria-label': 'naked' }}
-                                    name="description"
-                                    value={this.state.description}
+                                    name="title"
+                                    value={this.state.title}
                                     onChange={this.OnChange}
                                     style={{ width: '600px' }}
                                 />
                             </div> : null}
+
+                        <div className="inputbase">
+
+                            <InputBase
+                                placeholder="Take a note"
+                                multiline
+                                inputProps={{ 'aria-label': 'naked' }}
+                                name="description"
+                                onClick={this.onTakeNote}
+                                value={this.state.description}
+                                onChange={this.OnChange}
+                                style={{ width: '600px' }}
+                            />
+                        </div>
                     </div>
-                    
+
                     {this.state.takeNote ?
                         <div className="noteiconsdiv">
                             <div>

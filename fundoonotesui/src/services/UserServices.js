@@ -24,7 +24,6 @@ export default class UserServices {
         })
     }
     profilePicture(data) {
-        console.log("in profilepicture", data);
         var token = localStorage.getItem("logintoken")
         return services.PUT(`${userAccountBaseURL}/profilepicture`,data,{
             headers: {

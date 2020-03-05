@@ -32,7 +32,7 @@ class AllNotes extends Component {
     }
     GetPinnedNotes = () => {
         notesServices.GetPinned().then(response => {
-            console.log("response", response.data.data);
+           
 
             if (response.data.data != null) {
                 this.setState({

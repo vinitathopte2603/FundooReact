@@ -12,9 +12,7 @@ export default class LabelServices {
             }
         })
     }
-    CreateLabel(data) {
-        console.log("in label services",data);
-        
+    CreateLabel(data) {        
         var token = localStorage.getItem("logintoken")
         return services.POST(labelsBaseURL, data, {
             headers: {
@@ -33,7 +31,6 @@ export default class LabelServices {
         })
     }
     EditLabel(data,id){
-        console.log("id in edit label",id);
         var token = localStorage.getItem("logintoken")
         return services.PUT(`${labelsBaseURL}/`+ id, data,{
             headers: {

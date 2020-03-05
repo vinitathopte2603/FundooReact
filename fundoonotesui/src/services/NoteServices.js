@@ -13,8 +13,6 @@ export default class NoteServices {
         })
     }
     GetAllArchive() {
-
-
         var token = localStorage.getItem("logintoken")
         return services.GET(`${notesBaseURL}/AllArchive`, {
             headers: {
@@ -24,8 +22,6 @@ export default class NoteServices {
         })
     }
     GetAllTrash() {
-
-
         var token = localStorage.getItem("logintoken")
         return services.GET(`${notesBaseURL}/AllTrash`, {
             headers: {
@@ -35,8 +31,6 @@ export default class NoteServices {
         })
     }
     GetAllReminder() {
-
-
         var token = localStorage.getItem("logintoken")
         return services.GET(`${notesBaseURL}/reminder`, {
             headers: {
@@ -46,7 +40,6 @@ export default class NoteServices {
         })
     }
     CreateNote(data) {
-
         var token = localStorage.getItem("logintoken")
         return services.POST(notesBaseURL, data, {
             headers: {
@@ -57,7 +50,6 @@ export default class NoteServices {
 
     }
     MoveToTrash(id, data) {
-
         var token = localStorage.getItem("logintoken")
         return services.PUT(`${notesBaseURL}/` + id + `/trash`, data, {
             headers: {
@@ -68,7 +60,6 @@ export default class NoteServices {
 
     }
     MoveToArchive(id, data) {
-
         var token = localStorage.getItem("logintoken")
         return services.PUT(`${notesBaseURL}/` + id + `/Archived`, data, {
             headers: {
@@ -78,7 +69,6 @@ export default class NoteServices {
         })
     }
     DeleteNote(id) {
-
         var token = localStorage.getItem("logintoken")
         return services.DELETE(`${notesBaseURL}/` + id, {
             headers: {
@@ -106,8 +96,6 @@ export default class NoteServices {
         })
     }
     ChangeColour(data, id) {
-
-
         var token = localStorage.getItem("logintoken")
         return services.PUT(`${notesBaseURL}/` + id + `/color`, data, {
             headers: {
@@ -125,9 +113,7 @@ export default class NoteServices {
             }
         })
     }
-    PinNote(id,data){
-        console.log("data in services",data);
-        
+    PinNote(id, data) {
         var token = localStorage.getItem("logintoken")
         return services.PUT(`${notesBaseURL}/` + id + `/Pinned`, data, {
             headers: {
@@ -136,11 +122,20 @@ export default class NoteServices {
             }
         })
     }
-    GetPinned(){
-        console.log("pinned in service");
-        
+    GetPinned() {
         var token = localStorage.getItem("logintoken")
         return services.GET(`${notesBaseURL}/AllPin`, {
+            headers: {
+                'Content-Type': 'application/json', 'Accept': '*',
+                Authorization: 'Bearer ' + token
+            }
+        })
+    }
+    SearchNotes(data) {
+        // console.log("data in search",data);
+        
+        var token = localStorage.getItem("logintoken")
+        return services.GET(`${notesBaseURL}?keyword=` + data, {
             headers: {
                 'Content-Type': 'application/json', 'Accept': '*',
                 Authorization: 'Bearer ' + token

@@ -1,0 +1,42 @@
+.collabowner
+{font-family: 'Roboto',arial,sans-serif;
+font-size: '15px';
+font-weight: 600;}
+.ownerdiv{
+    display: flex;
+    padding-left: 15px;
+    margin-top: 17px;
+}
+.collabbutton{
+    background-color: rgba(0,0,0,0.07);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px 15px;
+}
+.collabmaindiv{
+   
+    box-sizing: border-box;
+    max-height: 320.828px;
+    min-height: 150px;
+    overflow-y: auto;
+}
+.cardpadding{
+    padding: 15px 15px 0;
+}
+.collabcancel{
+    user-select: none;
+    margin-right: 16px;
+    box-sizing: border-box;
+    color: rgba(0,0,0,0.87);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    letter-spacing: .01785714em;
+    font-family: 'Google Sans',Roboto,Arial,sans-serif;
+    font-size: .875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    height: 36px;
+    border-radius: 4px;
+}

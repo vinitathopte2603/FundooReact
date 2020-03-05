@@ -35,7 +35,7 @@ import AllLabel from '../components/Labels/AllLabel'
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import UserServices from '../services/UserServices'
-import SearchNote from './SearchNote';
+import { connect } from 'react-redux';
 
 const userService = new UserServices()
 const drawertheme = createMuiTheme({
@@ -75,7 +75,7 @@ class DashBoard extends Component {
         width: 30,
         aspect: 1 / 1,
       },
-    keyword:''
+      keyword: ''
 
     };
   }
@@ -99,7 +99,7 @@ class DashBoard extends Component {
     this.props.history.push('/u/0/archive')
   }
   showAllNotes = () => {
-    this.setState({ isNotes: true, isReminder: false, isTrash: false, isArchive: false })
+    this.setState({ isNotes: true, isReminder: false, isTrash: false, isArchive: false, keyword: '' })
     this.props.history.push('/u/0/notes')
   }
   showTrash = () => {
@@ -173,7 +173,7 @@ class DashBoard extends Component {
         crop,
         'newFile.jpeg'
       );
-      console.log("image", croppedImageUrl);
+      
 
       this.setState({ imageFile1: croppedImageUrl });
     }
@@ -212,11 +212,21 @@ class DashBoard extends Component {
       }, 'image/jpeg');
     });
   }
-  OnChange=(e)=>{
+  OnChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
-    console.log(this.state.keyword);
-    
+    const data = {
+      keyword: e.target.value
+    }
+    this.props.dispatch({
+      type: 'SEARCH',
+      data
+    });
+    this.props.history.push(`/u/0/search/${e.target.value}`)
   }
+  homepage = () => {
+    this.props.history.push('/u/0/notes')
+  }
+
   render() {
 
 
@@ -248,7 +258,7 @@ class DashBoard extends Component {
 
                 <div style={{ display: 'flex' }}>
                   <div >
-                    <Avatar variant="square" src={keepimage} style={{ height: '51px', width: '51px' }} />
+                    <Avatar variant="square" src={keepimage} style={{ height: '41px', width: '41px' }} />
                   </div>
                   <div>
                     <Typography variant="h6" noWrap style={{ color: 'black', marginTop: '7px' }}>
@@ -276,11 +286,12 @@ class DashBoard extends Component {
                   name="keyword"
                   value={this.state.keyword}
                   onChange={this.OnChange}
+                
                 />
-                <IconButton>
+                <IconButton onClick={this.homepage}>
                   <ClearIcon />
                 </IconButton>
-                
+
               </div>
               <div className="iconsdiv" style={{ marginLeft: '25%' }}>
                 <div className="refreshicon">
@@ -303,7 +314,8 @@ class DashBoard extends Component {
                 </div>
                 <div>
                   <IconButton onClick={this.profileupload}>
-                    <Avatar alt={localStorage.getItem("first")} src={localStorage.getItem("imageurl")} style={{ marginLeft: '30%', height: '45px', width: '45px' }} />
+                    <Avatar alt={localStorage.getItem("first")} src={localStorage.getItem("imageurl")}
+                      style={{ marginLeft: '30%', height: '41px', width: '41px' }} />
                   </IconButton>
                   <div>
                     <Popover open={openpopover}
@@ -459,4 +471,4 @@ class DashBoard extends Component {
   }
 
 }
-export default DashBoard
+export default connect()(DashBoard)

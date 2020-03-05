@@ -25,7 +25,7 @@ class AllLabel extends Component {
     }
     GetAllLabels = () => {
         labelsServices.GetAllLabels().then(response => {
-            console.log("all labels", response.data.data);
+            
             if (response.data.data != null) {
                 this.setState({ allLabels: response.data.data })
             }
