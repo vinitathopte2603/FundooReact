@@ -18,6 +18,8 @@ class Archive extends Component {
             this.allArchive = this.reverseArray.reverse()
             if (response.data.data != null) {
                 this.setState({ allArchive: response.data.data })
+                console.log("archived",response.data.data);
+                
             }
           
         })

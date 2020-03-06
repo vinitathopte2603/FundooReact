@@ -6,6 +6,7 @@ import '../scss/displaynotes.scss'
 import Icons from './Icons'
 import NoteServices from '../services/NoteServices';
 const notesServices = new NoteServices()
+
 class UpdateNote extends Component {
     constructor(props) {
         super(props);
@@ -31,7 +32,7 @@ class UpdateNote extends Component {
             labels: this.state.labels,
             Collaborators: this.state.collaborations
         }
-        notesServices.UpdateNote(this.props.object.noteId, data).then(response => {
+        notesServices.UpdateNote(this.props.note.noteId, data).then(response => {
            
             this.props.parentCallback();
             
@@ -41,8 +42,8 @@ class UpdateNote extends Component {
     }
     componentDidMount() {
         this.setState({
-            title: this.props.object.title,
-            description: this.props.object.description
+            title: this.props.note.title,
+            description: this.props.note.description
         })
     }
     OnChange = (e) => {
@@ -53,9 +54,15 @@ class UpdateNote extends Component {
     
         return (
             <div>
-                <Dialog open={this.state.openDialog} onClose={this.HandleClose}>
-                    <DialogContent>
+                <Dialog  open={this.state.openDialog} onClose={this.HandleClose}>
+                    <DialogContent style={{backgroundColor:this.props.note.color,padding:0}}>
+                      <div>
+                          <div>
+                              <img src={this.props.note.image}></img>
+                          </div>
+                          <div style={{marginLeft:'13px'}}>
                         <div  >
+                            
                             <InputBase
                                 placeholder="Title"
                                 multiline
@@ -75,11 +82,14 @@ class UpdateNote extends Component {
                                 onChange={this.OnChange}
                             />
                         </div>
+                        </div>
+                        </div>
                     </DialogContent>
-                    <DialogActions>
-                        <div className="noteiconsdiv">
+                    <DialogActions style={{padding:0}}>
+                        <div style={{backgroundColor:this.props.note.color}} className="noteiconsdiv">
                             <div>
-                                <Icons note={this.props.object} />
+                                <Icons note={this.props.note} />
+                             
                             </div>
                             <div>
                                 <Button style={{ marginRight: '9px', color: "dimgray" }} onClick={this.Update}>Close</Button>
@@ -91,4 +101,4 @@ class UpdateNote extends Component {
         )
     }
 }
-export default UpdateNote
+export default UpdateNote 

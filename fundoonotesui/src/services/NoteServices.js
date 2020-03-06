@@ -132,10 +132,26 @@ export default class NoteServices {
         })
     }
     SearchNotes(data) {
-        // console.log("data in search",data);
-        
         var token = localStorage.getItem("logintoken")
         return services.GET(`${notesBaseURL}?keyword=` + data, {
+            headers: {
+                'Content-Type': 'application/json', 'Accept': '*',
+                Authorization: 'Bearer ' + token
+            }
+        })
+    }
+    GetAllUser(data){
+        var token = localStorage.getItem("logintoken")
+        return services.GET(`${notesBaseURL}/users?keyword=` + data , {
+            headers: {
+                'Content-Type': 'application/json', 'Accept': '*',
+                Authorization: 'Bearer ' + token
+            }
+        })
+    }
+    AddCollaboration(noteid,data){
+        var token = localStorage.getItem("logintoken")
+        return services.PUT(`${notesBaseURL}/` + noteid + `/collaborate`, data, {
             headers: {
                 'Content-Type': 'application/json', 'Accept': '*',
                 Authorization: 'Bearer ' + token

@@ -39,6 +39,11 @@ class DisplayNotes extends Component {
             title: '',
             description: '',
             noteId: '',
+            image:'',
+            isArchive:'',
+            isPin:'',
+            isTrash:'',
+            color:'',
             change: false
         }
 
@@ -50,7 +55,12 @@ class DisplayNotes extends Component {
             change: !prevState.change,
             noteId: element.id,
             title: element.title,
-            description: element.description
+            description: element.description,
+            image:element.image,
+            isArchive:element.isArchive,
+            isPin:element.isPin,
+            isTrash:element.isTrash,
+            color:element.color
         }))
 
     }
@@ -172,7 +182,7 @@ class DisplayNotes extends Component {
                     </Masonry>
                 </div>
                 <div>
-                    {this.state.change ? <UpdateNote object={this.state} parentCallback={this.CallBack}></UpdateNote> : null}
+                    {this.state.change ? <UpdateNote note={this.state} parentCallback={this.CallBack}></UpdateNote> : null}
                 </div>
             </div>
         )

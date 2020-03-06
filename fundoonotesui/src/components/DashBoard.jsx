@@ -173,7 +173,7 @@ class DashBoard extends Component {
         crop,
         'newFile.jpeg'
       );
-      
+
 
       this.setState({ imageFile1: croppedImageUrl });
     }
@@ -286,7 +286,7 @@ class DashBoard extends Component {
                   name="keyword"
                   value={this.state.keyword}
                   onChange={this.OnChange}
-                
+
                 />
                 <IconButton onClick={this.homepage}>
                   <ClearIcon />
