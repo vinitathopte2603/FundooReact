@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import Signin from './components/Accounts/signin'
+import SignIn from './components/Accounts/signin'
 import Registration from './components/Accounts/registration'
 import { BrowserRouter as Router, Route} from 'react-router-dom';
 import ForgotPassword from './components/Accounts/ForgotPassword'
@@ -17,8 +17,8 @@ function App() {
     <div className="App">
       <Router>
         <div>
-           <Route path="/" exact component={Signin}/>
-            <Route path="/signin" component={Signin} />
+           <Route path="/" exact component={SignIn}/>
+            <Route path="/signin" component={SignIn} />
             <Route path="/registration" component={Registration}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
             <Route path="/resetpassword/:token" component={ResetPassword}/>

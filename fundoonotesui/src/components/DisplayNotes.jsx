@@ -12,12 +12,14 @@ import pin from '../images/pin.png';
 import unpin from '../images/unpin.png';
 import NoteServices from '../services/NoteServices';
 import Masonry from 'react-masonry-css'
+import { connect } from 'react-redux';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 const notesServices = new NoteServices()
 const breakpointColumnsObj = {
     default: 3,
     700: 2,
     500: 1
-  };
+};
 const collabtheme = createMuiTheme({
     overrides: {
         MuiAvatar: {
@@ -39,11 +41,11 @@ class DisplayNotes extends Component {
             title: '',
             description: '',
             noteId: '',
-            image:'',
-            isArchive:'',
-            isPin:'',
-            isTrash:'',
-            color:'',
+            image: '',
+            isArchive: '',
+            isPin: '',
+            isTrash: '',
+            color: '',
             change: false
         }
 
@@ -56,11 +58,11 @@ class DisplayNotes extends Component {
             noteId: element.id,
             title: element.title,
             description: element.description,
-            image:element.image,
-            isArchive:element.isArchive,
-            isPin:element.isPin,
-            isTrash:element.isTrash,
-            color:element.color
+            image: element.image,
+            isArchive: element.isArchive,
+            isPin: element.isPin,
+            isTrash: element.isTrash,
+            color: element.color
         }))
 
     }
@@ -68,14 +70,14 @@ class DisplayNotes extends Component {
         this.props.parentToAllNoteCallback();
     }
     pinNote = (element) => {
-       
+
 
         if (element.isPin === true) {
             let data = { value: false }
             notesServices.PinNote(element.id, data).then(response => {
 
                 this.props.parentToAllNoteCallback();
-               
+
 
 
             })
@@ -88,11 +90,15 @@ class DisplayNotes extends Component {
         }
     }
     render() {
-        const list= this.props.listview?'listview':'notesdisplay'
+        const list = this.props.posts.view ? 'my-masonry-list' : 'my-masonry-grid'
+        console.log("view", this.props.posts.view);
+        console.log("true",list);
+        
+        const columnsmasonary = this.props.posts ? breakpointColumnsObj : null
         // console.log('==>', this.props.AllNotes);
         const notes = this.props.AllNotes.map((element, index) => {
             return (
-                <div style={{ marginBottom: '20px', width: '250px', marginRight: '25px' }} key={index} >
+                <div style={{ marginBottom: '20px', width: '95%', marginRight: '25px' }} key={index} >
                     <div className="displaycard">
                         <Card variant="outlined" style={{ backgroundColor: element.color }}>
                             <div className="iconvisi" style={{ float: 'right', marginRight: '48px' }}>
@@ -100,9 +106,9 @@ class DisplayNotes extends Component {
                                     <IconButton onClick={() => this.pinNote(element)} style={{ height: '50px', width: '50px' }}>
                                         {element.isPin ?
 
-                                            <img src={pin} alt="Pin"/>
+                                            <img src={pin} alt="Pin" />
                                             :
-                                            <img src={unpin} alt="Unpin"/>}
+                                            <img src={unpin} alt="Unpin" />}
                                     </IconButton>
                                 </div>
                             </div>
@@ -121,6 +127,18 @@ class DisplayNotes extends Component {
                                     </div>
                                     <div className="inputbase">
                                         {element.description}
+                                    </div>
+                                    <div>
+                                        {element.reminder != null ? 
+                                        
+                                    <div> 
+                                    {new Intl.DateTimeFormat('en-GB', { 
+                                        month: 'long', 
+                                        day: '2-digit',
+                                        year: 'numeric', 
+                                    }).format(new Date(element.reminder))}
+                                  
+                                    </div>:null}
                                     </div>
                                     <ThemeProvider theme={collabtheme}>
                                         <div className="chips">
@@ -173,11 +191,12 @@ class DisplayNotes extends Component {
         })
         return (
             <div>
-                <div className="notesdisplay">
+                <div className="notesdisplay" >
                     <Masonry
-                        breakpointCols={breakpointColumnsObj}
-                        className="my-masonry-grid"
-                        columnClassName="my-masonry-grid_column">
+                        breakpointCols={columnsmasonary}
+                        className={list}
+
+                        columnClassName="">
                         {notes}
                     </Masonry>
                 </div>
@@ -188,4 +207,9 @@ class DisplayNotes extends Component {
         )
     }
 }
-export default DisplayNotes
+const mapStateToProps = (state) => {
+    return {
+        posts: state
+    }
+}
+export default connect(mapStateToProps)(DisplayNotes)

@@ -112,8 +112,15 @@ class DashBoard extends Component {
   }
   HandleListView = () => {
     this.setState({ listView: !this.state.listView })
+    
+    const data = {
+      view: this.state.listView
+    }
+    this.props.dispatch({
+      type: 'VIEW',
+      data
+    });
   }
-
   profileupload = event => {
     this.setState({
       anchorEl: event.currentTarget,
@@ -301,9 +308,9 @@ class DashBoard extends Component {
                 </div>
                 <div>
                   <IconButton onClick={this.HandleListView}>
-                    {this.state.listView ?
-                      <BorderAllIcon></BorderAllIcon> :
-                      <ViewAgendaOutlinedIcon></ViewAgendaOutlinedIcon>
+                    {this.state.listView ? 
+                      <ViewAgendaOutlinedIcon></ViewAgendaOutlinedIcon>:
+                      <BorderAllIcon></BorderAllIcon>
                     }
                   </IconButton>
                 </div>

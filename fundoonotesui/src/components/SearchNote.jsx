@@ -12,9 +12,9 @@ class SearchNote extends Component {
         }
     }
     Search = () => {
-        const keyword=this.props.posts.keyword
+        const keyword = this.props.posts.keyword
         notesServices.SearchNotes(keyword).then(response => {
-            this.reverseArray = response.data.data.filter(note => note.isTrash === false && note.isArchive === false 
+            this.reverseArray = response.data.data.filter(note => note.isTrash === false && note.isArchive === false
                 && note.isPin === false)
             this.reverseArray.reverse()
             if (response.data.data != null) {
@@ -25,13 +25,13 @@ class SearchNote extends Component {
     componentDidUpdate = () => {
         this.Search()
     }
-  
-    
+
+
     render() {
         return (
             <div>
                 <div style={{ marginTop: '75px' }}>
-                    <DisplayNotes  AllNotes={this.state.allNote} />
+                    <DisplayNotes AllNotes={this.state.allNote} />
                 </div>
             </div>
         )
