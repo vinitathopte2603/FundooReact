@@ -6,7 +6,7 @@ import '../scss/displaynotes.scss'
 import UpdateNote from './UpdateNote';
 import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
-import { Avatar, IconButton } from '@material-ui/core';
+import { Avatar, IconButton, Button } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import pin from '../images/pin.png';
 import unpin from '../images/unpin.png';
@@ -92,10 +92,10 @@ class DisplayNotes extends Component {
     render() {
         const list = this.props.posts.view ? 'my-masonry-list' : 'my-masonry-grid'
         console.log("view", this.props.posts.view);
-        console.log("true",list);
-        
+        console.log("true", list);
+
         const columnsmasonary = this.props.posts ? breakpointColumnsObj : null
-        // console.log('==>', this.props.AllNotes);
+        console.log('==>', this.props.AllNotes);
         const notes = this.props.AllNotes.map((element, index) => {
             return (
                 <div style={{ marginBottom: '20px', width: '95%', marginRight: '25px' }} key={index} >
@@ -129,16 +129,19 @@ class DisplayNotes extends Component {
                                         {element.description}
                                     </div>
                                     <div>
-                                        {element.reminder != null ? 
-                                        
-                                    <div> 
-                                    {new Intl.DateTimeFormat('en-GB', { 
-                                        month: 'long', 
-                                        day: '2-digit',
-                                        year: 'numeric', 
-                                    }).format(new Date(element.reminder))}
-                                  
-                                    </div>:null}
+
+                                        {element.reminder != null ?
+
+                                            <div>
+                                                <Button>
+                                                    <AccessTimeIcon />
+                                                    {new Intl.DateTimeFormat('en-GB', {
+                                                        month: 'long',
+                                                        day: '2-digit',
+                                                        year: 'numeric',
+                                                    }).format(new Date(element.reminder))}
+                                                </Button>
+                                            </div> : null}
                                     </div>
                                     <ThemeProvider theme={collabtheme}>
                                         <div className="chips">

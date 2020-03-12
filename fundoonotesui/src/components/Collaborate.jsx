@@ -4,6 +4,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import '../scss/collaborate.scss'
 import NoteServices from '../services/NoteServices';
 import DoneIcon from '@material-ui/icons/Done';
+import CloseIcon from '@material-ui/icons/Close';
 const notesServices = new NoteServices()
 class Collaborate extends Component {
     constructor(props) {
@@ -12,8 +13,8 @@ class Collaborate extends Component {
             collab: true,
             collabed: [],
             keyword: '',
-            userscollab:[],
-            clb:[]
+            userscollab: [],
+            clb: []
         }
     }
     getAllUsers = (data) => {
@@ -27,6 +28,7 @@ class Collaborate extends Component {
         this.setState({ collab: false })
     }
     OnChange = (e) => {
+        console.log("data", this.props.noteid.collaborations);
         this.setState({ [e.target.name]: e.target.value })
         if (e.target.value != null) {
             this.getAllUsers(e.target.value)
@@ -34,19 +36,27 @@ class Collaborate extends Component {
 
     }
     addcollab = (userid) => {
-      
-       var data ={
-        userId:userid
-       }
-       this.state.userscollab.push(data)
-       var userdata={
-        collaboratorRequestModels: this.state.userscollab
-       }
-       notesServices.AddCollaboration(this.props.noteid,userdata).then(response=>{
-           console.log("added",response.data)
-       })
+
+        var data = {
+            userId: userid
+        }
+        this.state.userscollab.push(data)
+        var userdata = {
+            collaboratorRequestModels: this.state.userscollab
+        }
+
+
+        notesServices.AddCollaboration(this.props.noteid.id, userdata).then(response => {
+            console.log("added", response.data)
+        })
+    }
+    RemoveCollab=()=>{
+       notesServices.RemoveCollaboration(this.props.noteid.id, userdata)
+        
     }
     render() {
+
+
         let users = null
         if (this.state.collabed != null) {
             users = this.state.collabed.map((item, index) => {
@@ -56,12 +66,12 @@ class Collaborate extends Component {
                         <Paper >
                             <div className="addcollab">
                                 <div>
-                            {item.email}
+                                    {item.email}
+                                </div>
+                                <div>
+                                    <DoneIcon onClick={() => this.addcollab(item.userId)}></DoneIcon>
+                                </div>
                             </div>
-                            <div>
-                           <DoneIcon onClick={() => this.addcollab(item.userId)}></DoneIcon>
-                           </div>
-                           </div>
                         </Paper>
 
                     </div>
@@ -91,6 +101,26 @@ class Collaborate extends Component {
                                     </div>
 
                                 </div>
+                                <div>
+                                    {this.props.noteid.collaborations.map((item, index) => {
+                                        return (
+                                            <div key={index} className="ownerdiv">
+                                                <div>
+                                                    <Avatar src="/broken-image.jpg" style={{ height: '40px', width: '40px' }} />
+                                                </div>
+
+                                                <div style={{ marginTop: '5px', marginLeft: '10px' }}>
+                                                    {item.email}
+
+                                                </div>
+                                                <div style={{marginLeft:'254px'}}>
+                                                    <CloseIcon onClick={this.RemoveCollab}/>
+                                                </div>
+
+                                            </div>
+                                        )
+                                    })}
+                                </div>
                                 <div className="ownerdiv">
                                     <PersonAddIcon />
                                     <InputBase
@@ -100,13 +130,10 @@ class Collaborate extends Component {
                                         value={this.state.keyword}
                                         onChange={this.OnChange}
                                     />
-
                                 </div>
-                                <div>
-                                    <Paper>
-                                        {users}
 
-                                    </Paper>
+                                <div>
+                                    {users}
                                 </div>
                             </div>
                         </div>

@@ -179,6 +179,7 @@ class SignIn extends Component {
                             <ThemeProvider theme={theme}>
                                 <TextField
                                     required
+                                    id="email"
                                     name="email"
                                     label="email"
                                     onChange={this.handleChange}
@@ -201,7 +202,7 @@ class SignIn extends Component {
                         <div className="textfields ">
                             <TextField
                                 required
-                                id="outlined-basic"
+                                id="password"
                                 name="password"
                                 label="password"
                                 onChange={this.handleChange}

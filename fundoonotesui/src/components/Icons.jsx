@@ -12,17 +12,18 @@ import MenuList from '@material-ui/core/MenuList';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import '../scss/createnote.scss'
-import { Card, Paper } from '@material-ui/core';
+import { Card, Paper, Checkbox } from '@material-ui/core';
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import NoteServices from '../services/NoteServices';
 import Tooltip from '@material-ui/core/Tooltip';
 import Collaborate from '../components/Collaborate'
 import '../scss/changebackgroundcolor.scss'
-
+import Popover from '@material-ui/core/Popover';
+import LabelServices from '../services/LabelServices'
 
 const notesServices = new NoteServices()
-
+const labelServices = new LabelServices()
 
 class Icons extends Component {
   constructor(props) {
@@ -33,15 +34,30 @@ class Icons extends Component {
       changeColor: false,
       image: null,
       collab: null,
+      anchorEl: null,
       colors: [{ color: "#d7aefb" }, { color: "#fdcfe8" }, { color: "#e6c9a8" }, { color: "#e8eaed" },
       { color: "#ccff90" }, { color: "#a7ffeb" }, { color: "#cbf0f8" }, { color: "#aecbfa" },
       { color: "#f28b82" }, { color: "#fbbc04" }, { color: "#fff475" }, { color: "#fff" }],
-      clr: ''
+      clr: '',
+      allLabels: []
 
     }
 
   }
+  handleCloseAddLabel = () => {
+    this.setState({
+      anchorEl: null,
+    });
+  };
 
+  handleAddlabel = event => {
+
+    this.setState({
+      anchorEl: event.currentTarget,
+    });
+    this.setState({ open: false });
+    this.getAllLabels()
+  };
   handleClosecolor = event => {
     if (this.anchorEl.contains(event.target)) {
       return;
@@ -144,9 +160,28 @@ class Icons extends Component {
   Collaborate = () => {
     this.setState({ collab: !this.state.collab })
   }
- 
+  getAllLabels = () => {
+    labelServices.GetAllLabels().then(response => {
+      console.log("all labels here", response.data.data);
+      this.setState({ allLabels: response.data.data })
+
+    })
+  }
   render() {
-  
+    const labels = this.state.allLabels.map((element, index) => {
+      return (
+        <div key={index}>
+          <div>
+            <Checkbox
+              value="primary"
+            />
+
+            {element.label}
+          </div>
+
+        </div>
+      )
+    })
     const colour = this.state.colors.map((item, index) => {
       return (
         <div key={index}>
@@ -161,9 +196,11 @@ class Icons extends Component {
       )
     })
     const { open } = this.state;
-
+    const { anchorEl } = this.state;
+    const openlabel = Boolean(anchorEl);
 
     return (
+      <div>
       <div >
         {this.props.note.isTrash ? <div className="noteiconsdiv" >
           <Tooltip title="Delete">
@@ -177,7 +214,7 @@ class Icons extends Component {
             </IconButton>
           </Tooltip>
         </div> :
-      
+
           <div className="noteiconsdiv">
             <Tooltip title="Remind me">
               <IconButton >
@@ -190,7 +227,7 @@ class Icons extends Component {
               </IconButton>
             </Tooltip>
             {this.state.collab ?
-            <Collaborate noteid={this.props.note.id}></Collaborate>: null
+              <Collaborate noteid={this.props.note}></Collaborate> : null
             }
             <Tooltip title="Change color">
               <IconButton onClick={this.handleToggleChangeColor}>
@@ -241,7 +278,7 @@ class Icons extends Component {
                     <ClickAwayListener onClickAway={this.handleClose}>
                       <MenuList>
                         <MenuItem onClick={this.TrashNote}>Delete note</MenuItem>
-                        <MenuItem onClick={this.handleClose}>Add label</MenuItem>
+                        <MenuItem onClick={this.handleAddlabel}>Add label</MenuItem>
 
                       </MenuList>
                     </ClickAwayListener>
@@ -250,9 +287,22 @@ class Icons extends Component {
                 </Grow>
               )}
             </Popper>
+           
           </div>}
-
+         
       </div>
+      <div>
+       {this.state.open ?
+        <Paper
+          id="simple-popper"
+          open={openlabel}
+          anchorEl={anchorEl}
+        // onClose={this.handleCloseAddLabel}
+        >
+          {labels}
+        </Paper> : null}
+        </div>
+        </div>
     )
 
   }
