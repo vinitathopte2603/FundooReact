@@ -45,18 +45,16 @@ class Collaborate extends Component {
             collaboratorRequestModels: this.state.userscollab
         }
 
-
         notesServices.AddCollaboration(this.props.noteid.id, userdata).then(response => {
-            console.log("added", response.data)
+
         })
     }
-    RemoveCollab=()=>{
-       notesServices.RemoveCollaboration(this.props.noteid.id, userdata)
-        
+    RemoveCollab = (userid) => {
+        notesServices.RemoveCollaboration(this.props.noteid.id, userid).then(response => {
+            console.log("removed", response.data)
+        })
     }
     render() {
-
-
         let users = null
         if (this.state.collabed != null) {
             users = this.state.collabed.map((item, index) => {
@@ -113,8 +111,8 @@ class Collaborate extends Component {
                                                     {item.email}
 
                                                 </div>
-                                                <div style={{marginLeft:'254px'}}>
-                                                    <CloseIcon onClick={this.RemoveCollab}/>
+                                                <div style={{ marginLeft: '254px' }}>
+                                                    <CloseIcon onClick={() => this.RemoveCollab(item.userId)} />
                                                 </div>
 
                                             </div>

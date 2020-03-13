@@ -19,9 +19,9 @@ import NoteServices from '../services/NoteServices';
 import Tooltip from '@material-ui/core/Tooltip';
 import Collaborate from '../components/Collaborate'
 import '../scss/changebackgroundcolor.scss'
-import Popover from '@material-ui/core/Popover';
+import Fade from '@material-ui/core/Fade';
 import LabelServices from '../services/LabelServices'
-
+import '../scss/displaynotes.scss'
 const notesServices = new NoteServices()
 const labelServices = new LabelServices()
 
@@ -35,11 +35,16 @@ class Icons extends Component {
       image: null,
       collab: null,
       anchorEl: null,
+      openaddlabel: false,
       colors: [{ color: "#d7aefb" }, { color: "#fdcfe8" }, { color: "#e6c9a8" }, { color: "#e8eaed" },
       { color: "#ccff90" }, { color: "#a7ffeb" }, { color: "#cbf0f8" }, { color: "#aecbfa" },
       { color: "#f28b82" }, { color: "#fbbc04" }, { color: "#fff475" }, { color: "#fff" }],
       clr: '',
-      allLabels: []
+      allLabels: [],
+      placement: null,
+      addlabel: false,
+      labelsToAdd: [],
+      empty: []
 
     }
 
@@ -49,15 +54,16 @@ class Icons extends Component {
       anchorEl: null,
     });
   };
-
-  handleAddlabel = event => {
-
-    this.setState({
-      anchorEl: event.currentTarget,
-    });
-    this.setState({ open: false });
+  handleAddlabel = placement => event => {
+    const { currentTarget } = event;
+    this.setState(state => ({
+      anchorEl: currentTarget,
+      openaddlabel: state.placement !== placement || !state.openaddlabel,
+      placement,
+    }));
     this.getAllLabels()
   };
+
   handleClosecolor = event => {
     if (this.anchorEl.contains(event.target)) {
       return;
@@ -75,7 +81,7 @@ class Icons extends Component {
   };
 
   handleToggle = () => {
-    this.setState(state => ({ open: !state.open }));
+    this.setState(state => ({ open: !state.open, openaddlabel: false }));
   };
   handleToggleChangeColor = () => {
     this.setState({ changeColor: !this.state.changeColor });
@@ -162,23 +168,52 @@ class Icons extends Component {
   }
   getAllLabels = () => {
     labelServices.GetAllLabels().then(response => {
-      console.log("all labels here", response.data.data);
+
       this.setState({ allLabels: response.data.data })
 
     })
   }
+  AddLabelToNote = (labelid) => {
+
+    this.setState({ addlabel: !this.state.addlabel })
+
+    var data = {
+      id: labelid
+    }
+
+    this.state.labelsToAdd.push(data)
+    var labeldata = {
+      labels: this.state.labelsToAdd,
+      collaborators: this.state.empty
+    }
+
+
+    notesServices.UpdateNote(this.props.note.id, labeldata).then(response => {
+
+
+    })
+
+
+  }
+  checkedLabel = (labelid) => {
+
+
+
+  }
   render() {
+
     const labels = this.state.allLabels.map((element, index) => {
       return (
         <div key={index}>
+
           <div>
             <Checkbox
               value="primary"
+              checked={() => this.checkedLabel(element.id)}
+              onClick={() => this.AddLabelToNote(element.id)}
             />
-
             {element.label}
           </div>
-
         </div>
       )
     })
@@ -196,113 +231,108 @@ class Icons extends Component {
       )
     })
     const { open } = this.state;
-    const { anchorEl } = this.state;
-    const openlabel = Boolean(anchorEl);
+    const { anchorEl, openaddlabel, placement } = this.state;
+    const id = openaddlabel ? 'simple-popper' : null;
 
     return (
       <div>
-      <div >
-        {this.props.note.isTrash ? <div className="noteiconsdiv" >
-          <Tooltip title="Delete">
-            <IconButton onClick={this.DeleteForever}>
-              <DeleteForeverIcon style={{ fontSize: '17' }} />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Restore">
-            <IconButton onClick={this.Restore}>
-              <RestoreFromTrashIcon style={{ fontSize: '17' }} />
-            </IconButton>
-          </Tooltip>
-        </div> :
-
-          <div className="noteiconsdiv">
-            <Tooltip title="Remind me">
-              <IconButton >
-                <AddAlertOutlinedIcon style={{ fontSize: '17' }} />
+        <div >
+          {this.props.note.isTrash ? <div className="noteiconsdiv" >
+            <Tooltip title="Delete">
+              <IconButton onClick={this.DeleteForever}>
+                <DeleteForeverIcon style={{ fontSize: '17' }} />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Collaborator">
-              <IconButton onClick={this.Collaborate} >
-                <PersonAddOutlinedIcon style={{ fontSize: '17' }} />
+            <Tooltip title="Restore">
+              <IconButton onClick={this.Restore}>
+                <RestoreFromTrashIcon style={{ fontSize: '17' }} />
               </IconButton>
             </Tooltip>
-            {this.state.collab ?
-              <Collaborate noteid={this.props.note}></Collaborate> : null
-            }
-            <Tooltip title="Change color">
-              <IconButton onClick={this.handleToggleChangeColor}>
-                <PaletteOutlinedIcon style={{ fontSize: '17' }} />
-              </IconButton>
-            </Tooltip>
+          </div> :
+            <div className="noteiconsdiv">
+              <Tooltip title="Remind me">
+                <IconButton >
+                  <AddAlertOutlinedIcon style={{ fontSize: '17' }} />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Collaborator">
+                <IconButton onClick={this.Collaborate} >
+                  <PersonAddOutlinedIcon style={{ fontSize: '17' }} />
+                </IconButton>
+              </Tooltip>
+              {this.state.collab ?
+                <Collaborate noteid={this.props.note}></Collaborate> : null
+              }
+              <Tooltip title="Change color">
+                <IconButton onClick={this.handleToggleChangeColor}>
+                  <PaletteOutlinedIcon style={{ fontSize: '17' }} />
+                </IconButton>
+              </Tooltip>
 
-            <Paper>
-              {this.state.changeColor ?
-                <ClickAwayListener onClickAway={this.handleClosecolor}>
-                  <Card className="colorpalettecard">
-                    {colour}
-                  </Card>
-                </ClickAwayListener>
-                : null}
-            </Paper>
-            <Tooltip title="Add image">
-              <div>
-                <input accept="image/*" style={{ display: 'none' }} id={this.props.note.id} type="file"
-                  onChange={this.imageUpload} />
-                <label htmlFor={this.props.note.id}>
-                  <IconButton component="span">
-                    <ImageOutlinedIcon style={{ fontSize: '17' }} />
-                  </IconButton>
-                </label>
-              </div>
-            </Tooltip>
-            <Tooltip title="Archive">
+              <Paper>
+                {this.state.changeColor ?
+                  <ClickAwayListener onClickAway={this.handleClosecolor}>
+                    <Card className="colorpalettecard">
+                      {colour}
+                    </Card>
+                  </ClickAwayListener>
+                  : null}
+              </Paper>
+              <Tooltip title="Add image">
+                <div>
+                  <input accept="image/*" style={{ display: 'none' }} id={this.props.note.id} type="file"
+                    onChange={this.imageUpload} />
+                  <label htmlFor={this.props.note.id}>
+                    <IconButton component="span">
+                      <ImageOutlinedIcon style={{ fontSize: '17' }} />
+                    </IconButton>
+                  </label>
+                </div>
+              </Tooltip>
+              <Tooltip title="Archive">
+                <IconButton onClick={this.ArchiveNote}>
+                  <ArchiveOutlinedIcon style={{ fontSize: '17' }} />
+                </IconButton>
+              </Tooltip>
 
-              <IconButton onClick={this.ArchiveNote}>
-                <ArchiveOutlinedIcon style={{ fontSize: '17' }} />
-              </IconButton>
-            </Tooltip>
-
-            <Tooltip title="More">
-              <IconButton buttonRef={node => { this.anchorEl = node; }} onClick={this.handleToggle}>
-                <MoreVertIcon style={{ fontSize: '17' }} >
-                </MoreVertIcon>
-              </IconButton>
-            </Tooltip>
-
-            <Popper open={open} anchorEl={this.anchorEl} transition disablePortal style={{ zIndex: 1 }}>
-              {({ TransitionProps }) => (
-                <Grow style={{ zIndex: 1 }}
-                  {...TransitionProps}
-                >
-                  <Card>
-                    <ClickAwayListener onClickAway={this.handleClose}>
+              <Tooltip title="More">
+                <IconButton buttonRef={node => { this.anchorEl = node; }} onClick={this.handleToggle}>
+                  <MoreVertIcon style={{ fontSize: '17' }} >
+                  </MoreVertIcon>
+                </IconButton>
+              </Tooltip>
+              {/* <ClickAwayListener onClickAway={this.handleClose}> */}
+              <Popper open={open} anchorEl={this.anchorEl} transition disablePortal style={{ zIndex: 1 }}>
+                {({ TransitionProps }) => (
+                  <Grow style={{ zIndex: 1 }}
+                    {...TransitionProps}
+                  >
+                    <Card>
                       <MenuList>
                         <MenuItem onClick={this.TrashNote}>Delete note</MenuItem>
-                        <MenuItem onClick={this.handleAddlabel}>Add label</MenuItem>
-
+                        <MenuItem onClick={this.handleAddlabel('right-start')}>Add label</MenuItem>
                       </MenuList>
-                    </ClickAwayListener>
-                  </Card>
 
-                </Grow>
-              )}
-            </Popper>
-           
-          </div>}
-         
+                      <Popper id={id} open={openaddlabel} anchorEl={anchorEl} placement={placement} transition>
+                        {({ TransitionProps }) => (
+                          <Fade {...TransitionProps} timeout={350}>
+                            <Paper>
+                              <div>
+                                {labels}
+                              </div>
+                            </Paper>
+                          </Fade>
+                        )}
+                      </Popper>
+
+                    </Card>
+                  </Grow>
+                )}
+              </Popper>
+              {/* </ClickAwayListener> */}
+            </div>}
+        </div>
       </div>
-      <div>
-       {this.state.open ?
-        <Paper
-          id="simple-popper"
-          open={openlabel}
-          anchorEl={anchorEl}
-        // onClose={this.handleCloseAddLabel}
-        >
-          {labels}
-        </Paper> : null}
-        </div>
-        </div>
     )
 
   }

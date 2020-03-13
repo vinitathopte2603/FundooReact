@@ -91,9 +91,6 @@ class DisplayNotes extends Component {
     }
     render() {
         const list = this.props.posts.view ? 'my-masonry-list' : 'my-masonry-grid'
-        console.log("view", this.props.posts.view);
-        console.log("true", list);
-
         const columnsmasonary = this.props.posts ? breakpointColumnsObj : null
         console.log('==>', this.props.AllNotes);
         const notes = this.props.AllNotes.map((element, index) => {

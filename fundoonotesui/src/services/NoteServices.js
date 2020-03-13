@@ -140,18 +140,27 @@ export default class NoteServices {
             }
         })
     }
-    GetAllUser(data){
+    GetAllUser(data) {
         var token = localStorage.getItem("logintoken")
-        return services.GET(`${notesBaseURL}/users?keyword=` + data , {
+        return services.GET(`${notesBaseURL}/users?keyword=` + data, {
             headers: {
                 'Content-Type': 'application/json', 'Accept': '*',
                 Authorization: 'Bearer ' + token
             }
         })
     }
-    AddCollaboration(noteid,data){
+    AddCollaboration(noteid, data) {
         var token = localStorage.getItem("logintoken")
         return services.PUT(`${notesBaseURL}/` + noteid + `/collaborate`, data, {
+            headers: {
+                'Content-Type': 'application/json', 'Accept': '*',
+                Authorization: 'Bearer ' + token
+            }
+        })
+    }
+    RemoveCollaboration(noteid, data) {
+        var token = localStorage.getItem("logintoken")
+        return services.DELETE(`${notesBaseURL}/` + noteid + `/removecollab/` + data, {
             headers: {
                 'Content-Type': 'application/json', 'Accept': '*',
                 Authorization: 'Bearer ' + token

@@ -58,7 +58,7 @@ class UpdateNote extends Component {
                     <DialogContent style={{backgroundColor:this.props.note.color,padding:0}}>
                       <div>
                           <div>
-                              <img src={this.props.note.image}></img>
+                              <img src={this.props.note.image} alt=""></img>
                           </div>
                           <div style={{marginLeft:'13px'}}>
                         <div  >
